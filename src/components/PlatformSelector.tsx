@@ -2,7 +2,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { Facebook, Instagram, Linkedin, PinIcon, Tiktok, Twitter, Unlink, Youtube } from "lucide-react";
+import { Facebook, Instagram, Linkedin, PinIcon, MessageCircle, Twitter, Unlink, Youtube } from "lucide-react";
 
 export function PlatformSelector() {
   const platforms = [
@@ -10,7 +10,7 @@ export function PlatformSelector() {
     { id: "twitter", name: "Twitter", icon: Twitter, connected: true, color: "bg-blue-400" },
     { id: "youtube", name: "YouTube", icon: Youtube, connected: true, color: "bg-red-500" },
     { id: "facebook", name: "Facebook", icon: Facebook, connected: false, color: "bg-blue-600" },
-    { id: "tiktok", name: "TikTok", icon: Tiktok, connected: false, color: "bg-black" },
+    { id: "tiktok", name: "TikTok", icon: MessageCircle, connected: false, color: "bg-black" },
     { id: "linkedin", name: "LinkedIn", icon: Linkedin, connected: false, color: "bg-blue-700" },
     { id: "pinterest", name: "Pinterest", icon: PinIcon, connected: false, color: "bg-red-600" },
   ];

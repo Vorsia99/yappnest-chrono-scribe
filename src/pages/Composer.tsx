@@ -1,10 +1,9 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { AlignLeft, Clock, Facebook, Image, Instagram, Linkedin, PenSquare, PenTool, Pinterest, SendHorizontal, Sparkles, Tiktok, Twitter, Upload, Youtube } from "lucide-react";
+import { AlignLeft, Clock, Facebook, Image, Instagram, Linkedin, PenSquare, PenTool, PinIcon, MessageCircle, SendHorizontal, Sparkles, Twitter, Upload, Youtube } from "lucide-react";
 import { PlatformSelector } from "@/components/PlatformSelector";
 import { DatePicker } from "@/components/DatePicker";
 import { TimePicker } from "@/components/TimePicker";
