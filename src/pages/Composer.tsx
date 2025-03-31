@@ -100,7 +100,7 @@ const Composer = () => {
                     <Youtube className="h-4 w-4" /> YouTube
                   </TabsTrigger>
                   <TabsTrigger value="tiktok" className="gap-1">
-                    <Tiktok className="h-4 w-4" /> TikTok
+                    <MessageCircle className="h-4 w-4" /> TikTok
                   </TabsTrigger>
                 </TabsList>
 
