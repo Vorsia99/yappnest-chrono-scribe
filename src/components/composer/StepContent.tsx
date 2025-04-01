@@ -39,10 +39,10 @@ export const StepContent = ({ formData, updateFormData, isFirstVisit }: StepCont
     const newCaptions = { ...formData.captions, [platform]: value };
     updateFormData({ captions: newCaptions });
     
-    setCaptionLengths({
-      ...captionLengths,
+    setCaptionLengths(prevLengths => ({
+      ...prevLengths,
       [platform]: value.length
-    });
+    }));
   };
 
   const handleHashtagsChange = (platform, value) => {
@@ -68,7 +68,7 @@ export const StepContent = ({ formData, updateFormData, isFirstVisit }: StepCont
     });
     
     // Update lengths
-    const newLengths = {};
+    const newLengths = { ...captionLengths };
     platforms.forEach(platform => {
       newLengths[platform.id] = currentCaption.length;
     });

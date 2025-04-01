@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, CalendarRange, FileAnalytics, Plus } from "lucide-react";
+import { CheckCircle, CalendarRange, BarChart2, Plus } from "lucide-react";
 import confetti from "canvas-confetti";
 
 interface StepConfirmationProps {
@@ -122,7 +122,7 @@ export const StepConfirmation = ({ formData, goToStep }: StepConfirmationProps) 
 
       <div className="border-t pt-4">
         <div className="flex items-center gap-2 justify-center text-sm text-muted-foreground">
-          <FileAnalytics className="h-4 w-4" />
+          <BarChart2 className="h-4 w-4" />
           <span>Track your post's performance in Analytics!</span>
         </div>
         <div className="text-center mt-4 text-xs text-muted-foreground">

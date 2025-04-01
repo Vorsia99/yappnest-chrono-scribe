@@ -11,7 +11,7 @@ interface StepPlatformsProps {
 }
 
 export const StepPlatforms = ({ formData, updateFormData, isFirstVisit }: StepPlatformsProps) => {
-  const handlePlatformsChange = (platforms) => {
+  const handlePlatformsChange = (platforms: any[]) => {
     updateFormData({ selectedPlatforms: platforms });
   };
 
@@ -27,7 +27,10 @@ export const StepPlatforms = ({ formData, updateFormData, isFirstVisit }: StepPl
           <Tooltip open={isFirstVisit}>
             <TooltipTrigger asChild>
               <div>
-                <PlatformSelector />
+                <PlatformSelector 
+                  onChange={handlePlatformsChange}
+                  initialPlatforms={formData.selectedPlatforms || []}
+                />
               </div>
             </TooltipTrigger>
             <TooltipContent side="right" className="max-w-xs">
