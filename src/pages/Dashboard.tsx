@@ -1,186 +1,171 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, Calendar, Instagram, LineChart, ListChecks, PenSquare, TrendingUp, Twitter, Youtube } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { UpcomingPostCard } from "@/components/UpcomingPostCard";
-import { StatsCard } from "@/components/StatsCard";
+import React from 'react';
+import { CalendarIcon, ListChecksIcon, PenSquareIcon, BarChart3Icon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import StatsCard from '@/components/StatsCard';
+import PlatformStat from '@/components/PlatformStat';
+import UpcomingPostCard from '@/components/UpcomingPostCard';
 
 const Dashboard = () => {
+  const stats = [
+    { 
+      title: "Total Posts", 
+      value: "128", 
+      change: "+12%", 
+      trend: "up",
+      description: "From last month"
+    },
+    { 
+      title: "Engagement Rate", 
+      value: "4.3%", 
+      change: "+0.8%", 
+      trend: "up",
+      description: "From last month"
+    },
+    { 
+      title: "Followers", 
+      value: "12.8K", 
+      change: "+1.2K", 
+      trend: "up",
+      description: "From last month"
+    },
+    { 
+      title: "Avg. Response Time", 
+      value: "45min", 
+      change: "-10min", 
+      trend: "down",
+      description: "From last month"
+    }
+  ];
+
+  const platformStats = [
+    { platform: "Instagram", followers: "8.5K", engagement: "4.2%" },
+    { platform: "Twitter", followers: "12.3K", engagement: "3.8%" },
+    { platform: "Facebook", followers: "5.7K", engagement: "2.9%" },
+    { platform: "LinkedIn", followers: "3.2K", engagement: "5.1%" }
+  ];
+
+  const upcomingPosts = [
+    { 
+      title: "Product launch announcement", 
+      platform: "Instagram", 
+      scheduledFor: "Today, 3:00 PM",
+      image: "/placeholder.svg"
+    },
+    { 
+      title: "Weekly industry insights", 
+      platform: "LinkedIn", 
+      scheduledFor: "Tomorrow, 9:00 AM",
+      image: "/placeholder.svg"
+    },
+    { 
+      title: "Customer success story", 
+      platform: "Facebook, Twitter", 
+      scheduledFor: "Jul 15, 2:30 PM",
+      image: "/placeholder.svg"
+    }
+  ];
+
+  const quickActions = [
+    { title: "Create Post", icon: PenSquareIcon, path: "/composer", color: "bg-blue-50 text-blue-600" },
+    { title: "View Calendar", icon: CalendarIcon, path: "/calendar", color: "bg-purple-50 text-purple-600" },
+    { title: "Manage Queue", icon: ListChecksIcon, path: "/queue", color: "bg-green-50 text-green-600" },
+    { title: "Analytics", icon: BarChart3Icon, path: "/analytics", color: "bg-amber-50 text-amber-600" }
+  ];
+
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">Welcome back! Here's an overview of your social media presence.</p>
-        </div>
-        <Button className="bg-yapp-misty-blue hover:bg-yapp-misty-blue/90">
-          <PenSquare className="mr-2 h-4 w-4" /> Create New Post
-        </Button>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <Button>New Post</Button>
       </div>
 
-      <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="schedule">Schedule</TabsTrigger>
-        </TabsList>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat) => (
+          <StatsCard 
+            key={stat.title}
+            title={stat.title}
+            value={stat.value}
+            change={stat.change}
+            trend={stat.trend}
+            description={stat.description}
+          />
+        ))}
+      </div>
 
-        <TabsContent value="overview" className="space-y-6">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <StatsCard 
-              title="Total Posts" 
-              value="128" 
-              description="+14% from last month" 
-              icon={<ListChecks className="h-4 w-4 text-muted-foreground" />} 
-              trend="up" 
-            />
-            <StatsCard 
-              title="Engagement Rate" 
-              value="4.6%" 
-              description="+2.1% from last month" 
-              icon={<TrendingUp className="h-4 w-4 text-muted-foreground" />} 
-              trend="up" 
-            />
-            <StatsCard 
-              title="Scheduled Posts" 
-              value="12" 
-              description="Next 7 days" 
-              icon={<Calendar className="h-4 w-4 text-muted-foreground" />} 
-              trend="neutral" 
-            />
-            <StatsCard 
-              title="Total Reach" 
-              value="245K" 
-              description="+18% from last month" 
-              icon={<BarChart className="h-4 w-4 text-muted-foreground" />} 
-              trend="up" 
-            />
-          </div>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+        <div className="col-span-full lg:col-span-3">
+          <Card>
+            <CardHeader>
+              <CardTitle>Platform Summary</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {platformStats.map((stat) => (
+                  <PlatformStat
+                    key={stat.platform}
+                    platform={stat.platform}
+                    followers={stat.followers}
+                    engagement={stat.engagement}
+                  />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
-          <div className="grid gap-4 md:grid-cols-7">
-            <Card className="col-span-4">
-              <CardHeader>
-                <CardTitle>Engagement Overview</CardTitle>
-                <CardDescription>View engagement across all platforms</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-[200px] flex items-center justify-center border rounded-md bg-muted/40">
-                  <LineChart className="h-8 w-8 text-muted-foreground" />
-                  <span className="ml-2 text-muted-foreground">Engagement chart will appear here</span>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="col-span-3">
-              <CardHeader>
+        <div className="col-span-full lg:col-span-4">
+          <Card className="h-full">
+            <CardHeader>
+              <div className="flex justify-between items-center">
                 <CardTitle>Upcoming Posts</CardTitle>
-                <CardDescription>Your next scheduled posts</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <UpcomingPostCard 
-                  title="Summer product launch announcement" 
-                  platform="instagram" 
-                  scheduledFor="Today, 2:30 PM" 
-                />
-                <UpcomingPostCard 
-                  title="Weekly tips and tricks video" 
-                  platform="youtube" 
-                  scheduledFor="Tomorrow, 10:00 AM" 
-                />
-                <UpcomingPostCard 
-                  title="Industry news update thread" 
-                  platform="twitter" 
-                  scheduledFor="Jun 15, 9:00 AM" 
-                />
-                <Button variant="outline" className="w-full">View All Scheduled Posts</Button>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Instagram Performance</CardTitle>
-                <Instagram className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">18.2K</div>
-                <p className="text-xs text-muted-foreground">Followers (+120 this week)</p>
-                <div className="mt-4 h-[60px] flex items-center justify-center border rounded-md bg-muted/40">
-                  <LineChart className="h-5 w-5 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Twitter Performance</CardTitle>
-                <Twitter className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">12.4K</div>
-                <p className="text-xs text-muted-foreground">Followers (+86 this week)</p>
-                <div className="mt-4 h-[60px] flex items-center justify-center border rounded-md bg-muted/40">
-                  <LineChart className="h-5 w-5 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">YouTube Performance</CardTitle>
-                <Youtube className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">8.5K</div>
-                <p className="text-xs text-muted-foreground">Subscribers (+45 this week)</p>
-                <div className="mt-4 h-[60px] flex items-center justify-center border rounded-md bg-muted/40">
-                  <LineChart className="h-5 w-5 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="analytics" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Detailed Analytics</CardTitle>
-              <CardDescription>
-                View detailed performance metrics across all platforms
-              </CardDescription>
+                <Button variant="outline" size="sm">View All</Button>
+              </div>
             </CardHeader>
-            <CardContent className="h-[400px] flex items-center justify-center">
-              <div className="text-center">
-                <BarChart className="mx-auto h-12 w-12 text-muted-foreground" />
-                <h3 className="mt-4 text-lg font-medium">Analytics Dashboard</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Detailed analytics will be available here
-                </p>
+            <CardContent>
+              <div className="space-y-4">
+                {upcomingPosts.map((post, index) => (
+                  <UpcomingPostCard 
+                    key={index}
+                    title={post.title}
+                    platform={post.platform}
+                    scheduledFor={post.scheduledFor}
+                    image={post.image}
+                  />
+                ))}
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
+        </div>
 
-        <TabsContent value="schedule" className="space-y-4">
+        <div className="col-span-full">
           <Card>
             <CardHeader>
-              <CardTitle>Content Calendar</CardTitle>
-              <CardDescription>
-                View and manage your upcoming content schedule
-              </CardDescription>
+              <CardTitle>Quick Actions</CardTitle>
             </CardHeader>
-            <CardContent className="h-[400px] flex items-center justify-center">
-              <div className="text-center">
-                <Calendar className="mx-auto h-12 w-12 text-muted-foreground" />
-                <h3 className="mt-4 text-lg font-medium">Content Calendar</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Your scheduled content will appear here
-                </p>
+            <CardContent>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {quickActions.map((action) => (
+                  <Button
+                    key={action.title}
+                    variant="outline"
+                    className="h-auto py-6 flex flex-col items-center justify-center text-center gap-2 hover:bg-secondary transition-colors"
+                    asChild
+                  >
+                    <a href={action.path}>
+                      <div className={`p-2 rounded-full ${action.color} mb-2`}>
+                        <action.icon className="h-6 w-6" />
+                      </div>
+                      <span>{action.title}</span>
+                    </a>
+                  </Button>
+                ))}
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-      </Tabs>
+        </div>
+      </div>
     </div>
   );
 };
