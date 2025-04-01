@@ -119,4 +119,93 @@
   .shadow-soft {
     @apply shadow-md hover:shadow-lg transition-shadow duration-300;
   }
+  
+  /* New styles for a more traditional look */
+  .card {
+    @apply bg-white rounded-md shadow-md p-6 border border-gray-100;
+  }
+  
+  .section {
+    @apply py-12 md:py-16;
+  }
+  
+  .section-header {
+    @apply mb-10 text-center;
+  }
+  
+  .btn {
+    @apply inline-flex items-center justify-center font-medium transition-colors;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white rounded-md px-6 py-3 shadow-md hover:bg-primary/90;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-foreground rounded-md px-6 py-3 shadow-sm hover:bg-secondary/80;
+  }
+  
+  .btn-outline {
+    @apply border border-primary text-primary bg-transparent rounded-md px-6 py-3 hover:bg-primary/10;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .feature-card {
+    @apply flex flex-col items-center text-center p-6 rounded-lg bg-white shadow-md border border-gray-100;
+  }
+  
+  .platform-logo {
+    @apply w-16 h-16 object-contain mx-auto grayscale hover:grayscale-0 transition-all duration-300;
+  }
+  
+  .testimonial {
+    @apply bg-white p-6 rounded-lg shadow-md border border-gray-100;
+  }
+  
+  .pricing-card {
+    @apply bg-white p-8 rounded-lg shadow-md border border-gray-200 flex flex-col h-full;
+  }
+  
+  .pricing-popular {
+    @apply border-primary border-2 relative;
+  }
+}
+
+#root {
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.read-the-docs {
+  color: #888;
 }
