@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 84% 5%;
 
-    --primary: 226 94% 81%;
+    --primary: 226 94% 81%; /* Misty Blue: #A3BFFA */
     --primary-foreground: 210 40% 98%;
 
     --secondary: 220 13% 91%;
@@ -25,7 +25,7 @@
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 340 100% 82%;
+    --accent: 340 100% 82%; /* Soft Pink: #FF9CAC */
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -109,9 +109,10 @@
   }
 
   h3 {
-    @apply text-xl md:text-2xl font-medium;
+    @apply text-lg md:text-xl font-medium;
   }
 
+  /* MGZ-inspired design utilities */
   .hover-scale {
     @apply transition-transform duration-200 hover:scale-105;
   }
@@ -120,13 +121,12 @@
     @apply shadow-md hover:shadow-lg transition-shadow duration-300;
   }
   
-  /* New styles for a more traditional look */
   .card {
-    @apply bg-white rounded-md shadow-md p-6 border border-gray-100;
+    @apply bg-white rounded-md shadow-card hover:shadow-card-hover transition-shadow duration-300 p-6 border border-gray-100;
   }
   
   .section {
-    @apply py-12 md:py-16;
+    @apply py-12 md:py-16 opacity-0 animate-section-fade-in;
   }
   
   .section-header {
@@ -134,19 +134,19 @@
   }
   
   .btn {
-    @apply inline-flex items-center justify-center font-medium transition-colors;
+    @apply inline-flex items-center justify-center h-12 px-4 font-medium text-base transition-colors rounded-lg;
   }
   
   .btn-primary {
-    @apply bg-primary text-white rounded-md px-6 py-3 shadow-md hover:bg-primary/90;
+    @apply bg-yapp-misty-blue text-white rounded-md px-6 py-3 shadow-md hover:bg-yapp-misty-blue-hover;
   }
   
   .btn-secondary {
-    @apply bg-secondary text-foreground rounded-md px-6 py-3 shadow-sm hover:bg-secondary/80;
+    @apply bg-white border border-yapp-misty-blue text-yapp-dark-slate rounded-md px-6 py-3 shadow-sm hover:bg-yapp-misty-blue/10;
   }
   
   .btn-outline {
-    @apply border border-primary text-primary bg-transparent rounded-md px-6 py-3 hover:bg-primary/10;
+    @apply border border-yapp-misty-blue text-yapp-dark-slate bg-transparent rounded-md px-6 py-3 hover:bg-yapp-misty-blue/10;
   }
   
   .container-custom {
@@ -154,24 +154,58 @@
   }
   
   .feature-card {
-    @apply flex flex-col items-center text-center p-6 rounded-lg bg-white shadow-md border border-gray-100;
+    @apply flex flex-col items-center text-center p-6 rounded-lg bg-white shadow-card hover:shadow-card-hover transition-shadow duration-300 border border-gray-100;
   }
   
   .platform-logo {
-    @apply w-16 h-16 object-contain mx-auto grayscale hover:grayscale-0 transition-all duration-300;
+    @apply w-16 h-16 object-contain mx-auto transition-all duration-300;
   }
   
   .testimonial {
-    @apply bg-white p-6 rounded-lg shadow-md border border-gray-100;
+    @apply bg-white p-6 rounded-lg shadow-card hover:shadow-card-hover transition-shadow duration-300 border border-gray-100;
   }
   
   .pricing-card {
-    @apply bg-white p-8 rounded-lg shadow-md border border-gray-200 flex flex-col h-full;
+    @apply bg-white p-8 rounded-lg shadow-card hover:shadow-card-hover transition-shadow duration-300 border border-gray-200 flex flex-col h-[400px];
   }
   
   .pricing-popular {
-    @apply border-primary border-2 relative;
+    @apply border-yapp-misty-blue border-2 relative;
   }
+
+  /* MGZ-inspired gradients and backgrounds */
+  .bg-misty {
+    @apply bg-misty-gradient;
+  }
+
+  .bg-dark-misty {
+    @apply dark:bg-dark-misty-gradient;
+  }
+}
+
+/* Additional layout and spacing utilities */
+.spacing-x-16 > * + * {
+  @apply ml-4;
+}
+
+.spacing-y-24 > * + * {
+  @apply mt-6;
+}
+
+.spacing-y-8 > * + * {
+  @apply mt-2;
+}
+
+.carousel-nav {
+  @apply w-6 h-6 absolute top-1/2 -translate-y-1/2;
+}
+
+.carousel-nav-prev {
+  @apply -left-4;
+}
+
+.carousel-nav-next {
+  @apply -right-4;
 }
 
 #root {

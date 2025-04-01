@@ -63,13 +63,18 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// YappHQ Color Palette
+				// YappHQ Color Palette - Updated for MGZ-inspired design
 				yapp: {
 					"misty-blue": "#A3BFFA",
+					"misty-blue-hover": "#7F9CF5",
 					"soft-pink": "#FF9CAC",
 					"electric-green": "#4AFCA6",
 					"gray": "#CBD5E0",
 					"dark-slate": "#4A5568",
+					"misty-light": "#E2E8F0",
+					"misty-dark": "#CBD5E0",
+					"dark-mode-light": "#2D3748",
+					"dark-mode-dark": "#1A202C",
 				}
 			},
 			borderRadius: {
@@ -124,11 +129,20 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'scale-in': 'scale-in 0.2s ease-out',
-				'slide-in': 'slide-in 0.3s ease-out'
+				'slide-in': 'slide-in 0.3s ease-out',
+				'section-fade-in': 'fade-in 0.5s ease-out forwards',
 			},
 			fontFamily: {
 				'sans': ['Inter', 'sans-serif'],
 				'playfair': ['Playfair Display', 'serif'],
+			},
+			backgroundImage: {
+				'misty-gradient': 'linear-gradient(180deg, #E2E8F0 0%, #CBD5E0 100%)',
+				'dark-misty-gradient': 'linear-gradient(180deg, #2D3748 0%, #1A202C 100%)',
+			},
+			boxShadow: {
+				'card-hover': '0 8px 12px rgba(0,0,0,0.1)',
+				'card': '0 4px 6px rgba(0,0,0,0.1)',
 			}
 		}
 	},
