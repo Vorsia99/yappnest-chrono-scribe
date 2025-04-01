@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Edit2, Trash2, PlusCircle, Calendar, Clock, Send, ArrowRight } from "lucide-react";
@@ -10,9 +9,9 @@ import { DatePicker } from "@/components/DatePicker";
 import { TimePicker } from "@/components/TimePicker";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import UpcomingPostCard from "@/components/UpcomingPostCard";
-import PlatformStat from "@/components/PlatformStat";
-import StatsCard from "@/components/StatsCard";
+import { UpcomingPostCard } from "@/components/UpcomingPostCard";
+import { PlatformStat } from "@/components/PlatformStat";
+import { StatsCard } from "@/components/StatsCard";
 
 // Post types for TypeScript
 interface Post {
