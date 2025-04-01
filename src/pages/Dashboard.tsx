@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { CalendarIcon, ListChecksIcon, PenSquareIcon, BarChart3Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,55 +13,72 @@ const Dashboard = () => {
       title: "Total Posts", 
       value: "128", 
       change: "+12%", 
-      trend: "up",
+      trend: "up" as const,
       description: "From last month"
     },
     { 
       title: "Engagement Rate", 
       value: "4.3%", 
       change: "+0.8%", 
-      trend: "up",
+      trend: "up" as const,
       description: "From last month"
     },
     { 
       title: "Followers", 
       value: "12.8K", 
       change: "+1.2K", 
-      trend: "up",
+      trend: "up" as const,
       description: "From last month"
     },
     { 
       title: "Avg. Response Time", 
       value: "45min", 
       change: "-10min", 
-      trend: "down",
+      trend: "down" as const,
       description: "From last month"
     }
   ];
 
   const platformStats = [
-    { platform: "Instagram", followers: "8.5K", engagement: "4.2%" },
-    { platform: "Twitter", followers: "12.3K", engagement: "3.8%" },
-    { platform: "Facebook", followers: "5.7K", engagement: "2.9%" },
-    { platform: "LinkedIn", followers: "3.2K", engagement: "5.1%" }
+    { 
+      platform: "instagram" as const, 
+      followers: "8.5K", 
+      engagement: "4.2%", 
+      growth: "+5.2%", 
+      posts: "43" 
+    },
+    { 
+      platform: "twitter" as const, 
+      followers: "12.3K", 
+      engagement: "3.8%", 
+      growth: "+2.4%", 
+      posts: "87" 
+    },
+    { 
+      platform: "youtube" as const, 
+      followers: "5.7K", 
+      engagement: "2.9%", 
+      growth: "+1.8%", 
+      posts: "12" 
+    }
   ];
 
   const upcomingPosts = [
     { 
       title: "Product launch announcement", 
-      platform: "Instagram", 
+      platform: "instagram" as const, 
       scheduledFor: "Today, 3:00 PM",
       image: "/placeholder.svg"
     },
     { 
       title: "Weekly industry insights", 
-      platform: "LinkedIn", 
+      platform: "twitter" as const, 
       scheduledFor: "Tomorrow, 9:00 AM",
       image: "/placeholder.svg"
     },
     { 
       title: "Customer success story", 
-      platform: "Facebook, Twitter", 
+      platform: "youtube" as const, 
       scheduledFor: "Jul 15, 2:30 PM",
       image: "/placeholder.svg"
     }
@@ -107,6 +125,8 @@ const Dashboard = () => {
                     platform={stat.platform}
                     followers={stat.followers}
                     engagement={stat.engagement}
+                    growth={stat.growth}
+                    posts={stat.posts}
                   />
                 ))}
               </div>
@@ -130,7 +150,6 @@ const Dashboard = () => {
                     title={post.title}
                     platform={post.platform}
                     scheduledFor={post.scheduledFor}
-                    image={post.image}
                   />
                 ))}
               </div>
