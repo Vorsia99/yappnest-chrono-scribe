@@ -114,11 +114,11 @@
 
   /* MGZ-inspired design utilities */
   .hover-scale {
-    @apply transition-transform duration-200 hover:scale-105;
+    @apply transition-transform duration-300 hover:scale-105;
   }
 
   .shadow-soft {
-    @apply shadow-md hover:shadow-lg transition-shadow duration-300;
+    @apply shadow-md hover:shadow-card-hover transition-shadow duration-300;
   }
   
   .card {
@@ -138,15 +138,15 @@
   }
   
   .btn-primary {
-    @apply bg-yapp-misty-blue text-white rounded-md px-6 py-3 shadow-md hover:bg-yapp-misty-blue-hover;
+    @apply bg-yapp-misty-blue text-white rounded-md px-6 py-3 shadow-md hover:bg-yapp-misty-blue-hover transition-all duration-200 hover:scale-105;
   }
   
   .btn-secondary {
-    @apply bg-white border border-yapp-misty-blue text-yapp-dark-slate rounded-md px-6 py-3 shadow-sm hover:bg-yapp-misty-blue/10;
+    @apply bg-white border border-yapp-misty-blue text-yapp-dark-slate rounded-md px-6 py-3 shadow-sm hover:bg-yapp-misty-blue/10 transition-all duration-200 hover:scale-105;
   }
   
   .btn-outline {
-    @apply border border-yapp-misty-blue text-yapp-dark-slate bg-transparent rounded-md px-6 py-3 hover:bg-yapp-misty-blue/10;
+    @apply border border-yapp-misty-blue text-yapp-dark-slate bg-transparent rounded-md px-6 py-3 hover:bg-yapp-misty-blue/10 transition-all duration-200 hover:scale-105;
   }
   
   .container-custom {
@@ -154,11 +154,11 @@
   }
   
   .feature-card {
-    @apply flex flex-col items-center text-center p-6 rounded-lg bg-white shadow-card hover:shadow-card-hover transition-shadow duration-300 border border-gray-100;
+    @apply flex flex-col items-center text-center p-feature-padding rounded-lg bg-white shadow-card hover:shadow-card-hover transition-all duration-300 border border-gray-100 hover:scale-105;
   }
   
   .platform-logo {
-    @apply w-16 h-16 object-contain mx-auto transition-all duration-300;
+    @apply w-16 h-16 object-contain mx-auto transition-all duration-300 hover:animate-glow-effect;
   }
   
   .testimonial {
@@ -171,6 +171,27 @@
   
   .pricing-popular {
     @apply border-yapp-misty-blue border-2 relative;
+  }
+
+  /* Animation utilities */
+  .animate-stagger-1 {
+    animation-delay: 0ms;
+  }
+  
+  .animate-stagger-2 {
+    animation-delay: 200ms;
+  }
+  
+  .animate-stagger-3 {
+    animation-delay: 400ms;
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+  }
+
+  .animate-on-scroll.visible {
+    animation: fadeIn 0.5s ease-out forwards;
   }
 
   /* MGZ-inspired gradients and backgrounds */
@@ -208,6 +229,41 @@
   @apply -right-4;
 }
 
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Root styles */
 #root {
   text-align: center;
 }

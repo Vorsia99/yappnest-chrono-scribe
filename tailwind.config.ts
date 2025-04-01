@@ -122,6 +122,18 @@ export default {
 				'slide-in': {
 					'0%': { transform: 'translateX(-100%)' },
 					'100%': { transform: 'translateX(0)' }
+				},
+				'slide-in-bottom': {
+					'0%': { transform: 'translateY(100px)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'pulse-scale': {
+					'0%, 100%': { transform: 'scale(1)' },
+					'50%': { transform: 'scale(1.03)' }
+				},
+				'glow': {
+					'0%, 100%': { boxShadow: '0 0 0 rgba(255,156,172,0)' },
+					'50%': { boxShadow: '0 0 8px rgba(255,156,172,0.6)' }
 				}
 			},
 			animation: {
@@ -131,6 +143,9 @@ export default {
 				'scale-in': 'scale-in 0.2s ease-out',
 				'slide-in': 'slide-in 0.3s ease-out',
 				'section-fade-in': 'fade-in 0.5s ease-out forwards',
+				'slide-in-bottom': 'slide-in-bottom 0.5s ease-out forwards',
+				'pulse-cta': 'pulse-scale 2s infinite ease-in-out',
+				'glow-effect': 'glow 2s infinite ease-in-out',
 			},
 			fontFamily: {
 				'sans': ['Inter', 'sans-serif'],
@@ -143,6 +158,20 @@ export default {
 			boxShadow: {
 				'card-hover': '0 8px 12px rgba(0,0,0,0.1)',
 				'card': '0 4px 6px rgba(0,0,0,0.1)',
+			},
+			spacing: {
+				'nav': '16px',  // Nav spacing
+				'container-padding': '24px',  // Container padding
+				'feature-padding': '16px',  // Feature card padding
+				'feature-spacing': '24px',  // Spacing between feature cards
+				'workflow-spacing': '24px',  // Spacing between workflow steps
+			},
+			transitionDuration: {
+				'300': '300ms',
+				'500': '500ms',
+			},
+			transitionTimingFunction: {
+				'in-out-smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
 			}
 		}
 	},
