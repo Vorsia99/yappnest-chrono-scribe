@@ -254,7 +254,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </footer>
     </div>
   );
 };
