@@ -9,7 +9,11 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-export function TimePicker() {
+interface TimePickerProps {
+  onTimeChange?: (time: string) => void;
+}
+
+export function TimePicker({ onTimeChange }: TimePickerProps) {
   const [time, setTime] = React.useState<string>("");
   
   const hours = Array.from({ length: 12 }, (_, i) => i + 1);
@@ -37,7 +41,11 @@ export function TimePicker() {
 
   const updateTime = (hour: number | null, minute: string | null, period: string | null) => {
     if (hour !== null && minute !== null && period !== null) {
-      setTime(`${hour}:${minute} ${period}`);
+      const newTime = `${hour}:${minute} ${period}`;
+      setTime(newTime);
+      if (onTimeChange) {
+        onTimeChange(newTime);
+      }
     }
   };
 
