@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
+import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
 import Composer from "./pages/Composer";
@@ -21,8 +22,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Index />} />
           <Route element={<Layout />}>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/composer" element={<Composer />} />
             <Route path="/queue" element={<Queue />} />
