@@ -1,25 +1,17 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ArrowDownIcon, ArrowUpIcon, BarChart3Icon, Minus } from "lucide-react";
+import { ArrowDownIcon, ArrowUpIcon, Minus } from "lucide-react";
 
 interface StatsCardProps {
   title: string;
   value: string;
   description: string;
-  change: string;
+  icon: React.ReactNode;
   trend: "up" | "down" | "neutral";
-  icon?: React.ReactNode;
 }
 
-export function StatsCard({ 
-  title, 
-  value, 
-  description, 
-  change, 
-  trend, 
-  icon = <BarChart3Icon className="h-4 w-4 text-muted-foreground" />
-}: StatsCardProps) {
+export function StatsCard({ title, value, description, icon, trend }: StatsCardProps) {
   return (
     <Card className="shadow-soft hover-scale">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -42,7 +34,7 @@ export function StatsCard({
             trend === "up" && "text-green-500",
             trend === "down" && "text-red-500"
           )}>
-            {change} {description}
+            {description}
           </span>
         </p>
       </CardContent>

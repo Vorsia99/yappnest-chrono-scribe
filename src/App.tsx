@@ -12,7 +12,6 @@ import Composer from "./pages/Composer";
 import Queue from "./pages/Queue";
 import Analytics from "./pages/Analytics";
 import NotFound from "./pages/NotFound";
-import Resources from "./pages/Resources";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +23,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/resources" element={<Resources />} />
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/calendar" element={<Calendar />} />

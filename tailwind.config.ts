@@ -65,8 +65,7 @@ export default {
 				},
 				// YappHQ Color Palette
 				yapp: {
-					"blue": "#E9F4FA",
-					"dark": "#0F2937",
+					"misty-blue": "#A3BFFA",
 					"soft-pink": "#FF9CAC",
 					"electric-green": "#4AFCA6",
 					"gray": "#CBD5E0",
@@ -123,7 +122,7 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.3s ease-out forwards',
+				'fade-in': 'fade-in 0.3s ease-out',
 				'scale-in': 'scale-in 0.2s ease-out',
 				'slide-in': 'slide-in 0.3s ease-out'
 			},

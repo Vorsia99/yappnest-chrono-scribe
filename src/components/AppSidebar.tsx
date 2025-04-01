@@ -8,6 +8,7 @@ import {
   SidebarHeader,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton
@@ -23,9 +24,10 @@ import {
   Settings, 
   LogOut 
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const navItems = [
-  { title: 'Dashboard', icon: Home, path: '/dashboard' },
+  { title: 'Dashboard', icon: Home, path: '/' },
   { title: 'Calendar', icon: Calendar, path: '/calendar' },
   { title: 'Composer', icon: PenSquare, path: '/composer' },
   { title: 'Queue', icon: ListChecks, path: '/queue' },
@@ -39,12 +41,10 @@ const AppSidebar = () => {
     <Sidebar>
       <SidebarHeader className="p-4">
         <div className="flex items-center space-x-2">
-          <Link to="/" className="flex items-center">
-            <svg viewBox="0 0 36 24" fill="none" className="h-6 w-9 mr-2 text-primary">
-              <path d="M1 13L8 6L15 13L22 6L29 13L36 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <h1 className="text-xl font-bold text-foreground">YappHQ</h1>
-          </Link>
+          <div className="h-8 w-8 rounded-full bg-yapp-misty-blue flex items-center justify-center">
+            <span className="text-white font-bold">Y</span>
+          </div>
+          <h1 className="text-xl font-bold font-playfair text-foreground">YappHQ</h1>
         </div>
       </SidebarHeader>
       <SidebarContent>
