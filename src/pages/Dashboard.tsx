@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Edit2, Trash2, PlusCircle, Calendar, Clock, Send, ArrowRight, Users, BarChart3, Activity } from "lucide-react";
+import { Edit2, Trash2, Calendar, Clock, ArrowRight, Users, BarChart3, Activity } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,6 +13,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { UpcomingPostCard } from "@/components/UpcomingPostCard";
 import { PlatformStat } from "@/components/PlatformStat";
 import { StatsCard } from "@/components/StatsCard";
+import { QuickActions } from "@/components/QuickActions";
+import { TopPerformingPosts } from "@/components/TopPerformingPosts";
 
 // Post types for TypeScript
 interface Post {
@@ -70,6 +73,9 @@ const Dashboard = () => {
   
   // State for dialog open/close
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  
+  // State for number of posts to display
+  const [postsToDisplay, setPostsToDisplay] = useState(5);
 
   const { toast } = useToast();
 
@@ -238,6 +244,11 @@ const Dashboard = () => {
     setImagePreview("");
   };
 
+  // Handle posts to display change
+  const handlePostsToDisplayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPostsToDisplay(Number(e.target.value));
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center mb-8">
@@ -246,12 +257,6 @@ const Dashboard = () => {
           <p className="text-muted-foreground">Welcome back! Here's an overview of your social media activity</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button variant="cta-dark" className="gap-2">
-              <PlusCircle size={20} />
-              Create New Post
-            </Button>
-          </DialogTrigger>
           <DialogContent className="max-w-3xl">
             <DialogHeader>
               <DialogTitle>Create New Post</DialogTitle>
@@ -301,7 +306,6 @@ const Dashboard = () => {
                     className="w-full gap-2"
                     onClick={handleSchedulePost}
                   >
-                    <Send size={16} />
                     Schedule Post
                   </Button>
                   <Button 
@@ -318,26 +322,48 @@ const Dashboard = () => {
         </Dialog>
       </div>
 
+      {/* Quick Actions Section */}
+      <div className="mb-8">
+        <h2 className="text-xl font-medium mb-4">Quick Actions</h2>
+        <QuickActions />
+      </div>
+
       {/* Upcoming Posts Section */}
       <div>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-medium">Your Next Posts</h2>
-          <Button variant="ghost" className="gap-2">
-            View All <ArrowRight size={16} />
-          </Button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <label htmlFor="postsCount" className="text-sm text-yapp-deep-navy/70">Show:</label>
+              <select 
+                id="postsCount" 
+                className="text-sm border rounded py-1 px-2 bg-white"
+                value={postsToDisplay}
+                onChange={handlePostsToDisplayChange}
+              >
+                <option value={5}>5 posts</option>
+                <option value={10}>10 posts</option>
+                <option value={20}>20 posts</option>
+              </select>
+            </div>
+            <Button variant="ghost" className="gap-2">
+              View All <ArrowRight size={16} />
+            </Button>
+          </div>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {scheduledPosts.slice(0, 4).map((post) => (
-            <UpcomingPostCard 
-              key={post.id} 
-              post={post} 
-              onDelete={() => handleDeletePost(post.id)}
-              onEdit={() => handleEditPost(post)}
-            />
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none">
+          {scheduledPosts.slice(0, postsToDisplay).map((post) => (
+            <div key={post.id} className="flex-shrink-0 w-[280px]">
+              <UpcomingPostCard 
+                post={post} 
+                onDelete={() => handleDeletePost(post.id)}
+                onEdit={() => handleEditPost(post)}
+              />
+            </div>
           ))}
           {scheduledPosts.length === 0 && (
-            <div className="col-span-full flex flex-col items-center justify-center p-8 bg-yapp-pale-blue rounded-lg">
+            <div className="w-full flex flex-col items-center justify-center p-8 bg-yapp-pale-blue rounded-lg">
               <p className="text-center text-muted-foreground mb-4">No upcoming posts. Create a new post to get started.</p>
               <Button variant="cta-dark" onClick={() => setIsDialogOpen(true)}>
                 Create New Post
@@ -350,7 +376,7 @@ const Dashboard = () => {
       {/* Analytics Overview Section */}
       <div>
         <h2 className="text-xl font-medium mb-4">Analytics Overview</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatsCard
             title="Total Posts Published"
             value="42"
@@ -375,10 +401,21 @@ const Dashboard = () => {
             trend="up"
             trendValue="+5% this month"
           />
+          <StatsCard
+            title="Top Platform"
+            value="Instagram"
+            description="4.2% engagement"
+            icon={<Activity className="h-4 w-4 text-muted-foreground" />}
+            trend="up"
+            trendValue="+1.5% this month"
+          />
         </div>
-        <div className="mt-4 flex justify-center">
+        <div className="mt-4 flex justify-center gap-4">
           <Button variant="outline" className="gap-2">
             View Full Analytics <ArrowRight size={16} />
+          </Button>
+          <Button variant="outline" className="gap-2">
+            Export Overview
           </Button>
         </div>
       </div>
@@ -417,75 +454,21 @@ const Dashboard = () => {
                 status="connected"
               />
             </div>
-            <div className="mt-6 flex justify-center">
+            <div className="mt-6 flex justify-center gap-4">
               <Button variant="outline">
                 Manage All Accounts
+              </Button>
+              <Button variant="outline">
+                Connect More Accounts
               </Button>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Scheduled Posts Table */}
+      {/* Top Performing Posts Section */}
       <div>
-        <h2 className="text-xl font-medium mb-4">All Scheduled Posts</h2>
-        <Card className="bg-yapp-pale-blue">
-          <CardHeader>
-            <CardTitle>Scheduled Posts</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-4 gap-4 pb-4 mb-4 border-b">
-              <div className="font-medium text-yapp-deep-navy">Status</div>
-              <div className="font-medium text-yapp-deep-navy">Content</div>
-              <div className="font-medium text-yapp-deep-navy">Scheduled date</div>
-              <div className="font-medium text-yapp-deep-navy">Actions</div>
-            </div>
-
-            <div className="space-y-8">
-              {scheduledPosts.map((post) => (
-                <div key={post.id} className="grid grid-cols-4 gap-4 items-center pb-6 border-b">
-                  <div className="text-yapp-deep-navy">
-                    {post.status === "draft" ? "Draft" : "Scheduled"}
-                  </div>
-                  <div className="flex items-center gap-4">
-                    {post.type === "image" && post.image ? (
-                      <>
-                        <img 
-                          src={post.image} 
-                          alt={post.content}
-                          className="w-32 h-20 object-cover rounded"
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <div className="text-yapp-deep-navy">{post.content}</div>
-                      </>
-                    )}
-                  </div>
-                  <div className="text-yapp-deep-navy">
-                    {post.date}
-                    <br />
-                    {post.time}
-                  </div>
-                  <div className="flex gap-4">
-                    <Button variant="ghost" size="icon" onClick={() => handleEditPost(post)}>
-                      <Edit2 size={20} />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDeletePost(post.id)}>
-                      <Trash2 size={20} />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-              
-              {scheduledPosts.length === 0 && (
-                <div className="py-8 text-center text-muted-foreground">
-                  No posts scheduled. Create your first post to get started.
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
+        <TopPerformingPosts />
       </div>
     </div>
   );

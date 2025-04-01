@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import YappLogo from '@/components/YappLogo';
@@ -64,7 +63,7 @@ const Home = () => {
               <div className="relative">
                 <img 
                   src="/lovable-uploads/3911b980-5e26-4666-8fac-1aaabccf13e8.png" 
-                  alt="YappHQ Dashboard Demo" 
+                  alt="yappHQ Dashboard Demo" 
                   className="rounded-lg shadow-lg"
                 />
               </div>
@@ -161,7 +160,7 @@ const Home = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4">Trusted By</h2>
             <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
-              Join thousands of content creators and brands who trust YappHQ for their social media management.
+              Join thousands of content creators and brands who trust yappHQ for their social media management.
             </p>
           </div>
 
@@ -171,14 +170,14 @@ const Home = () => {
                 name: "Sarah Johnson",
                 title: "Marketing Director",
                 company: "Tech Innovations",
-                quote: "YappHQ has transformed our social media strategy. We've seen a 40% increase in engagement since switching.",
+                quote: "yappHQ has transformed our social media strategy. We've seen a 40% increase in engagement since switching.",
                 avatar: "https://i.pravatar.cc/100?img=1"
               },
               {
                 name: "Michael Chen",
                 title: "Content Creator",
                 company: "2.3M followers",
-                quote: "I manage 7 social accounts by myself, and YappHQ makes it feel effortless. The time I save is invaluable.",
+                quote: "I manage 7 social accounts by myself, and yappHQ makes it feel effortless. The time I save is invaluable.",
                 avatar: "https://i.pravatar.cc/100?img=2"
               },
               {
@@ -357,7 +356,7 @@ const Home = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4">Why Choose YappHQ?</h2>
+            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4">Why Choose yappHQ?</h2>
             <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
               See how we compare to other social media management tools
             </p>
@@ -368,7 +367,7 @@ const Home = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead className="min-w-[180px] text-yapp-deep-navy">Features</TableHead>
-                  <TableHead className="text-yapp-deep-navy font-medium">YappHQ</TableHead>
+                  <TableHead className="text-yapp-deep-navy font-medium">yappHQ</TableHead>
                   <TableHead className="text-gray-600">Buffer</TableHead>
                   <TableHead className="text-gray-600">Hootsuite</TableHead>
                 </TableRow>
@@ -476,7 +475,7 @@ const Home = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4">Frequently Asked Questions</h2>
             <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
-              Everything you need to know about YappHQ
+              Everything you need to know about yappHQ
             </p>
           </div>
 
@@ -487,7 +486,7 @@ const Home = () => {
                   Which social media platforms are supported?
                 </AccordionTrigger>
                 <AccordionContent className="text-yapp-deep-navy/80 pb-4">
-                  YappHQ supports Instagram, Facebook, X (Twitter), LinkedIn, TikTok, YouTube, Pinterest, Threads, and Bluesky. We're constantly adding support for new platforms.
+                  yappHQ supports Instagram, Facebook, X (Twitter), LinkedIn, TikTok, YouTube, Pinterest, Threads, and Bluesky. We're constantly adding support for new platforms.
                 </AccordionContent>
               </AccordionItem>
 
@@ -502,7 +501,7 @@ const Home = () => {
 
               <AccordionItem value="item-3" className="border-b border-gray-200">
                 <AccordionTrigger className="text-yapp-deep-navy py-4 font-medium text-left">
-                  Can I try YappHQ before committing?
+                  Can I try yappHQ before committing?
                 </AccordionTrigger>
                 <AccordionContent className="text-yapp-deep-navy/80 pb-4">
                   Yes! We offer a 30-day free trial on all paid plans, no credit card required. You'll have full access to all features during your trial period.
@@ -536,7 +535,7 @@ const Home = () => {
         <div className="container mx-auto px-4 md:px-6 text-center">
           <h2 className="text-3xl text-white font-serif mb-4">Ready to streamline your social media?</h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
-            Join thousands of marketers who have simplified their workflow with YappHQ
+            Join thousands of marketers who have simplified their workflow with yappHQ
           </p>
           <div className="flex flex-col items-center">
             <Button variant="cta" size="lg" className="rounded-full px-8">
@@ -589,7 +588,7 @@ const Home = () => {
           
           <div className="border-t border-yapp-deep-navy/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="text-yapp-deep-navy/60 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} YappHQ. All rights reserved.
+              © {new Date().getFullYear()} yappHQ. All rights reserved.
             </div>
             
             <div className="flex space-x-6">
