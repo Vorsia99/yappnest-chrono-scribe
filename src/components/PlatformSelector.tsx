@@ -13,6 +13,7 @@ interface Platform {
   connected: boolean;
   color: string;
   supportsStories?: boolean;
+  type?: "post" | "story"; // Add type property to the interface
 }
 
 interface PlatformSelectorProps {
@@ -38,6 +39,7 @@ export function PlatformSelector({ onChange, initialPlatforms = [], contentType 
   useEffect(() => {
     // Initialize with any platforms provided or default to connected platforms
     if (initialPlatforms && initialPlatforms.length > 0) {
+      // Make sure to check for the type property safely
       setSelectedPlatforms(initialPlatforms.filter(p => p.type !== "story").map(p => p.id));
       setSelectedStoryPlatforms(initialPlatforms.filter(p => p.type === "story").map(p => p.id));
     } else {
@@ -78,9 +80,10 @@ export function PlatformSelector({ onChange, initialPlatforms = [], contentType 
     }
     
     if (onChange) {
+      // Create properly typed objects with the type property explicitly set
       const selectedPlatformObjects = [
-        ...platforms.filter(p => selectedPlatforms.includes(p.id)).map(p => ({...p, type: "post"})),
-        ...platforms.filter(p => selectedStoryPlatforms.includes(p.id)).map(p => ({...p, type: "story"}))
+        ...platforms.filter(p => selectedPlatforms.includes(p.id)).map(p => ({...p, type: "post" as const})),
+        ...platforms.filter(p => selectedStoryPlatforms.includes(p.id)).map(p => ({...p, type: "story" as const}))
       ];
       onChange(selectedPlatformObjects);
     }
