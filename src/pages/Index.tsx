@@ -1,646 +1,480 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  ArrowRight, 
-  Calendar, 
-  BarChart, 
-  MessageSquare, 
-  MessageCircle, 
-  Users, 
-  Sparkles, 
-  Lightbulb, 
-  Pencil, 
-  Clock, 
-  BarChartHorizontal, 
-  BrainCircuit, 
-  LucideIcon, 
-  BookOpen,
-  FileText,
-  Video,
-  Headphones,
-  ChevronRight,
-  Github,
-  Twitter,
-  Instagram,
-  Linkedin,
-  ExternalLink
-} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-// Company logos for the trusted by section
-const companyLogos = [
-  { name: "Acme Inc", logo: "M" },
-  { name: "Globex", logo: "G" },
-  { name: "Stark Industries", logo: "S" },
-  { name: "Umbrella Corp", logo: "U" },
-  { name: "Wayne Enterprises", logo: "W" },
-  { name: "Oscorp", logo: "O" },
-];
-
-// Workflow steps
-const workflowSteps = [
-  {
-    icon: Lightbulb,
-    title: "Generate Ideas",
-    description: "Use our AI assistant to generate engaging content ideas tailored to your audience.",
-  },
-  {
-    icon: Pencil,
-    title: "Create Content",
-    description: "Craft posts with our intuitive composer and AI-powered suggestions.",
-  },
-  {
-    icon: Clock,
-    title: "Schedule Posts",
-    description: "Set up your content calendar and schedule posts for the perfect time.",
-  },
-  {
-    icon: BarChartHorizontal,
-    title: "Track Results",
-    description: "Analyze performance metrics and optimize your social media strategy.",
-  },
-];
-
-// Feature items
-const features = [
-  {
-    icon: Calendar,
-    title: "Content Calendar",
-    description: "Plan your social content with an intuitive visual calendar."
-  },
-  {
-    icon: BrainCircuit,
-    title: "AI Post Generator",
-    description: "Create engaging posts with the help of advanced AI."
-  },
-  {
-    icon: MessageSquare,
-    title: "Post Composer",
-    description: "Design beautiful posts with our easy-to-use composer."
-  },
-  {
-    icon: MessageCircle,
-    title: "Content Library",
-    description: "Store and organize all your media in one central location."
-  },
-  {
-    icon: Users,
-    title: "Team Collaboration",
-    description: "Work together seamlessly with role-based permissions."
-  },
-  {
-    icon: BarChart,
-    title: "Analytics Dashboard",
-    description: "Track and analyze your social media performance."
-  },
-];
-
-// Resource types
-const resources = [
-  {
-    icon: FileText,
-    title: "Guides & Articles",
-    description: "Learn strategies and best practices for social media success.",
-    link: "/resources/guides"
-  },
-  {
-    icon: Video,
-    title: "Tutorial Videos",
-    description: "Step-by-step video guides to help you master YappHQ.",
-    link: "/resources/videos"
-  },
-  {
-    icon: Headphones,
-    title: "Webinars",
-    description: "Join live sessions with social media experts and our team.",
-    link: "/resources/webinars"
-  },
-  {
-    icon: BookOpen,
-    title: "Documentation",
-    description: "Detailed documentation to help you get the most out of YappHQ.",
-    link: "/resources/docs"
-  },
-];
-
-// Custom feature card component
-const FeatureCard = ({ icon: Icon, title, description }: { icon: LucideIcon, title: string, description: string }) => (
-  <Card className="hover-scale shadow-soft border-none">
-    <CardHeader>
-      <div className="bg-[#e6f2fa] p-3 w-14 h-14 rounded-lg mb-4 flex items-center justify-center">
-        <Icon className="h-6 w-6 text-[#0c2f41]" />
-      </div>
-      <CardTitle className="text-[#0c2f41] text-xl">{title}</CardTitle>
-    </CardHeader>
-    <CardContent>
-      <p className="text-[#0c2f41]/80">{description}</p>
-    </CardContent>
-  </Card>
-);
-
-// Testimonial component
-const Testimonial = ({ quote, author, role, company }: { quote: string; author: string; role: string; company: string }) => (
-  <Card className="bg-white border-none shadow-md h-full flex flex-col">
-    <CardContent className="pt-6 pb-2 flex-grow">
-      <p className="text-[#0c2f41]/80 italic mb-4">{quote}</p>
-    </CardContent>
-    <CardFooter className="flex flex-col items-start">
-      <div className="font-semibold text-[#0c2f41]">{author}</div>
-      <div className="text-sm text-[#0c2f41]/70">{role}, {company}</div>
-    </CardFooter>
-  </Card>
-);
+import { CalendarIcon, BarChart2Icon, RefreshCcwIcon, BrainIcon, CheckIcon, ArrowRightIcon } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-[#e6f2fa]">
-      {/* Navigation */}
-      <header className="container mx-auto py-6 px-4 md:px-6">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <svg 
-              width="40" 
-              height="32" 
-              viewBox="0 0 40 32" 
-              fill="none" 
-              xmlns="http://www.w3.org/2000/svg"
-              className="text-[#0c2f41]"
-            >
-              <path d="M11.5 4L4 11.5L11.5 19" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M28.5 13L36 20.5L28.5 28" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M19 0L19 32" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <span className="text-2xl font-bold text-[#0c2f41]">YappHQ</span>
-          </div>
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/features" className="text-[#0c2f41] hover:text-[#0c2f41]/80 font-medium">
-              Features
-            </Link>
-            <Link to="/pricing" className="text-[#0c2f41] hover:text-[#0c2f41]/80 font-medium">
-              Pricing
-            </Link>
-            <Link to="/resources" className="text-[#0c2f41] hover:text-[#0c2f41]/80 font-medium">
-              Resources
-            </Link>
-            <Link to="/dashboard">
-              <Button className="rounded-full bg-[#0c2f41] hover:bg-[#0c2f41]/90 text-white px-6">
-                Sign up
-              </Button>
-            </Link>
-          </nav>
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon" className="text-[#0c2f41]">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 12H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M3 6H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Button>
-          </div>
-        </div>
-      </header>
+  const { toast } = useToast();
 
-      <main>
-        {/* Hero Section */}
-        <section className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-[#0c2f41] leading-tight">
-                Social media<br />on autopilot
+  const handleDemoRequest = () => {
+    toast({
+      title: "Demo Request Received",
+      description: "Our team will contact you shortly to schedule a demo.",
+    });
+  };
+
+  const features = [
+    {
+      icon: <CalendarIcon className="h-10 w-10 text-primary" />,
+      title: "Smart Scheduling",
+      description: "AI-powered scheduling that finds the perfect time to post for maximum engagement."
+    },
+    {
+      icon: <BarChart2Icon className="h-10 w-10 text-primary" />,
+      title: "Advanced Analytics",
+      description: "Comprehensive insights into your social media performance to help you grow."
+    },
+    {
+      icon: <RefreshCcwIcon className="h-10 w-10 text-primary" />,
+      title: "Cross-Platform Posting",
+      description: "Post to all your social networks from one intuitive dashboard."
+    },
+    {
+      icon: <BrainIcon className="h-10 w-10 text-primary" />,
+      title: "AI Content Generation",
+      description: "Generate engaging posts with our advanced AI assistant."
+    }
+  ];
+
+  const trustLogos = [
+    { name: "Forbes", logo: "/placeholder.svg" },
+    { name: "TechCrunch", logo: "/placeholder.svg" },
+    { name: "Wired", logo: "/placeholder.svg" },
+    { name: "Fast Company", logo: "/placeholder.svg" },
+    { name: "Business Insider", logo: "/placeholder.svg" },
+    { name: "Entrepreneur", logo: "/placeholder.svg" }
+  ];
+
+  const roadmapSteps = [
+    {
+      title: "Idea to Content",
+      description: "Transform your ideas into engaging social media content with our AI assistant.",
+      icon: "💡"
+    },
+    {
+      title: "Strategic Scheduling",
+      description: "Schedule posts for optimal times to reach your target audience effectively.",
+      icon: "📅"
+    },
+    {
+      title: "Cross-Platform Publishing",
+      description: "Publish seamlessly across all major social media platforms in one click.",
+      icon: "🚀"
+    },
+    {
+      title: "Analytics & Growth",
+      description: "Measure performance, gain insights, and scale to over 1 million views.",
+      icon: "📈"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-blue-50 via-blue-100 to-white py-20 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div className="lg:w-1/2 space-y-6 animate-fade-in">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 animate-slide-in">
+                Elevate Your Social Media Presence
               </h1>
-              <p className="mt-6 text-xl text-[#0c2f41]/80 max-w-md">
-                Schedule posts, manage your content lineup, and track performance—effortlessly.
+              <p className="text-xl text-gray-700 max-w-xl animate-fade-in" style={{animationDelay: "0.2s"}}>
+                Manage all your social media content in one place with AI-powered scheduling, analytics, and content creation.
               </p>
-              <div className="mt-8">
-                <Button className="rounded-full bg-[#0c2f41] hover:bg-[#0c2f41]/90 text-white px-8 py-6 text-lg">
-                  Get started
+              <div className="flex flex-wrap gap-4 pt-4 animate-fade-in" style={{animationDelay: "0.4s"}}>
+                <Button size="lg" className="hover-scale shadow-soft transition-all duration-300 bg-primary hover:bg-primary/90">
+                  Get Started Free
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="hover-scale shadow-soft transition-all duration-300"
+                  onClick={handleDemoRequest}
+                >
+                  Request Demo
                 </Button>
               </div>
             </div>
-            <div className="relative">
-              <div className="aspect-video rounded-lg overflow-hidden bg-gradient-to-br from-[#0c2f41] to-[#0c2f41]/80 p-6">
-                <div className="relative aspect-square max-w-md mx-auto">
-                  <div className="absolute inset-0 rounded-full border-2 border-white/30"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex items-center space-x-2 text-white">
-                      <svg 
-                        width="32" 
-                        height="24" 
-                        viewBox="0 0 40 32" 
-                        fill="none" 
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M11.5 4L4 11.5L11.5 19" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M28.5 13L36 20.5L28.5 28" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M19 0L19 32" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                      <span className="text-xl font-bold">YappHQ</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute bottom-6 left-6 right-6 bg-[#0c2f41] text-white p-4 rounded">
-                  <p className="font-medium">Advanced scheduling tools</p>
-                  <p className="text-sm mt-1 opacity-80">Powerful queue management</p>
-                </div>
-              </div>
+            <div className="lg:w-1/2 animate-scale-in" style={{animationDelay: "0.5s"}}>
+              <img 
+                src="/placeholder.svg" 
+                alt="YappHQ Dashboard Preview" 
+                className="rounded-xl shadow-2xl hover:shadow-primary/20 transition-all duration-500 transform hover:-translate-y-2"
+              />
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Trusted By Section */}
-        <section className="container mx-auto px-4 md:px-6 py-12 md:py-16">
-          <div className="text-center mb-12">
-            <p className="text-[#0c2f41]/70 font-medium mb-2">TRUSTED BY 100+ BUSINESSES</p>
-            <h2 className="text-2xl md:text-3xl font-playfair font-bold text-[#0c2f41]">
-              Powering social media for leading brands
-            </h2>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
-            {companyLogos.map((company, index) => (
-              <div key={index} className="bg-white/50 rounded-lg py-6 px-8 flex items-center justify-center shadow-sm">
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#0c2f41]/10 text-[#0c2f41] font-bold text-xl">
-                  {company.logo}
-                </div>
-                <span className="ml-3 font-medium text-[#0c2f41]">{company.name}</span>
+      {/* Trusted By Section */}
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-8 text-gray-800 animate-fade-in">
+            Trusted by 100+ Forward-Thinking Businesses
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+            {trustLogos.map((logo, index) => (
+              <div 
+                key={logo.name} 
+                className="grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100 animate-fade-in"
+                style={{animationDelay: `${0.1 * index}s`}}
+              >
+                <img src={logo.logo} alt={logo.name} className="h-12" />
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Features Section */}
-        <section className="container mx-auto px-4 md:px-6 py-16 md:py-24 bg-white/30 rounded-lg my-12">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-[#0c2f41]">
-              Powerful features to supercharge your social presence
+      {/* Features Section */}
+      <section className="py-20 bg-white overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              Powerful Features for Social Media Success
             </h2>
-            <p className="mt-4 text-lg text-[#0c2f41]/80 max-w-2xl mx-auto">
-              All the tools you need to create, schedule, and analyze your content
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+              Everything you need to create, schedule, and analyze your social media content
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature, index) => (
-              <FeatureCard 
-                key={index}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-              />
+              <div 
+                key={feature.title} 
+                className="bg-blue-50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border border-blue-100 animate-fade-in hover-scale"
+                style={{animationDelay: `${0.15 * index}s`}}
+              >
+                <div className="mb-4 text-primary">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-bold mb-2 text-gray-900">{feature.title}</h3>
+                <p className="text-gray-700">{feature.description}</p>
+              </div>
             ))}
           </div>
-          
-          <div className="mt-16 text-center">
-            <Link to="/features" className="inline-flex items-center text-[#0c2f41] font-medium hover:underline">
-              Explore all features
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </div>
-        </section>
+        </div>
+      </section>
 
-        {/* AI Assistant Section */}
-        <section className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <div className="bg-white/70 rounded-lg p-6 shadow-md">
-                <div className="flex items-start space-x-4 mb-6 pb-6 border-b border-[#0c2f41]/10">
-                  <div className="w-10 h-10 rounded-full bg-[#0c2f41] flex items-center justify-center text-white">
-                    <span>AI</span>
-                  </div>
-                  <div className="bg-[#0c2f41]/5 rounded-lg p-4 flex-1">
-                    <p className="text-[#0c2f41]">I need a post about our new product launch next week.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4 mb-6 pb-6 border-b border-[#0c2f41]/10">
-                  <div className="w-10 h-10 rounded-full bg-[#e6f2fa] flex items-center justify-center">
-                    <BrainCircuit className="h-5 w-5 text-[#0c2f41]" />
-                  </div>
-                  <div className="bg-[#0c2f41]/5 rounded-lg p-4 flex-1">
-                    <p className="text-[#0c2f41]">Here are 3 post ideas for your product launch:</p>
-                    <ol className="mt-2 ml-6 list-decimal text-[#0c2f41]/80">
-                      <li>Excited to announce our new product! Join us for the launch on [date] and be among the first to experience the future of [industry].</li>
-                      <li>The wait is over! After months of development, we're thrilled to unveil our latest innovation. #ProductLaunch #Innovation</li>
-                      <li>New beginnings start next week. Our team has been working tirelessly to create something special for you. Stay tuned for the big reveal!</li>
-                    </ol>
-                  </div>
-                </div>
-
-                <div className="flex">
-                  <input 
-                    type="text" 
-                    placeholder="Ask our AI assistant..." 
-                    className="flex-1 p-3 rounded-l-lg border border-[#0c2f41]/20 focus:outline-none focus:ring-2 focus:ring-[#0c2f41]/30" 
-                  />
-                  <button className="bg-[#0c2f41] text-white p-3 rounded-r-lg">
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
-                </div>
-              </div>
+      {/* AI Assistant Section */}
+      <section className="py-20 bg-gradient-to-br from-primary/10 via-blue-50 to-white overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            <div className="lg:w-1/2 animate-fade-in">
+              <img 
+                src="/placeholder.svg" 
+                alt="AI Assistant" 
+                className="rounded-xl shadow-xl hover:shadow-primary/20 transition-all duration-500 transform hover:-translate-y-2"
+              />
             </div>
-            <div className="order-1 lg:order-2">
-              <h2 className="text-3xl md:text-4xl font-playfair font-bold text-[#0c2f41]">
-                AI-powered assistant at your service
+            <div className="lg:w-1/2 space-y-6 animate-fade-in" style={{animationDelay: "0.2s"}}>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                Meet Your AI Content Assistant
               </h2>
-              <p className="mt-6 text-lg text-[#0c2f41]/80">
-                Our AI assistant helps you generate engaging content ideas, craft compelling posts, and optimize your social media strategy with data-driven insights.
+              <p className="text-lg text-gray-700">
+                Our advanced AI helps you generate engaging content, optimize your posts, and recommend the best strategies to grow your audience.
               </p>
-              <ul className="mt-8 space-y-4">
-                {[
-                  "Generate post ideas based on your brand voice",
-                  "Create captions that drive engagement",
-                  "Analyze top-performing content for insights",
-                  "Suggest optimal posting times based on audience activity"
-                ].map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="mt-1 mr-3 flex-shrink-0 w-5 h-5 rounded-full bg-[#0c2f41] text-white flex items-center justify-center">
-                      <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 5L4 8L11 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                    <span className="text-[#0c2f41]/80">{item}</span>
-                  </li>
-                ))}
+              <ul className="space-y-3">
+                <li className="flex items-start space-x-3 animate-fade-in" style={{animationDelay: "0.3s"}}>
+                  <CheckIcon className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                  <span className="text-gray-700">Generate content ideas based on your brand voice</span>
+                </li>
+                <li className="flex items-start space-x-3 animate-fade-in" style={{animationDelay: "0.4s"}}>
+                  <CheckIcon className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                  <span className="text-gray-700">Optimize captions for maximum engagement</span>
+                </li>
+                <li className="flex items-start space-x-3 animate-fade-in" style={{animationDelay: "0.5s"}}>
+                  <CheckIcon className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                  <span className="text-gray-700">Suggest trending hashtags relevant to your content</span>
+                </li>
+                <li className="flex items-start space-x-3 animate-fade-in" style={{animationDelay: "0.6s"}}>
+                  <CheckIcon className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
+                  <span className="text-gray-700">Analyze past performance to improve future content</span>
+                </li>
               </ul>
-              <div className="mt-8">
-                <Button className="bg-[#0c2f41] hover:bg-[#0c2f41]/90 text-white">
-                  Try the AI assistant
-                </Button>
-              </div>
+              <Button className="mt-4 animate-fade-in hover-scale shadow-soft" style={{animationDelay: "0.7s"}}>
+                Try AI Assistant <ArrowRightIcon className="ml-2 h-4 w-4" />
+              </Button>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Product Roadmap / Workflow Section */}
-        <section className="container mx-auto px-4 md:px-6 py-16 md:py-24 bg-white/30 rounded-lg">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-[#0c2f41]">
-              From idea to 1M+ views
+      {/* Product Roadmap Section */}
+      <section className="py-20 bg-white overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              From Idea to 1 Million+ Views
             </h2>
-            <p className="mt-4 text-lg text-[#0c2f41]/80 max-w-2xl mx-auto">
-              A streamlined workflow designed to maximize your social media impact
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+              Our comprehensive platform guides you through every step of the content lifecycle
             </p>
           </div>
           
           <div className="relative">
-            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-1 bg-[#0c2f41]/20 -translate-y-1/2 z-0"></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
-              {workflowSteps.map((step, index) => {
-                const Icon = step.icon;
-                return (
-                  <div key={index} className="relative flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-md mb-6 z-10">
-                      <Icon className="h-8 w-8 text-[#0c2f41]" />
+            {/* Connector Line */}
+            <div className="absolute left-1/2 top-8 bottom-0 w-1 bg-primary/30 transform -translate-x-1/2 hidden md:block"></div>
+            
+            <div className="space-y-12 relative">
+              {roadmapSteps.map((step, index) => (
+                <div 
+                  key={step.title} 
+                  className={`flex flex-col md:flex-row ${index % 2 === 1 ? 'md:flex-row-reverse' : ''} items-center gap-8 animate-fade-in`}
+                  style={{animationDelay: `${0.2 * index}s`}}
+                >
+                  <div className="md:w-1/2 flex justify-center">
+                    <div className="bg-blue-50 w-16 h-16 flex items-center justify-center rounded-full text-3xl border-4 border-primary/20 shadow-md z-10 hover-scale">
+                      {step.icon}
                     </div>
-                    <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-sm font-medium bg-[#0c2f41] text-white px-3 py-1 rounded-full">
-                      Step {index + 1}
-                    </div>
-                    <h3 className="text-xl font-bold text-[#0c2f41] mb-2 text-center">{step.title}</h3>
-                    <p className="text-[#0c2f41]/70 text-center">{step.description}</p>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-          
-          <div className="mt-16 text-center">
-            <Button className="bg-[#0c2f41] hover:bg-[#0c2f41]/90 text-white">
-              Start your journey
-            </Button>
-          </div>
-        </section>
-
-        {/* Testimonials Section */}
-        <section className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-[#0c2f41]">
-              Loved by social media managers
-            </h2>
-            <p className="mt-4 text-lg text-[#0c2f41]/80 max-w-2xl mx-auto">
-              Hear what our customers have to say about YappHQ
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Testimonial
-              quote="YappHQ has revolutionized our social media workflow. The AI-powered suggestions save us countless hours every week."
-              author="Sarah Johnson"
-              role="Marketing Director"
-              company="TechGrowth"
-            />
-            <Testimonial
-              quote="The analytics dashboard gives us insights we never had before. Now we can see exactly what content performs best with our audience."
-              author="Michael Chen"
-              role="Social Media Manager"
-              company="StyleBrand"
-            />
-            <Testimonial
-              quote="The collaborative tools make it easy for our entire team to work together on our social campaigns. Approval workflows are seamless."
-              author="Alex Rodriguez"
-              role="Content Creator"
-              company="MediaPulse"
-            />
-          </div>
-        </section>
-
-        {/* How to Use Section */}
-        <section className="container mx-auto px-4 md:px-6 py-16 md:py-24 bg-white/30 rounded-lg">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-[#0c2f41]">
-              How to use YappHQ
-            </h2>
-            <p className="mt-4 text-lg text-[#0c2f41]/80 max-w-2xl mx-auto">
-              Get started in minutes with these simple steps
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {[
-              {
-                title: "1. Set up your account",
-                description: "Create an account and connect your social media profiles to start managing them all in one place.",
-                img: "bg-[#0c2f41]/10"
-              },
-              {
-                title: "2. Create your content",
-                description: "Use our composer and AI assistant to create engaging posts for your audience.",
-                img: "bg-[#0c2f41]/15"
-              },
-              {
-                title: "3. Schedule and analyze",
-                description: "Plan your content calendar and track performance metrics to optimize your strategy.",
-                img: "bg-[#0c2f41]/20"
-              }
-            ].map((step, index) => (
-              <div key={index} className="flex flex-col">
-                <div className={`${step.img} rounded-lg h-48 mb-6 flex items-center justify-center`}>
-                  <div className="w-12 h-12 rounded-full bg-white text-[#0c2f41] flex items-center justify-center font-bold text-xl">
-                    {index + 1}
+                  <div className={`md:w-1/2 p-6 bg-blue-50 rounded-xl shadow-md border border-blue-100 hover:shadow-xl transition-all duration-300 hover:bg-white ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
+                    <h3 className="text-xl font-bold mb-2 text-gray-900">{step.title}</h3>
+                    <p className="text-gray-700">{step.description}</p>
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-[#0c2f41] mb-2">{step.title}</h3>
-                <p className="text-[#0c2f41]/70">{step.description}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How to Use Section */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-blue-50 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              Create, Schedule, Analyze, Grow
+            </h2>
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+              Our intuitive platform makes social media management effortless
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="rounded-xl overflow-hidden shadow-lg group animate-fade-in hover-scale" style={{animationDelay: "0.1s"}}>
+              <div className="h-48 bg-primary/20 relative overflow-hidden">
+                <img 
+                  src="/placeholder.svg" 
+                  alt="Create Content" 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
               </div>
-            ))}
-          </div>
-          
-          <div className="mt-12 text-center">
-            <Button className="bg-[#0c2f41] hover:bg-[#0c2f41]/90 text-white">
-              View detailed tutorials
-            </Button>
-          </div>
-        </section>
+              <div className="p-6 bg-white">
+                <h3 className="text-xl font-bold mb-2 text-gray-900">1. Create Engaging Content</h3>
+                <p className="text-gray-700">Use our AI assistant to create compelling posts that resonate with your audience.</p>
+              </div>
+            </div>
 
-        {/* Resources Section */}
-        <section className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-[#0c2f41]">
-              Resources to help you succeed
+            <div className="rounded-xl overflow-hidden shadow-lg group animate-fade-in hover-scale" style={{animationDelay: "0.2s"}}>
+              <div className="h-48 bg-primary/20 relative overflow-hidden">
+                <img 
+                  src="/placeholder.svg" 
+                  alt="Schedule Posts" 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-6 bg-white">
+                <h3 className="text-xl font-bold mb-2 text-gray-900">2. Schedule Strategically</h3>
+                <p className="text-gray-700">Plan your content calendar and schedule posts for optimal engagement times.</p>
+              </div>
+            </div>
+
+            <div className="rounded-xl overflow-hidden shadow-lg group animate-fade-in hover-scale" style={{animationDelay: "0.3s"}}>
+              <div className="h-48 bg-primary/20 relative overflow-hidden">
+                <img 
+                  src="/placeholder.svg" 
+                  alt="Analyze Results" 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="p-6 bg-white">
+                <h3 className="text-xl font-bold mb-2 text-gray-900">3. Track Performance</h3>
+                <p className="text-gray-700">Analyze your results with comprehensive analytics to optimize your strategy.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12 animate-fade-in" style={{animationDelay: "0.4s"}}>
+            <Link to="/dashboard">
+              <Button size="lg" className="hover-scale shadow-soft">
+                Start Creating Now <ArrowRightIcon className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Resources Section */}
+      <section className="py-20 bg-white overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              Resources to Help You Succeed
             </h2>
-            <p className="mt-4 text-lg text-[#0c2f41]/80 max-w-2xl mx-auto">
-              Explore our library of guides, tutorials, and best practices
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+              Explore our guides, tutorials, and best practices
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {resources.map((resource, index) => {
-              const Icon = resource.icon;
-              return (
-                <Link key={index} to={resource.link} className="group">
-                  <Card className="h-full hover:shadow-md transition-shadow border-none">
-                    <CardHeader>
-                      <div className="w-12 h-12 rounded-lg bg-[#e6f2fa] flex items-center justify-center mb-4 group-hover:bg-[#0c2f41] transition-colors">
-                        <Icon className="h-6 w-6 text-[#0c2f41] group-hover:text-white transition-colors" />
-                      </div>
-                      <CardTitle className="text-[#0c2f41]">{resource.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-[#0c2f41]/70">{resource.description}</p>
-                    </CardContent>
-                    <CardFooter>
-                      <div className="flex items-center text-[#0c2f41] font-medium group-hover:underline">
-                        <span>Learn more</span>
-                        <ChevronRight className="h-4 w-4 ml-1" />
-                      </div>
-                    </CardFooter>
-                  </Card>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Link to="/resources" className="group animate-fade-in hover-scale" style={{animationDelay: "0.1s"}}>
+              <div className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full">
+                <div className="h-48 bg-primary/10 relative overflow-hidden">
+                  <img 
+                    src="/placeholder.svg" 
+                    alt="Blog" 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-primary transition-colors">Blog</h3>
+                  <p className="text-gray-700">Tips, trends, and insights to enhance your social media strategy.</p>
+                </div>
+              </div>
+            </Link>
 
-        {/* CTA Section */}
-        <section className="bg-[#0c2f41] text-white py-16 md:py-24">
-          <div className="container mx-auto px-4 md:px-6 text-center">
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold">
-              Ready to streamline your social media?
+            <Link to="/resources" className="group animate-fade-in hover-scale" style={{animationDelay: "0.2s"}}>
+              <div className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full">
+                <div className="h-48 bg-primary/10 relative overflow-hidden">
+                  <img 
+                    src="/placeholder.svg" 
+                    alt="Tutorials" 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-primary transition-colors">Tutorials</h3>
+                  <p className="text-gray-700">Step-by-step guides to master YappHQ features and tools.</p>
+                </div>
+              </div>
+            </Link>
+
+            <Link to="/resources" className="group animate-fade-in hover-scale" style={{animationDelay: "0.3s"}}>
+              <div className="rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full">
+                <div className="h-48 bg-primary/10 relative overflow-hidden">
+                  <img 
+                    src="/placeholder.svg" 
+                    alt="Case Studies" 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2 text-gray-900 group-hover:text-primary transition-colors">Case Studies</h3>
+                  <p className="text-gray-700">Success stories and examples from brands using YappHQ.</p>
+                </div>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-primary/10 overflow-hidden">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Ready to Transform Your Social Media Strategy?
             </h2>
-            <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto">
-              Join thousands of marketers who have simplified their workflow with YappHQ
+            <p className="text-lg text-gray-700">
+              Join thousands of businesses using YappHQ to grow their social media presence
             </p>
-            <div className="mt-8">
-              <Button className="rounded-full bg-white hover:bg-white/90 text-[#0c2f41] px-8 py-6 text-lg font-medium">
-                Start your free trial
+            <div className="flex flex-wrap justify-center gap-4 pt-4 animate-fade-in" style={{animationDelay: "0.3s"}}>
+              <Button size="lg" className="hover-scale shadow-soft bg-primary hover:bg-primary/90">
+                Get Started Free
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="hover-scale shadow-soft"
+                onClick={handleDemoRequest}
+              >
+                Schedule Demo
               </Button>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
       {/* Footer */}
-      <footer className="bg-[#0c2f41]/5 pt-16 pb-8">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-            <div className="lg:col-span-2">
-              <div className="flex items-center space-x-2 mb-4">
-                <svg 
-                  width="32" 
-                  height="24" 
-                  viewBox="0 0 40 32" 
-                  fill="none" 
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-[#0c2f41]"
-                >
-                  <path d="M11.5 4L4 11.5L11.5 19" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M28.5 13L36 20.5L28.5 28" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M19 0L19 32" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span className="text-xl font-bold text-[#0c2f41]">YappHQ</span>
-              </div>
-              <p className="text-[#0c2f41]/70 mb-6 max-w-md">
-                YappHQ is the all-in-one social media management platform that helps businesses create, schedule, and analyze their content with ease.
+      <footer className="bg-gray-900 text-white py-12 overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 animate-fade-in">
+            <div>
+              <h3 className="text-xl font-bold mb-4">YappHQ</h3>
+              <p className="text-gray-400 mb-4">
+                The all-in-one social media management platform powered by AI.
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="text-[#0c2f41] hover:text-[#0c2f41]/80">
-                  <Twitter size={20} />
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd"></path>
+                  </svg>
                 </a>
-                <a href="#" className="text-[#0c2f41] hover:text-[#0c2f41]/80">
-                  <Instagram size={20} />
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                  </svg>
                 </a>
-                <a href="#" className="text-[#0c2f41] hover:text-[#0c2f41]/80">
-                  <Linkedin size={20} />
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd"></path>
+                  </svg>
                 </a>
-                <a href="#" className="text-[#0c2f41] hover:text-[#0c2f41]/80">
-                  <Github size={20} />
+                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                  <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fillRule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.21c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z" clipRule="evenodd"></path>
+                  </svg>
                 </a>
               </div>
             </div>
             
-            <div>
-              <h3 className="font-bold text-[#0c2f41] mb-4">Product</h3>
-              <ul className="space-y-3">
-                <li><Link to="/features" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Features</Link></li>
-                <li><Link to="/pricing" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Pricing</Link></li>
-                <li><Link to="/integrations" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Integrations</Link></li>
-                <li><Link to="/roadmap" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Roadmap</Link></li>
+            <div className="animate-fade-in" style={{animationDelay: "0.1s"}}>
+              <h3 className="text-xl font-bold mb-4">Product</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Features</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Integrations</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Enterprise</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Security</a></li>
               </ul>
             </div>
             
-            <div>
-              <h3 className="font-bold text-[#0c2f41] mb-4">Resources</h3>
-              <ul className="space-y-3">
-                <li><Link to="/resources/guides" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Guides</Link></li>
-                <li><Link to="/resources/blog" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Blog</Link></li>
-                <li><Link to="/resources/webinars" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Webinars</Link></li>
-                <li><Link to="/resources/help" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Help Center</Link></li>
+            <div className="animate-fade-in" style={{animationDelay: "0.2s"}}>
+              <h3 className="text-xl font-bold mb-4">Resources</h3>
+              <ul className="space-y-2">
+                <li><Link to="/resources" className="text-gray-400 hover:text-white transition-colors">Blog</Link></li>
+                <li><Link to="/resources" className="text-gray-400 hover:text-white transition-colors">Tutorials</Link></li>
+                <li><Link to="/resources" className="text-gray-400 hover:text-white transition-colors">Case Studies</Link></li>
+                <li><Link to="/resources" className="text-gray-400 hover:text-white transition-colors">Support Center</Link></li>
+                <li><Link to="/resources" className="text-gray-400 hover:text-white transition-colors">API Documentation</Link></li>
               </ul>
             </div>
             
-            <div>
-              <h3 className="font-bold text-[#0c2f41] mb-4">Company</h3>
-              <ul className="space-y-3">
-                <li><Link to="/about" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">About us</Link></li>
-                <li><Link to="/careers" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Careers</Link></li>
-                <li><Link to="/contact" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Contact</Link></li>
-                <li><Link to="/legal" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Legal</Link></li>
+            <div className="animate-fade-in" style={{animationDelay: "0.3s"}}>
+              <h3 className="text-xl font-bold mb-4">Company</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Careers</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Press</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Partners</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-[#0c2f41]/10 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center">
-            <div className="text-[#0c2f41]/60 text-sm">
-              © {new Date().getFullYear()} YappHQ. All rights reserved.
-            </div>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link to="/privacy" className="text-[#0c2f41]/60 text-sm hover:text-[#0c2f41]">
-                Privacy Policy
-              </Link>
-              <Link to="/terms" className="text-[#0c2f41]/60 text-sm hover:text-[#0c2f41]">
-                Terms of Service
-              </Link>
-              <Link to="/cookies" className="text-[#0c2f41]/60 text-sm hover:text-[#0c2f41]">
-                Cookies
-              </Link>
+          <div className="border-t border-gray-800 pt-8 mt-8 animate-fade-in" style={{animationDelay: "0.4s"}}>
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <p className="text-gray-400 text-sm">
+                &copy; {new Date().getFullYear()} YappHQ. All rights reserved.
+              </p>
+              <div className="flex space-x-6 mt-4 md:mt-0">
+                <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+                <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Cookies</a>
+              </div>
             </div>
           </div>
         </div>
@@ -650,4 +484,3 @@ const Index = () => {
 };
 
 export default Index;
-
