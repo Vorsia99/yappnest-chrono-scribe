@@ -25,7 +25,7 @@ const YappLogo = ({ className, textClassName, showText = true }: YappLogoProps) 
       
       {showText && (
         <span className={cn("ml-2.5 text-2xl font-normal leading-none", textClassName)}>
-          YappHQ
+          yappHQ
         </span>
       )}
     </Link>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,7 @@ const Index = () => {
       <nav className="bg-white py-4 shadow-sm">
         <div className="container-custom flex items-center justify-between">
           <Link to="/" className="text-xl text-yapp-text-navy font-serif">
-            YappHQ
+            yappHQ
           </Link>
           <div className="space-x-4">
             <Link to="/login" className="text-yapp-text-navy">
@@ -147,7 +146,7 @@ const Index = () => {
                 className="w-full flex justify-between items-center py-6 text-left focus:outline-none"
                 onClick={() => toggleFaq('trial')}
               >
-                <span className="text-xl text-yapp-text-navy font-serif">Can I try YappHQ before committing?</span>
+                <span className="text-xl text-yapp-text-navy font-serif">Can I try yappHQ before committing?</span>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className={`transform transition-transform duration-300 ${isFaqOpen.trial ? 'rotate-180' : ''}`}>
                   <path d="M4 6L8 10L12 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -167,7 +166,7 @@ const Index = () => {
         <div className="container-custom">
           <h2 className="text-3xl text-white font-serif mb-4">Ready to streamline your social media?</h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
-            Join thousands of marketers who have simplified their workflow with YappHQ
+            Join thousands of marketers who have simplified their workflow with yappHQ
           </p>
           <div className="flex flex-col items-center">
             <button className="bg-white text-yapp-deep-navy rounded px-8 py-3 font-medium text-base">
@@ -198,7 +197,7 @@ const Index = () => {
                   <path d="M8 6L2 12L8 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M12 2V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                <span className="text-xl text-yapp-text-navy ml-2 font-serif">YappHQ</span>
+                <span className="text-xl text-yapp-text-navy ml-2 font-serif">yappHQ</span>
               </div>
               <p className="text-sm text-yapp-text-navy-light">
                 The all-in-one social media management platform that helps you schedule, publish, and analyze your content.
@@ -238,7 +237,7 @@ const Index = () => {
           
           <div className="border-t border-yapp-border-light pt-8 flex flex-col md:flex-row justify-between">
             <div className="text-yapp-text-navy-light text-sm mb-4 md:mb-0">
-              © 2025 YappHQ. All rights reserved.
+              © 2025 yappHQ. All rights reserved.
             </div>
             
             <div className="flex space-x-6">

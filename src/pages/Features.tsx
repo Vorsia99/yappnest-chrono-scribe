@@ -102,7 +102,7 @@ const Features = () => {
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl text-white mb-4">Ready to get started?</h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
-            Try YappHQ free for 30 days. No credit card required.
+            Try yappHQ free for 30 days. No credit card required.
           </p>
           <Button variant="cta" size="lg" className="rounded-full px-8">
             Start your free trial
@@ -115,7 +115,7 @@ const Features = () => {
         <div className="container mx-auto px-4 md:px-6">
           <div className="border-t border-yapp-deep-navy/10 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="text-yapp-deep-navy/60 text-sm mb-4 md:mb-0">
-              © {new Date().getFullYear()} YappHQ. All rights reserved.
+              © {new Date().getFullYear()} yappHQ. All rights reserved.
             </div>
             
             <div className="flex space-x-6">
