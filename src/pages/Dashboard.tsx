@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { CalendarIcon, ListChecksIcon, PenSquareIcon, BarChart3Icon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import StatsCard from '@/components/StatsCard';
-import PlatformStat from '@/components/PlatformStat';
-import UpcomingPostCard from '@/components/UpcomingPostCard';
+import { StatsCard } from '@/components/StatsCard';
+import { PlatformStat } from '@/components/PlatformStat';
+import { UpcomingPostCard } from '@/components/UpcomingPostCard';
 
 const Dashboard = () => {
   const stats = [
