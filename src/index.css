@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,44 +6,44 @@
 
 @layer base {
   :root {
-    --background: 220 33% 98%;
-    --foreground: 222 84% 5%;
+    --background: 200 55% 95%; /* Exact pale blue from image #E6F0F7 */
+    --foreground: 206 53% 12%; /* Deep navy text #0B2233 */
 
     --card: 0 0% 100%;
-    --card-foreground: 222 84% 5%;
+    --card-foreground: 206 53% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 5%;
+    --popover-foreground: 206 53% 12%;
 
-    --primary: 226 94% 81%; /* Misty Blue: #A3BFFA */
-    --primary-foreground: 210 40% 98%;
+    --primary: 206 53% 12%; /* Deep navy as primary */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 13% 91%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 200 55% 95%;
+    --secondary-foreground: 206 53% 12%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 340 100% 82%; /* Soft Pink: #FF9CAC */
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 206 53% 12%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 226 94% 81%;
+    --ring: 206 53% 12%;
 
-    --radius: 0.5rem;
+    --radius: 0.3rem; /* Smaller border radius from image */
 
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 84% 5%;
-    --sidebar-primary: 226 94% 81%;
+    --sidebar-foreground: 206 53% 12%;
+    --sidebar-primary: 206 53% 12%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 226 94% 81%;
+    --sidebar-ring: 206 53% 12%;
   }
 
   .dark {
@@ -93,60 +92,31 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-yapp-pale-blue text-yapp-text-navy font-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-playfair;
+    @apply font-serif font-normal;
   }
 
   h1 {
-    @apply text-3xl md:text-4xl font-bold;
+    @apply text-3xl md:text-4xl;
   }
 
   h2 {
-    @apply text-2xl md:text-3xl font-bold;
+    @apply text-2xl md:text-3xl;
   }
 
   h3 {
-    @apply text-lg md:text-xl font-medium;
+    @apply text-lg md:text-xl;
   }
 
-  /* MGZ-inspired design utilities */
-  .hover-scale {
-    @apply transition-transform duration-300 hover:scale-105;
-  }
-
-  .shadow-soft {
-    @apply shadow-md hover:shadow-card-hover transition-shadow duration-300;
-  }
-  
-  .card {
-    @apply bg-white rounded-md shadow-card hover:shadow-card-hover transition-shadow duration-300 p-6 border border-gray-100;
-  }
-  
-  .section {
-    @apply py-12 md:py-16 opacity-0 animate-section-fade-in;
-  }
-  
   .section-header {
     @apply mb-10 text-center;
   }
   
-  .btn {
-    @apply inline-flex items-center justify-center h-12 px-4 font-medium text-base transition-colors rounded-lg;
-  }
-  
-  .btn-primary {
-    @apply bg-yapp-misty-blue text-white rounded-md px-6 py-3 shadow-md hover:bg-yapp-misty-blue-hover transition-all duration-200 hover:scale-105;
-  }
-  
-  .btn-secondary {
-    @apply bg-white border border-yapp-misty-blue text-yapp-dark-slate rounded-md px-6 py-3 shadow-sm hover:bg-yapp-misty-blue/10 transition-all duration-200 hover:scale-105;
-  }
-  
-  .btn-outline {
-    @apply border border-yapp-misty-blue text-yapp-dark-slate bg-transparent rounded-md px-6 py-3 hover:bg-yapp-misty-blue/10 transition-all duration-200 hover:scale-105;
+  .btn-cta {
+    @apply bg-white text-yapp-deep-navy rounded px-6 py-3 transition-all;
   }
   
   .container-custom {
@@ -173,7 +143,6 @@
     @apply border-yapp-misty-blue border-2 relative;
   }
 
-  /* Animation utilities */
   .animate-stagger-1 {
     animation-delay: 0ms;
   }
@@ -194,7 +163,6 @@
     animation: fadeIn 0.5s ease-out forwards;
   }
 
-  /* MGZ-inspired gradients and backgrounds */
   .bg-misty {
     @apply bg-misty-gradient;
   }
@@ -204,7 +172,6 @@
   }
 }
 
-/* Additional layout and spacing utilities */
 .spacing-x-16 > * + * {
   @apply ml-4;
 }
@@ -229,7 +196,6 @@
   @apply -right-4;
 }
 
-/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -263,7 +229,6 @@
   }
 }
 
-/* Root styles */
 #root {
   text-align: center;
 }

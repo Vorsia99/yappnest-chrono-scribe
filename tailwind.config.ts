@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,8 +62,12 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// YappHQ Color Palette - Updated for MGZ-inspired design
 				yapp: {
+					"pale-blue": "#E6F0F7",
+					"deep-navy": "#0B2233",
+					"text-navy": "#0B2233",
+					"text-navy-light": "#465A6C",
+					"border-light": "#D3E4FD",
 					"misty-blue": "#A3BFFA",
 					"misty-blue-hover": "#7F9CF5",
 					"soft-pink": "#FF9CAC",
@@ -150,6 +153,7 @@ export default {
 			fontFamily: {
 				'sans': ['Inter', 'sans-serif'],
 				'playfair': ['Playfair Display', 'serif'],
+				'serif': ['Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
 			},
 			backgroundImage: {
 				'misty-gradient': 'linear-gradient(180deg, #E2E8F0 0%, #CBD5E0 100%)',
@@ -160,11 +164,11 @@ export default {
 				'card': '0 4px 6px rgba(0,0,0,0.1)',
 			},
 			spacing: {
-				'nav': '16px',  // Nav spacing
-				'container-padding': '24px',  // Container padding
-				'feature-padding': '16px',  // Feature card padding
-				'feature-spacing': '24px',  // Spacing between feature cards
-				'workflow-spacing': '24px',  // Spacing between workflow steps
+				'nav': '16px',
+				'container-padding': '24px',
+				'feature-padding': '16px',
+				'feature-spacing': '24px',
+				'workflow-spacing': '24px',
 			},
 			transitionDuration: {
 				'300': '300ms',

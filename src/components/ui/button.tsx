@@ -6,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:scale-105",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -19,15 +19,14 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        cta: "bg-yapp-misty-blue text-white hover:bg-yapp-misty-blue-hover shadow-md",
-        "cta-outline": "border border-yapp-misty-blue text-yapp-dark-slate bg-white hover:bg-yapp-misty-blue/10",
-        "cta-pulse": "bg-yapp-misty-blue text-white hover:bg-yapp-misty-blue-hover shadow-md animate-pulse-cta",
+        cta: "bg-white text-yapp-deep-navy hover:bg-white/90",
+        "cta-outline": "border border-yapp-text-navy text-yapp-text-navy bg-white hover:bg-white/90",
       },
       size: {
-        default: "h-12 px-4 py-2",
+        default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
-        lg: "h-12 rounded-md px-8 text-base",
-        xl: "h-12 rounded-md px-8 text-lg",
+        lg: "h-12 rounded-md px-8",
+        xl: "h-12 rounded-md px-8 text-base",
         icon: "h-10 w-10",
       },
     },
