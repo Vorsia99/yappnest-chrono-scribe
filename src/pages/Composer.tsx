@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { AlignLeft, Clock, Facebook, Image, Instagram, Linkedin, PinIcon, MessageCircle, SendHorizontal, Sparkles, X, Upload, Youtube } from "lucide-react";
+import { AlignLeft, Clock, Facebook, Image, Instagram, Linkedin, PinIcon, MessageCircle, SendHorizontal, Sparkles, X, Upload, Youtube, Pencil } from "lucide-react";
 import { PlatformSelector } from "@/components/PlatformSelector";
 import { DatePicker } from "@/components/DatePicker";
 import { TimePicker } from "@/components/TimePicker";
@@ -202,7 +202,7 @@ const Composer = () => {
             </CardHeader>
             <CardContent className="space-y-3">
               <Button variant="outline" className="w-full justify-start">
-                <PenTool className="mr-2 h-4 w-4" /> AI Caption Writer
+                <Pencil className="mr-2 h-4 w-4" /> AI Caption Writer
               </Button>
               <Button variant="outline" className="w-full justify-start">
                 <Image className="mr-2 h-4 w-4" /> Image Editor
