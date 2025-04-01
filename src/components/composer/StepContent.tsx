@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -14,52 +14,110 @@ interface StepContentProps {
 }
 
 export const StepContent = ({ formData, updateFormData, isFirstVisit }: StepContentProps) => {
-  const [activeTab, setActiveTab] = useState("instagram");
-  const [captionLengths, setCaptionLengths] = useState({
-    instagram: 0,
-    x: 0,
-    facebook: 0,
-    youtube: 0,
-    tiktok: 0,
-  });
+  const [activeTab, setActiveTab] = useState("instagram-post");
+  const [captionLengths, setCaptionLengths] = useState<Record<string, number>>({});
   
+  const contentType = formData.contentType || "post";
+  const selectedPlatforms = formData.selectedPlatforms || [];
+
   const platforms = [
-    { id: "instagram", name: "Instagram", icon: Instagram, maxLength: 2200 },
-    { id: "x", name: "X", icon: X, maxLength: 280 },
-    { id: "facebook", name: "Facebook", icon: Facebook, maxLength: 5000 },
-    { id: "youtube", name: "YouTube", icon: Youtube, maxLength: 5000 },
-    { id: "tiktok", name: "TikTok", icon: MessageCircle, maxLength: 2200 },
+    { id: "instagram", name: "Instagram", icon: Instagram, maxLength: { post: 2200, story: 150 } },
+    { id: "x", name: "X", icon: X, maxLength: { post: 280, story: 0 } },
+    { id: "facebook", name: "Facebook", icon: Facebook, maxLength: { post: 5000, story: 200 } },
+    { id: "youtube", name: "YouTube", icon: Youtube, maxLength: { post: 5000, story: 200 } },
+    { id: "tiktok", name: "TikTok", icon: MessageCircle, maxLength: { post: 2200, story: 100 } },
   ];
+
+  // Generate tabs based on selected platforms and content type
+  const generateTabs = () => {
+    const tabs: any[] = [];
+    
+    selectedPlatforms.forEach(platform => {
+      const platformInfo = platforms.find(p => p.id === platform.id);
+      if (!platformInfo) return;
+      
+      if (contentType === "post" || contentType === "both") {
+        if (platform.type === "post" || !platform.type) {
+          tabs.push({
+            id: `${platform.id}-post`,
+            name: `${platform.name} Post`,
+            icon: platform.icon,
+            maxLength: platformInfo.maxLength.post
+          });
+        }
+      }
+      
+      if (contentType === "story" || contentType === "both") {
+        if (platform.type === "story" || (platform.supportsStories && contentType === "story")) {
+          tabs.push({
+            id: `${platform.id}-story`,
+            name: `${platform.name} Story`,
+            icon: platform.icon,
+            maxLength: platformInfo.maxLength.story
+          });
+        }
+      }
+    });
+    
+    return tabs;
+  };
+  
+  const tabsData = generateTabs();
+  
+  // Set the first tab as active if no tab is selected or the active tab is not in tabsData
+  useEffect(() => {
+    if (tabsData.length > 0 && (!activeTab || !tabsData.find(tab => tab.id === activeTab))) {
+      setActiveTab(tabsData[0].id);
+    }
+  }, [tabsData, activeTab]);
 
   const handleTitleChange = (e) => {
     updateFormData({ title: e.target.value });
   };
 
-  const handleCaptionChange = (platform, value) => {
-    const newCaptions = { ...formData.captions, [platform]: value };
+  const handleCaptionChange = (tabId, value) => {
+    const [platformId, contentType] = tabId.split('-');
+    const newCaptions = { 
+      ...formData.captions, 
+      [tabId]: value 
+    };
     updateFormData({ captions: newCaptions });
     
     setCaptionLengths(prevLengths => ({
       ...prevLengths,
-      [platform]: value.length
+      [tabId]: value.length
     }));
   };
 
-  const handleHashtagsChange = (platform, value) => {
-    const newHashtags = { ...formData.hashtags, [platform]: value };
+  const handleHashtagsChange = (tabId, value) => {
+    const [platformId, contentType] = tabId.split('-');
+    const newHashtags = { 
+      ...formData.hashtags, 
+      [tabId]: value 
+    };
     updateFormData({ hashtags: newHashtags });
   };
 
-  const handleCopyToAll = () => {
-    const currentCaption = formData.captions[activeTab] || "";
-    const currentHashtags = formData.hashtags[activeTab] || "";
+  const handleCopyToAll = (type: 'post' | 'story') => {
+    if (!activeTab) return;
     
-    const newCaptions = {};
-    const newHashtags = {};
+    const [activePlatform, activeType] = activeTab.split('-');
     
-    platforms.forEach(platform => {
-      newCaptions[platform.id] = currentCaption;
-      newHashtags[platform.id] = currentHashtags;
+    // Only copy to tabs of the same type (post to post, story to story)
+    if (activeType !== type) return;
+    
+    const currentCaption = formData.captions?.[activeTab] || "";
+    const currentHashtags = formData.hashtags?.[activeTab] || "";
+    
+    const newCaptions = { ...formData.captions };
+    const newHashtags = { ...formData.hashtags };
+    
+    tabsData.forEach(tab => {
+      const [_, tabType] = tab.id.split('-');
+      if (tabType === type) {
+        newCaptions[tab.id] = currentCaption;
+        newHashtags[tab.id] = currentHashtags;
+      }
     });
     
     updateFormData({ 
@@ -69,8 +127,11 @@ export const StepContent = ({ formData, updateFormData, isFirstVisit }: StepCont
     
     // Update lengths
     const newLengths = { ...captionLengths };
-    platforms.forEach(platform => {
-      newLengths[platform.id] = currentCaption.length;
+    tabsData.forEach(tab => {
+      const [_, tabType] = tab.id.split('-');
+      if (tabType === type) {
+        newLengths[tab.id] = currentCaption.length;
+      }
     });
     
     setCaptionLengths(newLengths);
@@ -93,89 +154,119 @@ export const StepContent = ({ formData, updateFormData, isFirstVisit }: StepCont
           />
         </div>
       
-        <Tabs 
-          defaultValue="instagram" 
-          className="w-full"
-          value={activeTab}
-          onValueChange={setActiveTab}
-        >
-          <TabsList className="w-full justify-start mb-4 overflow-auto">
-            {platforms.map(platform => (
-              <TabsTrigger 
-                key={platform.id} 
-                value={platform.id} 
-                className="gap-1"
-              >
-                <platform.icon className="h-4 w-4" /> {platform.name}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+        {tabsData.length > 0 ? (
+          <Tabs 
+            defaultValue={tabsData[0]?.id} 
+            className="w-full"
+            value={activeTab}
+            onValueChange={setActiveTab}
+          >
+            <TabsList className="w-full justify-start mb-4 overflow-auto">
+              {tabsData.map(tab => (
+                <TabsTrigger 
+                  key={tab.id} 
+                  value={tab.id} 
+                  className="gap-1"
+                >
+                  <tab.icon className="h-4 w-4" /> {tab.name}
+                </TabsTrigger>
+              ))}
+            </TabsList>
 
-          {platforms.map(platform => (
-            <TabsContent 
-              key={platform.id} 
-              value={platform.id}
-              className="animate-fade-in"
-            >
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <TooltipProvider>
-                    <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium">Caption/Content</label>
-                      <Tooltip open={isFirstVisit && platform.id === "instagram"}>
-                        <TooltipTrigger asChild>
-                          <Button variant="ghost" size="sm" className="h-8 gap-1 text-xs">
-                            <Sparkles className="h-3 w-3" /> AI Assist
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent side="left" className="max-w-xs">
-                          <p>Tip: Customize captions for each platform to maximize impact.</p>
-                        </TooltipContent>
-                      </Tooltip>
+            {tabsData.map(tab => {
+              const [platformId, type] = tab.id.split('-');
+              const isStory = type === 'story';
+              
+              return (
+                <TabsContent 
+                  key={tab.id} 
+                  value={tab.id}
+                  className="animate-fade-in"
+                >
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <TooltipProvider>
+                        <div className="flex items-center justify-between">
+                          <label className="text-sm font-medium">
+                            {isStory ? 'Story Caption' : 'Caption/Content'}
+                          </label>
+                          <Tooltip open={isFirstVisit && tab.id === tabsData[0]?.id}>
+                            <TooltipTrigger asChild>
+                              <Button variant="ghost" size="sm" className="h-8 gap-1 text-xs">
+                                <Sparkles className="h-3 w-3" /> AI Assist
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent side="left" className="max-w-xs">
+                              <p>{isStory 
+                                ? "Tip: Keep story captions short and engaging—use emojis or questions to grab attention!"
+                                : "Tip: Customize captions for each platform to maximize impact."
+                              }</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </TooltipProvider>
+                      
+                      <Textarea 
+                        placeholder={`Write your ${isStory ? 'story' : platformId} content here...`} 
+                        className={isStory ? "min-h-20" : "min-h-32"}
+                        value={formData.captions?.[tab.id] || ""}
+                        onChange={(e) => handleCaptionChange(tab.id, e.target.value)}
+                      />
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>
+                          {captionLengths[tab.id] || 0}/{tab.maxLength} characters
+                        </span>
+                        <Button variant="ghost" size="sm" className="h-6 gap-1 text-xs">
+                          <AlignLeft className="h-3 w-3" /> Format Text
+                        </Button>
+                      </div>
                     </div>
-                  </TooltipProvider>
-                  
-                  <Textarea 
-                    placeholder={`Write your ${platform.name} content here...`} 
-                    className="min-h-32"
-                    value={formData.captions?.[platform.id] || ""}
-                    onChange={(e) => handleCaptionChange(platform.id, e.target.value)}
-                  />
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>
-                      {captionLengths[platform.id] || 0}/{platform.maxLength} characters
-                    </span>
-                    <Button variant="ghost" size="sm" className="h-6 gap-1 text-xs">
-                      <AlignLeft className="h-3 w-3" /> Format Text
-                    </Button>
-                  </div>
-                </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Hashtags</label>
-                  <div className="flex items-center">
-                    <Input 
-                      placeholder="Add hashtags (separate with spaces)" 
-                      value={formData.hashtags?.[platform.id] || ""}
-                      onChange={(e) => handleHashtagsChange(platform.id, e.target.value)}
-                    />
-                    <Button variant="ghost" size="sm" className="ml-2 gap-1">
-                      <Sparkles className="h-4 w-4" /> Suggest
-                    </Button>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Hashtags</label>
+                      <div className="flex items-center">
+                        <Input 
+                          placeholder="Add hashtags (separate with spaces)" 
+                          value={formData.hashtags?.[tab.id] || ""}
+                          onChange={(e) => handleHashtagsChange(tab.id, e.target.value)}
+                        />
+                        <Button variant="ghost" size="sm" className="ml-2 gap-1">
+                          <Sparkles className="h-4 w-4" /> Suggest
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </TabsContent>
-          ))}
-        </Tabs>
+                </TabsContent>
+              );
+            })}
+          </Tabs>
+        ) : (
+          <div className="text-center p-6 border rounded-md">
+            <p className="text-muted-foreground">Please select at least one platform in the previous step.</p>
+          </div>
+        )}
         
-        <Button 
-          variant="outline" 
-          className="mt-2"
-          onClick={handleCopyToAll}
-        >
-          Copy to All Platforms
-        </Button>
+        {tabsData.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {contentType !== "story" && (
+              <Button 
+                variant="outline" 
+                onClick={() => handleCopyToAll('post')}
+              >
+                Copy to All Posts
+              </Button>
+            )}
+            
+            {contentType !== "post" && (
+              <Button 
+                variant="outline" 
+                onClick={() => handleCopyToAll('story')}
+              >
+                Copy to All Stories
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
