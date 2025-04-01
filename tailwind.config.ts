@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,11 +64,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				yapp: {
-					"pale-blue": "#E6F0F7",
-					"deep-navy": "#0B2233",
-					"text-navy": "#0B2233",
-					"text-navy-light": "#465A6C",
-					"border-light": "#D3E4FD",
+					"pale-blue": "#E6F0F7",     // Light blue background
+					"deep-navy": "#0B2233",     // Dark blue for headings and CTA areas
+					"text-navy": "#0B2233",     // Main text color
+					"text-navy-light": "#465A6C", // Secondary text
+					"border-light": "#D3E4FD",  // Light border color
 					"misty-blue": "#A3BFFA",
 					"misty-blue-hover": "#7F9CF5",
 					"soft-pink": "#FF9CAC",
@@ -87,20 +88,12 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
 				},
 				'fade-in': {
 					'0%': {
@@ -129,14 +122,6 @@ export default {
 				'slide-in-bottom': {
 					'0%': { transform: 'translateY(100px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' }
-				},
-				'pulse-scale': {
-					'0%, 100%': { transform: 'scale(1)' },
-					'50%': { transform: 'scale(1.03)' }
-				},
-				'glow': {
-					'0%, 100%': { boxShadow: '0 0 0 rgba(255,156,172,0)' },
-					'50%': { boxShadow: '0 0 8px rgba(255,156,172,0.6)' }
 				}
 			},
 			animation: {
@@ -147,35 +132,10 @@ export default {
 				'slide-in': 'slide-in 0.3s ease-out',
 				'section-fade-in': 'fade-in 0.5s ease-out forwards',
 				'slide-in-bottom': 'slide-in-bottom 0.5s ease-out forwards',
-				'pulse-cta': 'pulse-scale 2s infinite ease-in-out',
-				'glow-effect': 'glow 2s infinite ease-in-out',
 			},
 			fontFamily: {
-				'sans': ['Inter', 'sans-serif'],
-				'playfair': ['Playfair Display', 'serif'],
-				'serif': ['Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
-			},
-			backgroundImage: {
-				'misty-gradient': 'linear-gradient(180deg, #E2E8F0 0%, #CBD5E0 100%)',
-				'dark-misty-gradient': 'linear-gradient(180deg, #2D3748 0%, #1A202C 100%)',
-			},
-			boxShadow: {
-				'card-hover': '0 8px 12px rgba(0,0,0,0.1)',
-				'card': '0 4px 6px rgba(0,0,0,0.1)',
-			},
-			spacing: {
-				'nav': '16px',
-				'container-padding': '24px',
-				'feature-padding': '16px',
-				'feature-spacing': '24px',
-				'workflow-spacing': '24px',
-			},
-			transitionDuration: {
-				'300': '300ms',
-				'500': '500ms',
-			},
-			transitionTimingFunction: {
-				'in-out-smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
+				'serif': ['Georgia', 'Times New Roman', 'serif'],
 			}
 		}
 	},

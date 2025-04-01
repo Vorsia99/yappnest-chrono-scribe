@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 200 55% 95%; /* Exact pale blue from image #E6F0F7 */
+    --background: 204 33% 96%; /* Light blue background #E6F0F7 */
     --foreground: 206 53% 12%; /* Deep navy text #0B2233 */
 
     --card: 0 0% 100%;
@@ -18,7 +18,7 @@
     --primary: 206 53% 12%; /* Deep navy as primary */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 200 55% 95%;
+    --secondary: 204 33% 96%;
     --secondary-foreground: 206 53% 12%;
 
     --muted: 210 40% 96.1%;
@@ -34,20 +34,20 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 206 53% 12%;
 
-    --radius: 0.3rem; /* Smaller border radius from image */
+    --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 100%;
+    --sidebar-background: 204 33% 96%; /* Light blue for sidebar */
     --sidebar-foreground: 206 53% 12%;
     --sidebar-primary: 206 53% 12%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-accent: 206 53% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 206 53% 12%;
   }
 
   .dark {
-    --background: 222.2 47.4% 11.2%;
+    --background: 206 53% 12%; /* Dark navy background */
     --foreground: 210 40% 98%;
 
     --card: 222.2 47.4% 11.2%;
@@ -92,31 +92,27 @@
   }
 
   body {
-    @apply bg-yapp-pale-blue text-yapp-text-navy font-serif;
+    @apply bg-yapp-pale-blue text-yapp-text-navy font-sans;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-normal;
+    @apply font-sans font-normal text-yapp-deep-navy;
   }
 
   h1 {
-    @apply text-3xl md:text-4xl;
+    @apply text-4xl md:text-5xl font-normal;
   }
 
   h2 {
-    @apply text-2xl md:text-3xl;
+    @apply text-3xl md:text-4xl font-normal;
   }
 
   h3 {
-    @apply text-lg md:text-xl;
+    @apply text-xl md:text-2xl font-normal;
   }
 
   .section-header {
     @apply mb-10 text-center;
-  }
-  
-  .btn-cta {
-    @apply bg-white text-yapp-deep-navy rounded px-6 py-3 transition-all;
   }
   
   .container-custom {
@@ -124,25 +120,13 @@
   }
   
   .feature-card {
-    @apply flex flex-col items-center text-center p-feature-padding rounded-lg bg-white shadow-card hover:shadow-card-hover transition-all duration-300 border border-gray-100 hover:scale-105;
+    @apply flex items-start p-0 rounded-lg;
   }
   
   .platform-logo {
-    @apply w-16 h-16 object-contain mx-auto transition-all duration-300 hover:animate-glow-effect;
+    @apply transition-all duration-300;
   }
   
-  .testimonial {
-    @apply bg-white p-6 rounded-lg shadow-card hover:shadow-card-hover transition-shadow duration-300 border border-gray-100;
-  }
-  
-  .pricing-card {
-    @apply bg-white p-8 rounded-lg shadow-card hover:shadow-card-hover transition-shadow duration-300 border border-gray-200 flex flex-col h-[400px];
-  }
-  
-  .pricing-popular {
-    @apply border-yapp-misty-blue border-2 relative;
-  }
-
   .animate-stagger-1 {
     animation-delay: 0ms;
   }
@@ -162,16 +146,9 @@
   .animate-on-scroll.visible {
     animation: fadeIn 0.5s ease-out forwards;
   }
-
-  .bg-misty {
-    @apply bg-misty-gradient;
-  }
-
-  .bg-dark-misty {
-    @apply dark:bg-dark-misty-gradient;
-  }
 }
 
+/* Custom spacing utilities */
 .spacing-x-16 > * + * {
   @apply ml-4;
 }
@@ -182,18 +159,6 @@
 
 .spacing-y-8 > * + * {
   @apply mt-2;
-}
-
-.carousel-nav {
-  @apply w-6 h-6 absolute top-1/2 -translate-y-1/2;
-}
-
-.carousel-nav-prev {
-  @apply -left-4;
-}
-
-.carousel-nav-next {
-  @apply -right-4;
 }
 
 @keyframes fadeIn {

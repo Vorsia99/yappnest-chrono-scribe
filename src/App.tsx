@@ -3,13 +3,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Layout from "./components/Layout";
-import Index from "./pages/Index";
+import Home from "./pages/Home";
+import Features from "./pages/Features";
 import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
-import Composer from "./pages/Composer";
 import Queue from "./pages/Queue";
 import Analytics from "./pages/Analytics";
 import NotFound from "./pages/NotFound";
@@ -49,11 +49,11 @@ const App = () => (
       <AnimationObserver />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/features" element={<Features />} />
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/composer" element={<Composer />} />
             <Route path="/queue" element={<Queue />} />
             <Route path="/analytics" element={<Analytics />} />
           </Route>
