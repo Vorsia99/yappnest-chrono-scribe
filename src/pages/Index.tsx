@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -713,4 +714,158 @@ const Index = () => {
 
         {/* Resources Section */}
         <section className="container mx-auto px-4 md:px-6 py-16 md:py-24 bg-[#e6f2fa]/50 rounded-lg">
-          <div className="
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-[#0c2f41]">
+              Resources to help you succeed
+            </h2>
+            <p className="mt-4 text-lg text-[#0c2f41]/80 max-w-2xl mx-auto">
+              Explore our library of guides, tutorials, and tips to get the most out of YappHQ
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {resources.map((resource, index) => {
+              const Icon = resource.icon;
+              return (
+                <Link to={resource.link} key={index}>
+                  <Card className="h-full hover:shadow-md transition-all border-none">
+                    <CardHeader>
+                      <div className="bg-white p-3 w-12 h-12 rounded-full mb-4 flex items-center justify-center shadow-sm">
+                        <Icon className="h-6 w-6 text-[#0c2f41]" />
+                      </div>
+                      <CardTitle className="text-[#0c2f41]">{resource.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-[#0c2f41]/80">{resource.description}</p>
+                    </CardContent>
+                    <CardFooter>
+                      <div className="inline-flex items-center text-[#0c2f41] font-medium hover:underline">
+                        Learn more
+                        <ChevronRight className="ml-2 h-4 w-4" />
+                      </div>
+                    </CardFooter>
+                  </Card>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+        
+        {/* CTA Section */}
+        <section className="container mx-auto px-4 md:px-6 py-16 md:py-24">
+          <div className="bg-[#0c2f41] rounded-lg p-8 md:p-12 text-center">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-playfair font-bold text-white mb-6">
+              Ready to transform your social media presence?
+            </h2>
+            <p className="text-white/80 text-lg max-w-2xl mx-auto mb-8">
+              Start your 30-day free trial today. No credit card required.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+              <input 
+                type="email" 
+                placeholder="Enter your email..." 
+                className="px-4 py-3 rounded-md border border-white/30 bg-white/10 text-white flex-grow focus:outline-none focus:ring-2 focus:ring-white/30"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Button className="rounded-md bg-primary hover:bg-primary/90 text-white px-6 py-3">
+                Get started
+              </Button>
+            </div>
+          </div>
+        </section>
+      </main>
+      
+      {/* Footer */}
+      <footer className="bg-white">
+        <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div className="md:col-span-1">
+              <div className="flex items-center space-x-2 mb-4">
+                <svg 
+                  width="32" 
+                  height="24" 
+                  viewBox="0 0 40 32" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-[#0c2f41]"
+                >
+                  <path d="M11.5 4L4 11.5L11.5 19" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M28.5 13L36 20.5L28.5 28" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M19 0L19 32" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span className="text-xl font-bold text-[#0c2f41]">YappHQ</span>
+              </div>
+              <p className="text-[#0c2f41]/70 max-w-xs">
+                The all-in-one social media toolkit for teams of all sizes.
+              </p>
+              <div className="flex space-x-4 mt-6">
+                <a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">
+                  <Twitter className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">
+                  <FacebookIcon className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-[#0c2f41] mb-4">Product</h3>
+              <ul className="space-y-2">
+                <li><Link to="/features" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Features</Link></li>
+                <li><Link to="/pricing" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Pricing</Link></li>
+                <li><a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Integrations</a></li>
+                <li><a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Changelog</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-[#0c2f41] mb-4">Resources</h3>
+              <ul className="space-y-2">
+                <li><Link to="/resources" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Blog</Link></li>
+                <li><a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Guides</a></li>
+                <li><a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Support</a></li>
+                <li><a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">API</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-[#0c2f41] mb-4">Company</h3>
+              <ul className="space-y-2">
+                <li><a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">About</a></li>
+                <li><a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Careers</a></li>
+                <li><a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Privacy</a></li>
+                <li><a href="#" className="text-[#0c2f41]/70 hover:text-[#0c2f41]">Terms</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-[#0c2f41]/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm text-[#0c2f41]/70">
+              © {new Date().getFullYear()} YappHQ. All rights reserved.
+            </p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="#" className="text-sm text-[#0c2f41]/70 hover:text-[#0c2f41]">
+                Privacy Policy
+              </a>
+              <a href="#" className="text-sm text-[#0c2f41]/70 hover:text-[#0c2f41]">
+                Terms of Service
+              </a>
+              <a href="#" className="text-sm text-[#0c2f41]/70 hover:text-[#0c2f41]">
+                Cookies
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default Index;
