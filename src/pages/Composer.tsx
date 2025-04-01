@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { AlignLeft, Clock, Facebook, Image, Instagram, Linkedin, PenSquare, PenTool, PinIcon, MessageCircle, SendHorizontal, Sparkles, Twitter, Upload, Youtube } from "lucide-react";
+import { AlignLeft, Clock, Facebook, Image, Instagram, Linkedin, PinIcon, MessageCircle, SendHorizontal, Sparkles, X, Upload, Youtube } from "lucide-react";
 import { PlatformSelector } from "@/components/PlatformSelector";
 import { DatePicker } from "@/components/DatePicker";
 import { TimePicker } from "@/components/TimePicker";
@@ -90,8 +90,8 @@ const Composer = () => {
                   <TabsTrigger value="instagram" className="gap-1">
                     <Instagram className="h-4 w-4" /> Instagram
                   </TabsTrigger>
-                  <TabsTrigger value="twitter" className="gap-1">
-                    <Twitter className="h-4 w-4" /> Twitter
+                  <TabsTrigger value="x" className="gap-1">
+                    <X className="h-4 w-4" /> X
                   </TabsTrigger>
                   <TabsTrigger value="facebook" className="gap-1">
                     <Facebook className="h-4 w-4" /> Facebook
@@ -122,7 +122,7 @@ const Composer = () => {
                   </div>
                 </TabsContent>
 
-                <TabsContent value="twitter">
+                <TabsContent value="x">
                   <div className="bg-white rounded-lg shadow-md max-w-sm mx-auto p-4">
                     <div className="flex items-start gap-3">
                       <div className="h-10 w-10 bg-gray-200 rounded-full flex-shrink-0"></div>

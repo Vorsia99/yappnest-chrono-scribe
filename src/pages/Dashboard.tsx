@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BarChart, Calendar, Instagram, LineChart, ListChecks, PenSquare, TrendingUp, Twitter, Youtube } from "lucide-react";
+import { BarChart, Calendar, Instagram, LineChart, ListChecks, PenSquare, TrendingUp, X, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { UpcomingPostCard } from "@/components/UpcomingPostCard";
 import { StatsCard } from "@/components/StatsCard";
@@ -90,7 +90,7 @@ const Dashboard = () => {
                 />
                 <UpcomingPostCard 
                   title="Industry news update thread" 
-                  platform="twitter" 
+                  platform="x" 
                   scheduledFor="Jun 15, 9:00 AM" 
                 />
                 <Button variant="outline" className="w-full">View All Scheduled Posts</Button>
@@ -114,8 +114,8 @@ const Dashboard = () => {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Twitter Performance</CardTitle>
-                <Twitter className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium">X Performance</CardTitle>
+                <X className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">12.4K</div>

@@ -1,10 +1,10 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Instagram, Twitter, Youtube, TrendingUp } from "lucide-react";
+import { Instagram, X, Youtube, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PlatformStatProps {
-  platform: "instagram" | "twitter" | "youtube";
+  platform: "instagram" | "x" | "youtube";
   followers: string;
   engagement: string;
   growth: string;
@@ -14,19 +14,19 @@ interface PlatformStatProps {
 export function PlatformStat({ platform, followers, engagement, growth, posts }: PlatformStatProps) {
   const platformIcons = {
     instagram: <Instagram className="h-5 w-5" />,
-    twitter: <Twitter className="h-5 w-5" />,
+    x: <X className="h-5 w-5" />,
     youtube: <Youtube className="h-5 w-5" />,
   };
 
   const platformColors = {
     instagram: "from-purple-500 to-pink-500",
-    twitter: "from-blue-400 to-blue-500",
+    x: "from-black to-gray-800",
     youtube: "from-red-500 to-red-600",
   };
 
   const platformNames = {
     instagram: "Instagram",
-    twitter: "Twitter",
+    x: "X",
     youtube: "YouTube",
   };
 

@@ -1,23 +1,23 @@
 
 import { cn } from "@/lib/utils";
-import { Instagram, Twitter, Youtube } from "lucide-react";
+import { Instagram, X, Youtube } from "lucide-react";
 
 interface UpcomingPostCardProps {
   title: string;
-  platform: "instagram" | "twitter" | "youtube";
+  platform: "instagram" | "x" | "youtube";
   scheduledFor: string;
 }
 
 export function UpcomingPostCard({ title, platform, scheduledFor }: UpcomingPostCardProps) {
   const platformIcons = {
     instagram: <Instagram className="h-4 w-4" />,
-    twitter: <Twitter className="h-4 w-4" />,
+    x: <X className="h-4 w-4" />,
     youtube: <Youtube className="h-4 w-4" />,
   };
 
   const platformColors = {
     instagram: "bg-gradient-to-r from-purple-500 to-pink-500",
-    twitter: "bg-blue-400",
+    x: "bg-black",
     youtube: "bg-red-500",
   };
 

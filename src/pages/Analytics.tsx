@@ -54,7 +54,7 @@ const Analytics = () => {
           posts="32"
         />
         <PlatformStat 
-          platform="twitter"
+          platform="x"
           followers="12.4K"
           engagement="2.1%"
           growth="+86"
@@ -106,7 +106,7 @@ const Analytics = () => {
             <TabsList>
               <TabsTrigger value="all">All Platforms</TabsTrigger>
               <TabsTrigger value="instagram">Instagram</TabsTrigger>
-              <TabsTrigger value="twitter">Twitter</TabsTrigger>
+              <TabsTrigger value="x">X</TabsTrigger>
               <TabsTrigger value="youtube">YouTube</TabsTrigger>
             </TabsList>
             
@@ -142,9 +142,9 @@ const Analytics = () => {
               </div>
             </TabsContent>
 
-            <TabsContent value="twitter">
+            <TabsContent value="x">
               <div className="h-[300px] flex items-center justify-center border rounded-md">
-                <p className="text-muted-foreground">Twitter top content will appear here</p>
+                <p className="text-muted-foreground">X top content will appear here</p>
               </div>
             </TabsContent>
 
