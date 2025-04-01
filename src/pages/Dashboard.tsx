@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Edit2, Trash2, PlusCircle, Calendar, Clock, Send } from "lucide-react";
+import { Edit2, Trash2, PlusCircle, Calendar, Clock, Send, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,6 +10,9 @@ import { DatePicker } from "@/components/DatePicker";
 import { TimePicker } from "@/components/TimePicker";
 import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import UpcomingPostCard from "@/components/UpcomingPostCard";
+import PlatformStat from "@/components/PlatformStat";
+import StatsCard from "@/components/StatsCard";
 
 // Post types for TypeScript
 interface Post {
@@ -31,7 +34,7 @@ const Dashboard = () => {
       content: "Forest in fog",
       image: "/lovable-uploads/1f5dc3cd-0e25-4aa0-ba2f-889d901ac525.png",
       date: "April 20, 2024",
-      time: "10:00 am",
+      time: "10:00 AM",
       status: "scheduled"
     },
     {
@@ -40,7 +43,7 @@ const Dashboard = () => {
       content: "Misty mountains",
       image: "/lovable-uploads/14e1f6ac-5248-44df-a433-8eaa03333e2e.png",
       date: "April 18, 2024",
-      time: "2:00 pm",
+      time: "2:00 PM",
       status: "scheduled"
     },
     {
@@ -48,7 +51,7 @@ const Dashboard = () => {
       type: "text",
       content: "New video coming next week. Stay tuned!",
       date: "April 16, 2024",
-      time: "9:00 am",
+      time: "9:00 AM",
       status: "scheduled"
     }
   ]);
@@ -238,8 +241,11 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-center">
-        <h1 className="text-4xl font-normal text-yapp-deep-navy">Dashboard</h1>
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-4xl font-normal text-yapp-deep-navy">Dashboard</h1>
+          <p className="text-muted-foreground">Welcome back! Here's an overview of your social media activity</p>
+        </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button variant="cta-dark" className="gap-2">
@@ -313,75 +319,163 @@ const Dashboard = () => {
         </Dialog>
       </div>
 
-      <div className="pb-4 border-b">
-        <div className="flex space-x-6 mb-6">
-          <button className="text-yapp-deep-navy border-b-2 border-yapp-deep-navy pb-2 font-medium">
-            All posts
-          </button>
-          <button className="text-yapp-deep-navy/60 pb-2">
-            Facebook
-          </button>
-          <button className="text-yapp-deep-navy/60 pb-2">
-            Twitter
-          </button>
-          <button className="text-yapp-deep-navy/60 pb-2">
-            LinkedIn
-          </button>
+      {/* Upcoming Posts Section */}
+      <div>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-medium">Your Next Posts</h2>
+          <Button variant="ghost" className="gap-2">
+            View All <ArrowRight size={16} />
+          </Button>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {scheduledPosts.slice(0, 4).map((post) => (
+            <UpcomingPostCard 
+              key={post.id} 
+              post={post} 
+              onDelete={() => handleDeletePost(post.id)}
+              onEdit={() => handleEditPost(post)}
+            />
+          ))}
+          {scheduledPosts.length === 0 && (
+            <div className="col-span-full flex flex-col items-center justify-center p-8 bg-muted rounded-lg">
+              <p className="text-center text-muted-foreground mb-4">No upcoming posts. Create a new post to get started.</p>
+              <Button variant="cta-dark" onClick={() => setIsDialogOpen(true)}>
+                Create New Post
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Scheduled Posts</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-4 gap-4 pb-4 mb-4 border-b">
-            <div className="font-medium text-yapp-deep-navy">Status</div>
-            <div className="font-medium text-yapp-deep-navy">Content</div>
-            <div className="font-medium text-yapp-deep-navy">Scheduled date</div>
-            <div className="font-medium text-yapp-deep-navy">Actions</div>
-          </div>
+      {/* Analytics Overview Section */}
+      <div>
+        <h2 className="text-xl font-medium mb-4">Analytics Overview</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <StatsCard
+            title="Total Posts Published"
+            value="42"
+            description="Published"
+            trend="up"
+            trendValue="+12% this month"
+          />
+          <StatsCard
+            title="Total Engagement"
+            value="3.5%"
+            description="Avg. Engagement"
+            trend="down"
+            trendValue="-0.8% this month"
+          />
+          <StatsCard
+            title="Total Reach"
+            value="10K"
+            description="Accounts Reached"
+            trend="up"
+            trendValue="+5% this month"
+          />
+        </div>
+        <div className="mt-4 flex justify-center">
+          <Button variant="outline" className="gap-2">
+            View Full Analytics <ArrowRight size={16} />
+          </Button>
+        </div>
+      </div>
 
-          <div className="space-y-8">
-            {scheduledPosts.map((post) => (
-              <div key={post.id} className="grid grid-cols-4 gap-4 items-center pb-6 border-b">
-                <div className="text-yapp-deep-navy">
-                  {post.status === "draft" ? "Draft" : "Scheduled"}
+      {/* Connected Accounts Section */}
+      <div>
+        <h2 className="text-xl font-medium mb-4">Connected Accounts</h2>
+        <Card>
+          <CardContent className="p-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <PlatformStat
+                platform="Instagram"
+                username="@yourusername"
+                followers={5432}
+                status="connected"
+              />
+              <PlatformStat
+                platform="X"
+                username="@yourusername"
+                followers={2100}
+                status="connected"
+              />
+              <PlatformStat
+                platform="LinkedIn"
+                username="Your Company"
+                followers={1890}
+                status="connected"
+              />
+            </div>
+            <div className="mt-6 flex justify-center">
+              <Button variant="outline">
+                Manage All Accounts
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Scheduled Posts Table */}
+      <div>
+        <h2 className="text-xl font-medium mb-4">All Scheduled Posts</h2>
+        <Card>
+          <CardHeader>
+            <CardTitle>Scheduled Posts</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-4 gap-4 pb-4 mb-4 border-b">
+              <div className="font-medium text-yapp-deep-navy">Status</div>
+              <div className="font-medium text-yapp-deep-navy">Content</div>
+              <div className="font-medium text-yapp-deep-navy">Scheduled date</div>
+              <div className="font-medium text-yapp-deep-navy">Actions</div>
+            </div>
+
+            <div className="space-y-8">
+              {scheduledPosts.map((post) => (
+                <div key={post.id} className="grid grid-cols-4 gap-4 items-center pb-6 border-b">
+                  <div className="text-yapp-deep-navy">
+                    {post.status === "draft" ? "Draft" : "Scheduled"}
+                  </div>
+                  <div className="flex items-center gap-4">
+                    {post.type === "image" && post.image ? (
+                      <>
+                        <img 
+                          src={post.image} 
+                          alt={post.content}
+                          className="w-32 h-20 object-cover rounded"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-yapp-deep-navy">{post.content}</div>
+                      </>
+                    )}
+                  </div>
+                  <div className="text-yapp-deep-navy">
+                    {post.date}
+                    <br />
+                    {post.time}
+                  </div>
+                  <div className="flex gap-4">
+                    <Button variant="ghost" size="icon" onClick={() => handleEditPost(post)}>
+                      <Edit2 size={20} />
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={() => handleDeletePost(post.id)}>
+                      <Trash2 size={20} />
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  {post.type === "image" && post.image ? (
-                    <>
-                      <img 
-                        src={post.image} 
-                        alt={post.content}
-                        className="w-32 h-20 object-cover rounded"
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <div className="text-yapp-deep-navy">{post.content}</div>
-                      <div className="text-sm text-yapp-deep-navy/60 mt-1">Text post</div>
-                    </>
-                  )}
+              ))}
+              
+              {scheduledPosts.length === 0 && (
+                <div className="py-8 text-center text-muted-foreground">
+                  No posts scheduled. Create your first post to get started.
                 </div>
-                <div className="text-yapp-deep-navy">
-                  {post.date}
-                  <br />
-                  {post.time}
-                </div>
-                <div className="flex gap-4">
-                  <Button variant="ghost" size="icon" onClick={() => handleEditPost(post)}>
-                    <Edit2 size={20} />
-                  </Button>
-                  <Button variant="ghost" size="icon" onClick={() => handleDeletePost(post.id)}>
-                    <Trash2 size={20} />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

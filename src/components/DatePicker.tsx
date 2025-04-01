@@ -45,7 +45,6 @@ export function DatePicker({ onDateChange }: DatePickerProps) {
           selected={date}
           onSelect={handleDateChange}
           initialFocus
-          className={cn("p-3 pointer-events-auto")}
         />
       </PopoverContent>
     </Popover>

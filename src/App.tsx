@@ -12,6 +12,7 @@ import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
 import Queue from "./pages/Queue";
 import Analytics from "./pages/Analytics";
+import Composer from "./pages/Composer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -53,9 +54,11 @@ const App = () => (
           <Route path="/features" element={<Features />} />
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/composer" element={<Composer />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/queue" element={<Queue />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/settings" element={<Navigate to="/dashboard" />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

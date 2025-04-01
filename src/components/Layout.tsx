@@ -6,19 +6,26 @@ import AppSidebar from '@/components/AppSidebar';
 import { UserNav } from '@/components/UserNav';
 import { Button } from '@/components/ui/button';
 import { PlusIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Layout = () => {
+  const navigate = useNavigate();
+  
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-yapp-pale-blue">
         <AppSidebar />
         <div className="flex-1 overflow-auto">
-          <div className="sticky top-0 z-30 flex h-16 items-center justify-between px-6 lg:px-8">
+          <div className="sticky top-0 z-30 flex h-16 items-center justify-between px-6 lg:px-8 bg-white border-b">
             <SidebarTrigger />
             <div className="flex items-center gap-4">
-              <Button variant="cta-dark" className="flex items-center gap-2">
+              <Button 
+                variant="cta-dark" 
+                className="flex items-center gap-2"
+                onClick={() => navigate('/composer')}
+              >
                 <PlusIcon size={16} />
-                <span>New post</span>
+                <span>Create Post</span>
               </Button>
               <UserNav />
             </div>

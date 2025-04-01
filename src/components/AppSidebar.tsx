@@ -13,17 +13,24 @@ import {
   SidebarMenuButton
 } from '@/components/ui/sidebar';
 import { 
+  LayoutDashboard,
+  PenSquare,
   ListChecks, 
   Calendar, 
   BarChart3, 
-  Settings
+  Image,
+  Settings,
+  User
 } from 'lucide-react';
 import YappLogo from './YappLogo';
 
 const navItems = [
+  { title: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+  { title: 'Create Post', icon: PenSquare, path: '/composer' },
   { title: 'Queue', icon: ListChecks, path: '/queue' },
   { title: 'Calendar', icon: Calendar, path: '/calendar' },
   { title: 'Analytics', icon: BarChart3, path: '/analytics' },
+  { title: 'Media Library', icon: Image, path: '/media-library' },
   { title: 'Settings', icon: Settings, path: '/settings' },
 ];
 
@@ -59,6 +66,15 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="p-4">
+        <div className="flex items-center gap-3 p-2 hover:bg-accent rounded-md cursor-pointer">
+          <div className="h-8 w-8 bg-primary/20 rounded-full flex items-center justify-center">
+            <User size={16} className="text-primary" />
+          </div>
+          <div className="text-sm">
+            <p className="font-medium">Your Account</p>
+            <p className="text-xs text-muted-foreground">Pro Plan</p>
+          </div>
+        </div>
       </SidebarFooter>
     </Sidebar>
   );
