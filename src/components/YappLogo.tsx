@@ -24,7 +24,7 @@ const YappLogo = ({ className, textClassName, showText = true }: YappLogoProps) 
       </svg>
       
       {showText && (
-        <span className={cn("ml-2 text-2xl font-normal", textClassName)}>
+        <span className={cn("ml-2.5 text-2xl font-normal leading-none", textClassName)}>
           YappHQ
         </span>
       )}

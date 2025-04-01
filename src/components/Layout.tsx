@@ -13,7 +13,7 @@ const Layout = () => {
       <div className="min-h-screen flex w-full bg-yapp-pale-blue">
         <AppSidebar />
         <div className="flex-1 overflow-auto">
-          <div className="sticky top-0 z-30 flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+          <div className="sticky top-0 z-30 flex h-16 items-center justify-between px-6 lg:px-8">
             <SidebarTrigger />
             <div className="flex items-center gap-4">
               <Button variant="cta-dark" className="flex items-center gap-2">
@@ -23,7 +23,7 @@ const Layout = () => {
               <UserNav />
             </div>
           </div>
-          <main className="px-4 sm:px-6 lg:px-8 py-6">
+          <main className="px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
             <Outlet />
           </main>
         </div>

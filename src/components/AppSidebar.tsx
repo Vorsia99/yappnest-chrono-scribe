@@ -32,10 +32,10 @@ const AppSidebar = () => {
   
   return (
     <Sidebar className="border-r border-gray-200">
-      <SidebarHeader className="p-4">
+      <SidebarHeader className="py-4 px-5">
         <YappLogo textClassName="text-yapp-deep-navy" />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="px-3">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -47,7 +47,7 @@ const AppSidebar = () => {
                     asChild 
                     isActive={isActive}
                   >
-                    <Link to={item.path} className="flex items-center">
+                    <Link to={item.path} className="flex items-center px-2 py-2">
                       <item.icon className="mr-3 h-5 w-5" />
                       <span>{item.title}</span>
                     </Link>

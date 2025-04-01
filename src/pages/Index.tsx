@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,7 @@ const Index = () => {
     <div className="min-h-screen bg-yapp-pale-blue">
       {/* Navigation */}
       <nav className="bg-white py-4 shadow-sm">
-        <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+        <div className="container-custom flex items-center justify-between">
           <Link to="/" className="text-xl text-yapp-text-navy font-serif">
             YappHQ
           </Link>
@@ -38,11 +39,11 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="py-24 bg-yapp-pale-blue">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+        <div className="container-custom text-center">
           <h1 className="text-5xl text-yapp-text-navy font-serif mb-6">
             Streamline Your Social Media Management
           </h1>
-          <p className="text-yapp-text-navy-light text-lg mb-8">
+          <p className="text-yapp-text-navy-light text-lg mb-8 max-w-3xl mx-auto">
             The all-in-one platform to schedule, publish, and analyze your social media content.
           </p>
           <div className="flex justify-center space-x-4">
@@ -58,21 +59,23 @@ const Index = () => {
 
       {/* Trust Signals Section */}
       <section className="py-12 bg-white">
-        <div className="container mx-auto px-4 md:px-6 flex justify-around items-center">
-          <img src="https://via.placeholder.com/80" alt="Company 1" className="h-12" />
-          <img src="https://via.placeholder.com/80" alt="Company 2" className="h-12" />
-          <img src="https://via.placeholder.com/80" alt="Company 3" className="h-12" />
-          <img src="https://via.placeholder.com/80" alt="Company 4" className="h-12" />
+        <div className="container-custom">
+          <div className="flex justify-around items-center gap-8 flex-wrap">
+            <img src="https://via.placeholder.com/80" alt="Company 1" className="h-12" />
+            <img src="https://via.placeholder.com/80" alt="Company 2" className="h-12" />
+            <img src="https://via.placeholder.com/80" alt="Company 3" className="h-12" />
+            <img src="https://via.placeholder.com/80" alt="Company 4" className="h-12" />
+          </div>
         </div>
       </section>
 
       {/* Supported Platforms Section */}
       <section className="py-16 bg-yapp-pale-blue">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+        <div className="container-custom text-center">
           <h2 className="text-3xl text-yapp-text-navy font-serif mb-8">
             Supported Platforms
           </h2>
-          <div className="flex justify-center space-x-8">
+          <div className="flex justify-center space-x-8 flex-wrap gap-y-6">
             <img src="https://via.placeholder.com/60" alt="Platform 1" className="h-10" />
             <img src="https://via.placeholder.com/60" alt="Platform 2" className="h-10" />
             <img src="https://via.placeholder.com/60" alt="Platform 3" className="h-10" />
@@ -81,9 +84,12 @@ const Index = () => {
         </div>
       </section>
       
-      {/* FAQ Section - Exactly matching the image */}
+      {/* FAQ Section */}
       <section className="bg-yapp-pale-blue py-16">
-        <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+        <div className="container-custom max-w-4xl">
+          <h2 className="text-3xl text-yapp-text-navy font-serif text-center mb-10">
+            Frequently Asked Questions
+          </h2>
           <div className="space-y-6">
             <div className="border-b border-yapp-border-light">
               <button 
@@ -156,9 +162,9 @@ const Index = () => {
         </div>
       </section>
       
-      {/* CTA Section - Exactly matching the image */}
+      {/* CTA Section */}
       <section className="bg-yapp-deep-navy py-16 text-center">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container-custom">
           <h2 className="text-3xl text-white font-serif mb-4">Ready to streamline your social media?</h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
             Join thousands of marketers who have simplified their workflow with YappHQ
@@ -174,9 +180,9 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Footer - Matching the image */}
+      {/* Footer */}
       <footer className="bg-yapp-pale-blue py-12">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center mb-4">
@@ -248,7 +254,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </footer>
+      </section>
     </div>
   );
 };
