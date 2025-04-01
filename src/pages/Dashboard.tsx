@@ -337,7 +337,7 @@ const Dashboard = () => {
             />
           ))}
           {scheduledPosts.length === 0 && (
-            <div className="col-span-full flex flex-col items-center justify-center p-8 bg-muted rounded-lg">
+            <div className="col-span-full flex flex-col items-center justify-center p-8 bg-yapp-pale-blue rounded-lg">
               <p className="text-center text-muted-foreground mb-4">No upcoming posts. Create a new post to get started.</p>
               <Button variant="cta-dark" onClick={() => setIsDialogOpen(true)}>
                 Create New Post
@@ -386,7 +386,7 @@ const Dashboard = () => {
       {/* Connected Accounts Section */}
       <div>
         <h2 className="text-xl font-medium mb-4">Connected Accounts</h2>
-        <Card>
+        <Card className="bg-yapp-pale-blue">
           <CardContent className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <PlatformStat
@@ -429,7 +429,7 @@ const Dashboard = () => {
       {/* Scheduled Posts Table */}
       <div>
         <h2 className="text-xl font-medium mb-4">All Scheduled Posts</h2>
-        <Card>
+        <Card className="bg-yapp-pale-blue">
           <CardHeader>
             <CardTitle>Scheduled Posts</CardTitle>
           </CardHeader>

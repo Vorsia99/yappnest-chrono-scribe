@@ -16,7 +16,7 @@ const Layout = () => {
       <div className="min-h-screen flex w-full bg-yapp-pale-blue">
         <AppSidebar />
         <div className="flex-1 overflow-auto">
-          <div className="sticky top-0 z-30 flex h-16 items-center justify-between px-6 lg:px-8 bg-white border-b">
+          <div className="sticky top-0 z-30 flex h-16 items-center justify-between px-6 lg:px-8 bg-yapp-pale-blue border-b">
             <SidebarTrigger />
             <div className="flex items-center gap-4">
               <Button 
