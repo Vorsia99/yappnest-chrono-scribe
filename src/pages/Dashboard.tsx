@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Edit2, Trash2, PlusCircle, Calendar, Clock, Send, ArrowRight } from "lucide-react";
+import { Edit2, Trash2, PlusCircle, Calendar, Clock, Send, ArrowRight, Users, BarChart3, Activity } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -355,6 +355,7 @@ const Dashboard = () => {
             title="Total Posts Published"
             value="42"
             description="Published"
+            icon={<Activity className="h-4 w-4 text-muted-foreground" />}
             trend="up"
             trendValue="+12% this month"
           />
@@ -362,6 +363,7 @@ const Dashboard = () => {
             title="Total Engagement"
             value="3.5%"
             description="Avg. Engagement"
+            icon={<BarChart3 className="h-4 w-4 text-muted-foreground" />}
             trend="down"
             trendValue="-0.8% this month"
           />
@@ -369,6 +371,7 @@ const Dashboard = () => {
             title="Total Reach"
             value="10K"
             description="Accounts Reached"
+            icon={<Users className="h-4 w-4 text-muted-foreground" />}
             trend="up"
             trendValue="+5% this month"
           />
@@ -387,21 +390,30 @@ const Dashboard = () => {
           <CardContent className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <PlatformStat
-                platform="Instagram"
+                platform="instagram"
                 username="@yourusername"
-                followers={5432}
+                followers="5,432"
+                engagement="4.2%"
+                growth="+2.3%"
+                posts="128"
                 status="connected"
               />
               <PlatformStat
-                platform="X"
+                platform="x"
                 username="@yourusername"
-                followers={2100}
+                followers="2,100"
+                engagement="1.5%"
+                growth="+0.8%"
+                posts="95"
                 status="connected"
               />
               <PlatformStat
-                platform="LinkedIn"
+                platform="linkedin"
                 username="Your Company"
-                followers={1890}
+                followers="1,890"
+                engagement="3.1%"
+                growth="+1.4%"
+                posts="42"
                 status="connected"
               />
             </div>

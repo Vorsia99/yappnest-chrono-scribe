@@ -9,9 +9,10 @@ interface StatsCardProps {
   description: string;
   icon: React.ReactNode;
   trend: "up" | "down" | "neutral";
+  trendValue?: string;
 }
 
-export function StatsCard({ title, value, description, icon, trend }: StatsCardProps) {
+export function StatsCard({ title, value, description, icon, trend, trendValue }: StatsCardProps) {
   return (
     <Card className="shadow-soft hover-scale">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -34,7 +35,7 @@ export function StatsCard({ title, value, description, icon, trend }: StatsCardP
             trend === "up" && "text-green-500",
             trend === "down" && "text-red-500"
           )}>
-            {description}
+            {trendValue || description}
           </span>
         </p>
       </CardContent>
