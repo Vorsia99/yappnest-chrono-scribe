@@ -98,8 +98,8 @@ export const TopPerformingPosts = ({ platform = 'all' }: TopPerformingPostsProps
     topPosts.filter(post => post.platform === platform);
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-4">
+    <div className="w-full">
+      <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-medium">Top Performing Posts</h2>
         <Button variant="ghost" className="gap-2">
           View All <ArrowRight size={16} />
@@ -107,12 +107,12 @@ export const TopPerformingPosts = ({ platform = 'all' }: TopPerformingPostsProps
       </div>
       
       {filteredPosts.length > 0 ? (
-        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
           {filteredPosts.map((post, index) => (
-            <Card key={index} className="bg-white hover:shadow-md transition-shadow duration-300 flex-shrink-0 w-[280px]">
-              <CardContent className="p-4 space-y-3">
+            <Card key={index} className="bg-white hover:shadow-md transition-shadow duration-300 h-full">
+              <CardContent className="p-4 space-y-4 flex flex-col h-full">
                 {post.image && (
-                  <div className="h-32 w-full rounded-md overflow-hidden">
+                  <div className="h-40 w-full rounded-md overflow-hidden">
                     <img 
                       src={post.image} 
                       alt={post.content}
@@ -124,7 +124,7 @@ export const TopPerformingPosts = ({ platform = 'all' }: TopPerformingPostsProps
                 <div className="flex items-center justify-between gap-1.5">
                   <div className="flex items-center gap-1.5">
                     <span className="text-yapp-deep-navy">{post.platformIcon}</span>
-                    <span className="text-sm text-yapp-deep-navy/80">{post.platform}</span>
+                    <span className="text-sm text-yapp-deep-navy/80 capitalize">{post.platform}</span>
                   </div>
                   {post.sponsored && (
                     <Badge variant="outline" className="text-xs bg-yellow-50">
@@ -139,7 +139,7 @@ export const TopPerformingPosts = ({ platform = 'all' }: TopPerformingPostsProps
                   <p className="text-xs text-yapp-text-navy-light">Sponsored by {post.sponsoredBy}</p>
                 )}
                 
-                <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="grid grid-cols-2 gap-3 text-xs mt-auto">
                   <div className="text-yapp-deep-navy/70">
                     <span className="block font-medium text-yapp-deep-navy">{post.metrics.likes.toLocaleString()}</span>
                     Likes
@@ -158,7 +158,7 @@ export const TopPerformingPosts = ({ platform = 'all' }: TopPerformingPostsProps
                   </div>
                 </div>
                 
-                <div className="flex gap-2 pt-2">
+                <div className="flex gap-2 pt-3">
                   <Button variant="outline" size="sm" className="w-full">
                     View Details
                   </Button>
