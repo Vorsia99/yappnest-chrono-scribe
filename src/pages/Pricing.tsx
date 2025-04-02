@@ -20,6 +20,7 @@ import {
 
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import PlanSelector from '@/components/PlanSelector';
 
 const Pricing = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
@@ -268,8 +269,32 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* Why Choose yappHQ Section */}
+      {/* Trusted by Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">Trusted by Creators & Brands</h2>
+            <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
+              Join thousands of satisfied users who've transformed their social media workflow.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* How yappHQ Transforms Section */}
       <section className="py-16 bg-yapp-pale-blue">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">How yappHQ Transforms Your Social Media</h2>
+            <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
+              Our comprehensive platform streamlines your entire social media workflow.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose yappHQ Section */}
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">Why Choose yappHQ</h2>
@@ -296,30 +321,6 @@ const Pricing = () => {
                 </p>
               </CardContent>
             </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Trusted by Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">Trusted by Creators & Brands</h2>
-            <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
-              Join thousands of satisfied users who've transformed their social media workflow.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* How yappHQ Transforms Section */}
-      <section className="py-16 bg-yapp-pale-blue">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">How yappHQ Transforms Your Social Media</h2>
-            <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
-              Our comprehensive platform streamlines your entire social media workflow.
-            </p>
           </div>
         </div>
       </section>
