@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,8 @@ import {
   Bot,
   MessageSquare,
   CheckCircle,
-  User
+  User,
+  GlobeIcon
 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlatformStat } from "@/components/PlatformStat";
@@ -225,29 +225,7 @@ const Dashboard = () => {
       facebook: <Facebook className="h-4 w-4" />,
       youtube: <Youtube className="h-4 w-4" />
     };
-    return icons[platform] || <Globe className="h-4 w-4" />;
-  };
-
-  const renderPredictionBadge = (prediction) => {
-    if (prediction.includes("High") || prediction.includes("Viral")) {
-      return (
-        <Badge className="bg-[#4AFCA6] text-[#2D3748] hover:bg-[#4AFCA6]/80">
-          {prediction}
-        </Badge>
-      );
-    } else if (prediction.includes("Medium")) {
-      return (
-        <Badge className="bg-amber-400 text-[#2D3748] hover:bg-amber-400/80">
-          {prediction}
-        </Badge>
-      );
-    } else {
-      return (
-        <Badge className="bg-gray-400 hover:bg-gray-400/80">
-          {prediction}
-        </Badge>
-      );
-    }
+    return icons[platform] || <GlobeIcon className="h-4 w-4" />;
   };
 
   return (
@@ -312,29 +290,31 @@ const Dashboard = () => {
             <CardDescription>View and manage your upcoming content</CardDescription>
           </div>
           <div className="flex gap-2">
-            <TabsList className="bg-[#E2E8F0]">
-              <TabsTrigger 
-                value="month" 
-                onClick={() => setCalendarView("month")}
-                className={calendarView === "month" ? "bg-[#A3BFFA] text-white" : ""}
-              >
-                Month
-              </TabsTrigger>
-              <TabsTrigger 
-                value="week" 
-                onClick={() => setCalendarView("week")}
-                className={calendarView === "week" ? "bg-[#A3BFFA] text-white" : ""}
-              >
-                Week
-              </TabsTrigger>
-              <TabsTrigger 
-                value="day" 
-                onClick={() => setCalendarView("day")}
-                className={calendarView === "day" ? "bg-[#A3BFFA] text-white" : ""}
-              >
-                Day
-              </TabsTrigger>
-            </TabsList>
+            <Tabs defaultValue="month" className="w-auto">
+              <TabsList className="bg-[#E2E8F0]">
+                <TabsTrigger 
+                  value="month" 
+                  onClick={() => setCalendarView("month")}
+                  className={calendarView === "month" ? "bg-[#A3BFFA] text-white" : ""}
+                >
+                  Month
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="week" 
+                  onClick={() => setCalendarView("week")}
+                  className={calendarView === "week" ? "bg-[#A3BFFA] text-white" : ""}
+                >
+                  Week
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="day" 
+                  onClick={() => setCalendarView("day")}
+                  className={calendarView === "day" ? "bg-[#A3BFFA] text-white" : ""}
+                >
+                  Day
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
             <Button 
               className="bg-[#A3BFFA] hover:bg-[#7F9CF5] text-white"
               onClick={() => navigate('/composer')}
@@ -464,7 +444,7 @@ const Dashboard = () => {
           </Button>
         </CardHeader>
         <CardContent>
-          <TopPerformingPosts limit={3} />
+          <TopPerformingPosts />
         </CardContent>
       </Card>
 
