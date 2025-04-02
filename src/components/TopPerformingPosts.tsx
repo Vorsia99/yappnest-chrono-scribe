@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Instagram, Twitter, Youtube, TikTok } from 'lucide-react';
+import { ArrowRight, Instagram, Twitter, Youtube, CirclePlay } from 'lucide-react';
 import { Badge } from './ui/badge';
 
 interface TopPostProps {
@@ -79,7 +79,7 @@ export const TopPerformingPosts = ({ platform = 'all' }: TopPerformingPostsProps
     {
       content: "Quick tutorial on our latest features",
       platform: "tiktok",
-      platformIcon: <TikTok size={16} />,
+      platformIcon: <CirclePlay size={16} />,
       image: "/lovable-uploads/bc113fd0-18d2-4e4c-8f34-5f7480463c85.png",
       metrics: {
         likes: 1423,
