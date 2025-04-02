@@ -20,7 +20,8 @@ import {
   BarChart3, 
   Image,
   Settings,
-  User
+  User,
+  MessageSquare
 } from 'lucide-react';
 import YappLogo from './YappLogo';
 
@@ -30,6 +31,7 @@ const navItems = [
   { title: 'Queue', icon: ListChecks, path: '/queue' },
   { title: 'Calendar', icon: Calendar, path: '/calendar' },
   { title: 'Analytics', icon: BarChart3, path: '/analytics' },
+  { title: 'Engagement', icon: MessageSquare, path: '/engagement' },
   { title: 'Media Library', icon: Image, path: '/media-library' },
   { title: 'Settings', icon: Settings, path: '/settings' },
 ];
