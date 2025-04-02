@@ -6,14 +6,11 @@ import { cn } from '@/lib/utils';
 
 interface InsightCardProps {
   title: string;
-  description?: string;
-  value?: string;
+  description: string;
   icon: React.ReactNode;
   action?: string;
   actionVariant?: 'default' | 'outline' | 'secondary';
   onActionClick?: () => void;
-  trend?: string;
-  trendDirection?: 'up' | 'down' | 'neutral';
   badge?: {
     text: string;
     color: 'green' | 'yellow' | 'red' | 'blue';
@@ -23,14 +20,11 @@ interface InsightCardProps {
 export function InsightCard({
   title,
   description,
-  value,
   icon,
   action,
   actionVariant = 'default',
   onActionClick,
-  badge,
-  trend,
-  trendDirection
+  badge
 }: InsightCardProps) {
   return (
     <div className="flex gap-4 p-4 border rounded-lg hover:bg-slate-50 transition-colors animate-fade-in">
@@ -52,24 +46,7 @@ export function InsightCard({
             </Badge>
           )}
         </div>
-        
-        {value && <p className="text-xl font-medium mt-1">{value}</p>}
-        
-        {trend && (
-          <div className="flex items-center gap-1 mt-1">
-            <span className={cn(
-              "text-sm font-medium",
-              trendDirection === 'up' && "text-green-600",
-              trendDirection === 'down' && "text-red-600",
-              trendDirection === 'neutral' && "text-blue-600"
-            )}>
-              {trend}
-            </span>
-          </div>
-        )}
-        
-        {description && <p className="text-muted-foreground mb-3 mt-1">{description}</p>}
-        
+        <p className="text-muted-foreground mb-3">{description}</p>
         {action && (
           <Button 
             variant={actionVariant} 

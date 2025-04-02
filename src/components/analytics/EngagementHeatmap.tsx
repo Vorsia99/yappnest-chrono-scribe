@@ -5,10 +5,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 interface EngagementHeatmapProps {
   platform?: string;
   contentType?: string;
-  metric?: string;
 }
 
-export function EngagementHeatmap({ platform = 'all', contentType = 'all-content', metric = 'engagement' }: EngagementHeatmapProps) {
+export function EngagementHeatmap({ platform = 'all', contentType = 'all-content' }: EngagementHeatmapProps) {
   const [viewType, setViewType] = useState<'engagement' | 'views'>('engagement');
   
   // Generate random data for the heatmap
@@ -88,11 +87,11 @@ export function EngagementHeatmap({ platform = 'all', contentType = 'all-content
       });
     });
     
-    const metricDisplay = viewType === 'engagement' ? 'engagement' : 'views';
+    const metric = viewType === 'engagement' ? 'engagement' : 'views';
     const value = (maxValue * (viewType === 'engagement' ? 1 : 1000)).toFixed(1);
     const metricUnit = viewType === 'engagement' ? '%' : '';
     
-    return `Highest ${metricDisplay} on ${bestDay} at ${formatHour(bestHour)} (${value}${metricUnit})`;
+    return `Highest ${metric} on ${bestDay} at ${formatHour(bestHour)} (${value}${metricUnit})`;
   };
 
   return (
