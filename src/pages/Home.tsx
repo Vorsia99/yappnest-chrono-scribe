@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import YappLogo from '@/components/YappLogo';
@@ -35,9 +36,11 @@ const Home = () => {
             <Link to="/pricing" className="text-yapp-deep-navy hover:opacity-80">
               Pricing
             </Link>
-            <Button variant="cta-dark" className="rounded-full px-6">
-              Sign up
-            </Button>
+            <Link to="/signup">
+              <Button variant="cta-dark" className="rounded-full px-6">
+                Sign up
+              </Button>
+            </Link>
           </div>
         </div>
       </nav>
@@ -54,9 +57,11 @@ const Home = () => {
                 Schedule posts, manage your content lineup, and track performance—effortlessly.
               </p>
               <div className="pt-4">
-                <Button variant="cta-dark" size="lg" className="rounded-full px-8">
-                  Get started
-                </Button>
+                <Link to="/signup">
+                  <Button variant="cta-dark" size="lg" className="rounded-full px-8">
+                    Get started
+                  </Button>
+                </Link>
               </div>
             </div>
             <div className="lg:w-1/2">
@@ -538,9 +543,11 @@ const Home = () => {
             Join thousands of marketers who have simplified their workflow with yappHQ
           </p>
           <div className="flex flex-col items-center">
-            <Button variant="cta" size="lg" className="rounded-full px-8">
-              Start your free trial
-            </Button>
+            <Link to="/signup">
+              <Button variant="cta" size="lg" className="rounded-full px-8">
+                Start your free trial
+              </Button>
+            </Link>
             <p className="text-white/70 text-sm mt-4">
               30 days free. No credit card required.
             </p>

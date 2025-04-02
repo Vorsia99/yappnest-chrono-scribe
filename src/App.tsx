@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Features from "./pages/Features";
+import Pricing from "./pages/Pricing";
+import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Calendar from "./pages/Calendar";
 import Queue from "./pages/Queue";
@@ -55,6 +57,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/features" element={<Features />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/composer" element={<Composer />} />
