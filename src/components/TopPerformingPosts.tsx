@@ -22,10 +22,9 @@ interface TopPostProps {
 
 interface TopPerformingPostsProps {
   platform?: string;
-  limit?: number;
 }
 
-export const TopPerformingPosts = ({ platform = 'all', limit }: TopPerformingPostsProps) => {
+export const TopPerformingPosts = ({ platform = 'all' }: TopPerformingPostsProps) => {
   // Sample top performing posts data
   const topPosts: TopPostProps[] = [
     {
@@ -97,9 +96,6 @@ export const TopPerformingPosts = ({ platform = 'all', limit }: TopPerformingPos
   const filteredPosts = platform === 'all' ? 
     topPosts : 
     topPosts.filter(post => post.platform === platform);
-  
-  // Apply limit if specified
-  const displayedPosts = limit ? filteredPosts.slice(0, limit) : filteredPosts;
 
   return (
     <div className="w-full">
@@ -110,9 +106,9 @@ export const TopPerformingPosts = ({ platform = 'all', limit }: TopPerformingPos
         </Button>
       </div>
       
-      {displayedPosts.length > 0 ? (
+      {filteredPosts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
-          {displayedPosts.map((post, index) => (
+          {filteredPosts.map((post, index) => (
             <Card key={index} className="bg-white hover:shadow-md transition-shadow duration-300 h-full">
               <CardContent className="p-4 space-y-4 flex flex-col h-full">
                 {post.image && (
