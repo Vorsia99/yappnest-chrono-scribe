@@ -22,6 +22,7 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
+import { Label } from "@/components/ui/label";
 
 const profileFormSchema = z.object({
   username: z.string().min(2, {
@@ -36,11 +37,28 @@ const profileFormSchema = z.object({
   }),
 });
 
+const passwordFormSchema = z.object({
+  currentPassword: z.string().min(1, {
+    message: "Current password is required",
+  }),
+  newPassword: z.string().min(8, {
+    message: "New password must be at least 8 characters.",
+  }),
+  confirmPassword: z.string().min(8, {
+    message: "Password confirmation is required.",
+  }),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"],
+});
+
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
+type PasswordFormValues = z.infer<typeof passwordFormSchema>;
 
 const AccountSettings = () => {
   const { toast } = useToast();
   
+  // Profile form
   const defaultValues: Partial<ProfileFormValues> = {
     username: "johndoe",
     email: "john.doe@example.com",
@@ -48,18 +66,45 @@ const AccountSettings = () => {
     name: "John Doe",
   };
 
-  const form = useForm<ProfileFormValues>({
+  const profileForm = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
     mode: "onChange",
   });
 
-  function onSubmit(data: ProfileFormValues) {
+  // Password form
+  const passwordForm = useForm<PasswordFormValues>({
+    resolver: zodResolver(passwordFormSchema),
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+    mode: "onChange",
+  });
+
+  function onProfileSubmit(data: ProfileFormValues) {
     toast({
       title: "Profile updated",
       description: "Your profile has been updated successfully.",
     });
     console.log(data);
+  }
+
+  function onPasswordSubmit(data: PasswordFormValues) {
+    toast({
+      title: "Password updated",
+      description: "Your password has been changed successfully.",
+    });
+    console.log(data);
+  }
+
+  function onDeleteAccount() {
+    toast({
+      title: "Account deletion requested",
+      description: "Your account deletion request has been submitted.",
+      variant: "destructive",
+    });
   }
 
   return (
@@ -85,10 +130,10 @@ const AccountSettings = () => {
             </div>
           </div>
           
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <Form {...profileForm}>
+            <form onSubmit={profileForm.handleSubmit(onProfileSubmit)} className="space-y-4">
               <FormField
-                control={form.control}
+                control={profileForm.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
@@ -102,7 +147,7 @@ const AccountSettings = () => {
               />
               
               <FormField
-                control={form.control}
+                control={profileForm.control}
                 name="username"
                 render={({ field }) => (
                   <FormItem>
@@ -119,7 +164,7 @@ const AccountSettings = () => {
               />
               
               <FormField
-                control={form.control}
+                control={profileForm.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -133,7 +178,7 @@ const AccountSettings = () => {
               />
               
               <FormField
-                control={form.control}
+                control={profileForm.control}
                 name="bio"
                 render={({ field }) => (
                   <FormItem>
@@ -166,23 +211,56 @@ const AccountSettings = () => {
             Change your password to keep your account secure.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <FormLabel>Current Password</FormLabel>
-            <Input type="password" />
-          </div>
-          <div className="space-y-2">
-            <FormLabel>New Password</FormLabel>
-            <Input type="password" />
-          </div>
-          <div className="space-y-2">
-            <FormLabel>Confirm Password</FormLabel>
-            <Input type="password" />
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button>Change Password</Button>
-        </CardFooter>
+        <Form {...passwordForm}>
+          <form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)}>
+            <CardContent className="space-y-4">
+              <FormField
+                control={passwordForm.control}
+                name="currentPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Current Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={passwordForm.control}
+                name="newPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>New Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={passwordForm.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+            <CardFooter>
+              <Button type="submit">Change Password</Button>
+            </CardFooter>
+          </form>
+        </Form>
       </Card>
 
       <Card>
@@ -198,7 +276,7 @@ const AccountSettings = () => {
           </p>
         </CardContent>
         <CardFooter>
-          <Button variant="destructive">Delete Account</Button>
+          <Button variant="destructive" onClick={onDeleteAccount}>Delete Account</Button>
         </CardFooter>
       </Card>
     </div>
