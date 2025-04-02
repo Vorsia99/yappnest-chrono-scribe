@@ -122,6 +122,11 @@ export default {
 				'slide-in-bottom': {
 					'0%': { transform: 'translateY(100px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'confetti': {
+					'0%': { transform: 'translateY(0) rotate(0deg)', opacity: '0' },
+					'10%': { opacity: '1' },
+					'100%': { transform: 'translateY(650px) rotate(720deg)', opacity: '0' }
 				}
 			},
 			animation: {
@@ -132,10 +137,17 @@ export default {
 				'slide-in': 'slide-in 0.3s ease-out',
 				'section-fade-in': 'fade-in 0.5s ease-out forwards',
 				'slide-in-bottom': 'slide-in-bottom 0.5s ease-out forwards',
+				'confetti-1': 'confetti 4s ease-out forwards',
+				'confetti-2': 'confetti 3s ease-out forwards',
+				'confetti-3': 'confetti 3.5s ease-out forwards',
+				'confetti-4': 'confetti 4.5s ease-out forwards',
 			},
 			fontFamily: {
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
 				'serif': ['Georgia', 'Times New Roman', 'serif'],
+			},
+			gridTemplateColumns: {
+				'24': 'repeat(24, minmax(0, 1fr))',
 			}
 		}
 	},

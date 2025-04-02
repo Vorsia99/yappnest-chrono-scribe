@@ -2,133 +2,127 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowUpIcon, BarChart, Download, LineChart, PieChart, Calendar, TrendingUp, Users, Activity } from "lucide-react";
+import {
+  ArrowUpIcon,
+  BarChart, 
+  Calendar, 
+  Download, 
+  TrendingUp, 
+  Users, 
+  Activity,
+  FileText,
+  Filter,
+  Share,
+  ArrowDown,
+  Check,
+  X
+} from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlatformStat } from "@/components/PlatformStat";
 import { Badge } from "@/components/ui/badge";
 import { TopPerformingPosts } from "@/components/TopPerformingPosts";
 import { StatsCard } from "@/components/StatsCard";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import {
-  Area,
-  AreaChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
-  Legend,
-  Tooltip,
-  ComposedChart,
-} from "recharts";
-
-// Sample data for charts
-const followerGrowthData = [
-  { name: "Jan", instagram: 5200, youtube: 3800, x: 2400 },
-  { name: "Feb", instagram: 5800, youtube: 4200, x: 2700 },
-  { name: "Mar", instagram: 6500, youtube: 4600, x: 3100 },
-  { name: "Apr", instagram: 7200, youtube: 5000, x: 3400 },
-  { name: "May", instagram: 8100, youtube: 5500, x: 3800 },
-  { name: "Jun", instagram: 9000, youtube: 6200, x: 4300 },
-  { name: "Jul", instagram: 10000, youtube: 6800, x: 4900 },
-  { name: "Aug", instagram: 11200, youtube: 7300, x: 5400 },
-  { name: "Sep", instagram: 12500, youtube: 7800, x: 5800 },
-  { name: "Oct", instagram: 13800, youtube: 8200, x: 6300 },
-  { name: "Nov", instagram: 15400, youtube: 8500, x: 6800 },
-  { name: "Dec", instagram: 17000, youtube: 8900, x: 7500 },
-];
-
-const contentPerformanceData = [
-  { name: "Images", engagement: 4.8, reach: 12400 },
-  { name: "Videos", engagement: 6.2, reach: 18600 },
-  { name: "Carousels", engagement: 5.5, reach: 15800 },
-  { name: "Stories", engagement: 3.9, reach: 9200 },
-  { name: "Reels", engagement: 7.3, reach: 22500 },
-];
-
-const demographicData = [
-  { name: "18-24", value: 35 },
-  { name: "25-34", value: 40 },
-  { name: "35-44", value: 15 },
-  { name: "45-54", value: 7 },
-  { name: "55+", value: 3 },
-];
-
-const EngagementHeatmap = () => (
-  <div className="h-[250px] grid grid-cols-7 gap-1">
-    {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
-      <div key={day} className="flex flex-col gap-1">
-        <div className="text-xs text-center font-medium mb-1">{day}</div>
-        {Array.from({ length: 6 }).map((_, i) => {
-          const hour = 6 + i * 3; // 6AM, 9AM, 12PM, 3PM, 6PM, 9PM
-          const hourLabel = hour <= 12 ? `${hour}AM` : `${hour - 12}PM`;
-          // Random engagement between 1-10 for demo
-          const engagement = Math.floor(Math.random() * 10) + 1;
-          // Color based on engagement (1-10)
-          const intensity = 20 + (engagement * 8);
-          const bgColor = `bg-green-${intensity}`;
-          
-          return (
-            <div 
-              key={`${day}-${hour}`} 
-              className={`h-6 rounded-sm border border-green-100 ${bgColor} hover:ring-2 hover:ring-offset-1 hover:ring-green-500 transition-all cursor-pointer`}
-              title={`${day} ${hourLabel}: ${engagement}% engagement`}
-            />
-          );
-        })}
-      </div>
-    ))}
-  </div>
-);
+import { useState } from "react";
+import { PlatformGrowthChart } from "@/components/analytics/PlatformGrowthChart";
+import { ContentPerformanceChart } from "@/components/analytics/ContentPerformanceChart";
+import { EngagementHeatmap } from "@/components/analytics/EngagementHeatmap";
+import { DemographicsChart } from "@/components/analytics/DemographicsChart";
+import { CollaborationTracker } from "@/components/analytics/CollaborationTracker";
+import { InsightCard } from "@/components/analytics/InsightCard";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 
 const Analytics = () => {
+  const [selectedDateRange, setSelectedDateRange] = useState<string>("30days");
+  const [selectedPlatform, setSelectedPlatform] = useState<string>("all");
+  const [selectedContentType, setSelectedContentType] = useState<string>("all-content");
+  const [sponsoredOnly, setSponsoredOnly] = useState<boolean>(false);
+  const [date, setDate] = useState<Date>();
+
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
-          <p className="text-muted-foreground">Track performance across all your social platforms.</p>
-        </div>
-        <div className="flex flex-col md:flex-row gap-2">
-          <Select defaultValue="30days">
-            <SelectTrigger className="w-36">
-              <SelectValue placeholder="Time Period" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="7days">Last 7 days</SelectItem>
-              <SelectItem value="30days">Last 30 days</SelectItem>
-              <SelectItem value="90days">Last 90 days</SelectItem>
-              <SelectItem value="custom">Custom range</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select defaultValue="all">
-            <SelectTrigger className="w-36">
-              <SelectValue placeholder="Platform" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Platforms</SelectItem>
-              <SelectItem value="instagram">Instagram</SelectItem>
-              <SelectItem value="x">X</SelectItem>
-              <SelectItem value="youtube">YouTube</SelectItem>
-              <SelectItem value="tiktok">TikTok</SelectItem>
-              <SelectItem value="linkedin">LinkedIn</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select defaultValue="all-content">
-            <SelectTrigger className="w-36">
-              <SelectValue placeholder="Content Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all-content">All Content</SelectItem>
-              <SelectItem value="posts">Posts</SelectItem>
-              <SelectItem value="stories">Stories</SelectItem>
-              <SelectItem value="posts-stories">Posts + Stories</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button variant="outline">
-            <Download className="mr-2 h-4 w-4" /> Export
-          </Button>
+    <div className="space-y-8 animate-fade-in pb-12">
+      {/* Sticky Header Section */}
+      <div className="sticky top-0 z-10 bg-white px-6 py-4 border-b shadow-sm mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight text-yapp-deep-navy">Analytics</h1>
+            <p className="text-muted-foreground">Track performance across all your social platforms</p>
+          </div>
+          <div className="flex flex-wrap gap-2 items-center">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-[240px] justify-start text-left font-normal",
+                    !date && "text-muted-foreground"
+                  )}
+                >
+                  <Calendar className="mr-2 h-4 w-4" />
+                  {date ? format(date, "PPP") : <span>Custom date range</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="end">
+                <CalendarComponent
+                  mode="single"
+                  selected={date}
+                  onSelect={setDate}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+
+            <Select value={selectedDateRange} onValueChange={setSelectedDateRange}>
+              <SelectTrigger className="w-36">
+                <SelectValue placeholder="Time Period" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="7days">Last 7 days</SelectItem>
+                <SelectItem value="30days">Last 30 days</SelectItem>
+                <SelectItem value="90days">Last 90 days</SelectItem>
+                <SelectItem value="custom">Custom range</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={selectedPlatform} onValueChange={setSelectedPlatform}>
+              <SelectTrigger className="w-36">
+                <SelectValue placeholder="Platform" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Platforms</SelectItem>
+                <SelectItem value="instagram">Instagram</SelectItem>
+                <SelectItem value="x">X</SelectItem>
+                <SelectItem value="youtube">YouTube</SelectItem>
+                <SelectItem value="tiktok">TikTok</SelectItem>
+                <SelectItem value="threads">Threads</SelectItem>
+                <SelectItem value="linkedin">LinkedIn</SelectItem>
+                <SelectItem value="pinterest">Pinterest</SelectItem>
+                <SelectItem value="bluesky">Bluesky</SelectItem>
+                <SelectItem value="facebook">Facebook</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={selectedContentType} onValueChange={setSelectedContentType}>
+              <SelectTrigger className="w-36">
+                <SelectValue placeholder="Content Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all-content">All Content</SelectItem>
+                <SelectItem value="posts">Posts</SelectItem>
+                <SelectItem value="stories">Stories</SelectItem>
+                <SelectItem value="posts-stories">Posts + Stories</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="outline" className="flex items-center gap-1">
+              <Filter className="h-4 w-4" />
+              <span className="hidden sm:inline">More Filters</span>
+            </Button>
+            <Button variant="outline" className="flex items-center gap-1">
+              <Download className="h-4 w-4" />
+              <span className="hidden sm:inline">Export</span>
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -152,7 +146,7 @@ const Analytics = () => {
           title="Total Posts" 
           value="85" 
           description="-5% vs. last month" 
-          icon={<Calendar className="h-4 w-4 text-muted-foreground" />} 
+          icon={<FileText className="h-4 w-4 text-muted-foreground" />} 
           trend="down" 
           trendValue="-5%"
         />
@@ -165,46 +159,29 @@ const Analytics = () => {
         />
       </div>
 
-      {/* Follower Growth Chart */}
-      <Card>
+      {/* Platform Growth Chart */}
+      <Card className="shadow-sm hover:shadow-md transition-shadow duration-300">
         <CardHeader>
-          <CardTitle>Platform Growth</CardTitle>
-          <CardDescription>Follower growth across platforms over time</CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-xl">Platform Growth</CardTitle>
+              <CardDescription>Follower growth across platforms over time</CardDescription>
+            </div>
+            <Select defaultValue="followers">
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select metric" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="followers">Followers</SelectItem>
+                <SelectItem value="reach">Reach</SelectItem>
+                <SelectItem value="engagement">Engagement</SelectItem>
+                <SelectItem value="impressions">Impressions</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </CardHeader>
         <CardContent>
-          <ChartContainer className="h-[300px]" config={{
-            instagram: { color: "#E1306C" },
-            youtube: { color: "#FF0000" },
-            x: { color: "#000000" }
-          }}>
-            <AreaChart
-              data={followerGrowthData}
-              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-            >
-              <defs>
-                <linearGradient id="colorInstagram" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#E1306C" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="#E1306C" stopOpacity={0}/>
-                </linearGradient>
-                <linearGradient id="colorYoutube" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#FF0000" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="#FF0000" stopOpacity={0}/>
-                </linearGradient>
-                <linearGradient id="colorX" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#000000" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="#000000" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <CartesianGrid strokeDasharray="3 3" />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Area type="monotone" dataKey="instagram" stroke="#E1306C" fillOpacity={1} fill="url(#colorInstagram)" />
-              <Area type="monotone" dataKey="youtube" stroke="#FF0000" fillOpacity={1} fill="url(#colorYoutube)" />
-              <Area type="monotone" dataKey="x" stroke="#000000" fillOpacity={1} fill="url(#colorX)" />
-              <Legend />
-            </AreaChart>
-          </ChartContainer>
+          <PlatformGrowthChart platform={selectedPlatform} timeRange={selectedDateRange} />
         </CardContent>
       </Card>
 
@@ -235,114 +212,115 @@ const Analytics = () => {
 
       {/* Content Performance & Demographics */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Content Performance</CardTitle>
+        <Card className="shadow-sm hover:shadow-md transition-shadow duration-300">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-xl">Content Performance</CardTitle>
             <CardDescription>Performance by content type</CardDescription>
+          </CardHeader>
+          <CardContent>
             <Tabs defaultValue="chart" className="w-full">
-              <TabsList className="grid grid-cols-2 w-[200px]">
+              <TabsList className="grid grid-cols-2 w-[220px] mb-4">
                 <TabsTrigger value="chart">Performance</TabsTrigger>
-                <TabsTrigger value="heatmap">Heatmap</TabsTrigger>
+                <TabsTrigger value="heatmap">Engagement</TabsTrigger>
               </TabsList>
-              <TabsContent value="chart" className="pt-4">
-                <ChartContainer className="h-[250px]" config={{
-                  engagement: { color: "#4AFCA6" },
-                  reach: { color: "#A3BFFA" }
-                }}>
-                  <ComposedChart
-                    data={contentPerformanceData}
-                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                  >
-                    <XAxis dataKey="name" />
-                    <YAxis yAxisId="left" />
-                    <YAxis yAxisId="right" orientation="right" />
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar yAxisId="left" dataKey="engagement" name="Engagement %" fill="#4AFCA6" />
-                    <Bar yAxisId="right" dataKey="reach" name="Reach" fill="#A3BFFA" />
-                    <Legend />
-                  </ComposedChart>
-                </ChartContainer>
+              <TabsContent value="chart" className="pt-2">
+                <ContentPerformanceChart
+                  contentType={selectedContentType}
+                  platform={selectedPlatform}
+                  timeRange={selectedDateRange}
+                />
               </TabsContent>
-              <TabsContent value="heatmap" className="pt-4">
-                <EngagementHeatmap />
+              <TabsContent value="heatmap" className="pt-2">
+                <EngagementHeatmap
+                  platform={selectedPlatform}
+                  contentType={selectedContentType}
+                />
               </TabsContent>
             </Tabs>
-          </CardHeader>
+          </CardContent>
         </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Audience Demographics</CardTitle>
+        <Card className="shadow-sm hover:shadow-md transition-shadow duration-300">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-xl">Audience Demographics</CardTitle>
             <CardDescription>Age, location and interests</CardDescription>
+          </CardHeader>
+          <CardContent>
             <Tabs defaultValue="age" className="w-full">
-              <TabsList className="grid grid-cols-3 w-[300px]">
+              <TabsList className="grid grid-cols-4 w-full mb-4">
                 <TabsTrigger value="age">Age & Gender</TabsTrigger>
                 <TabsTrigger value="location">Location</TabsTrigger>
                 <TabsTrigger value="interests">Interests</TabsTrigger>
+                <TabsTrigger value="activity">Activity</TabsTrigger>
               </TabsList>
-              <TabsContent value="age" className="pt-4 flex justify-center">
-                <div className="flex flex-col items-center">
-                  <div className="h-[220px] w-[220px] mb-4 relative">
-                    <PieChart className="h-full w-full text-muted-foreground" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-                    {demographicData.map((data) => (
-                      <div key={data.name} className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-primary"></div>
-                        <span className="text-sm">{data.name}: {data.value}%</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              <TabsContent value="age" className="pt-2">
+                <DemographicsChart 
+                  type="age"
+                  platform={selectedPlatform}
+                  timeRange={selectedDateRange}
+                  contentType={selectedContentType}
+                />
               </TabsContent>
-              <TabsContent value="location" className="pt-4">
-                <div className="h-[250px] flex items-center justify-center border rounded-md bg-muted/40">
-                  <BarChart className="h-12 w-12 text-muted-foreground" />
-                  <span className="ml-2 text-muted-foreground">Location data will appear here</span>
-                </div>
+              <TabsContent value="location" className="pt-2">
+                <DemographicsChart 
+                  type="location"
+                  platform={selectedPlatform}
+                  timeRange={selectedDateRange}
+                  contentType={selectedContentType}
+                />
               </TabsContent>
-              <TabsContent value="interests" className="pt-4">
-                <div className="h-[250px] border rounded-md bg-muted/40 p-6">
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    {["Fashion", "Tech", "Travel", "Food", "Fitness", "Beauty", "Gaming", "Music", "Art", "Sports"].map((interest, i) => {
-                      // Random size and opacity for tag cloud effect
-                      const size = Math.floor(Math.random() * 30) + 70; // 70-100%
-                      const opacity = (Math.floor(Math.random() * 50) + 50) / 100; // 0.5-1.0
-                      
-                      return (
-                        <span 
-                          key={interest} 
-                          className="px-3 py-1 bg-primary/20 rounded-full hover:bg-primary/30 cursor-pointer transition-all" 
-                          style={{ 
-                            fontSize: `${size}%`, 
-                            opacity 
-                          }}
-                        >
-                          {interest}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
+              <TabsContent value="interests" className="pt-2">
+                <DemographicsChart 
+                  type="interests"
+                  platform={selectedPlatform}
+                  timeRange={selectedDateRange}
+                  contentType={selectedContentType}
+                />
+              </TabsContent>
+              <TabsContent value="activity" className="pt-2">
+                <DemographicsChart 
+                  type="activity"
+                  platform={selectedPlatform}
+                  timeRange={selectedDateRange}
+                  contentType={selectedContentType}
+                />
               </TabsContent>
             </Tabs>
-          </CardHeader>
+          </CardContent>
         </Card>
       </div>
 
       {/* Top Performing Content */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Top Performing Content</CardTitle>
-          <CardDescription>Your best content from the last 30 days</CardDescription>
+      <Card className="shadow-sm hover:shadow-md transition-shadow duration-300">
+        <CardHeader className="pb-3">
+          <div className="flex justify-between items-center">
+            <div>
+              <CardTitle className="text-xl">Top Performing Content</CardTitle>
+              <CardDescription>Your best content from the last 30 days</CardDescription>
+            </div>
+            <div className="flex items-center gap-2">
+              <Select defaultValue="engagement">
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="engagement">Highest Engagement</SelectItem>
+                  <SelectItem value="reach">Highest Reach</SelectItem>
+                  <SelectItem value="recent">Most Recent</SelectItem>
+                  <SelectItem value="clicks">Most Clicks</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent className="pb-6">
+        <CardContent>
           <Tabs defaultValue="all" className="space-y-4">
-            <TabsList>
+            <TabsList className="inline-flex mb-4">
               <TabsTrigger value="all">All Platforms</TabsTrigger>
               <TabsTrigger value="instagram">Instagram</TabsTrigger>
               <TabsTrigger value="x">X</TabsTrigger>
               <TabsTrigger value="youtube">YouTube</TabsTrigger>
+              <TabsTrigger value="tiktok">TikTok</TabsTrigger>
+              <TabsTrigger value="more">More</TabsTrigger>
             </TabsList>
             
             <TabsContent value="all">
@@ -350,20 +328,26 @@ const Analytics = () => {
             </TabsContent>
             
             <TabsContent value="instagram">
-              <div className="h-[300px] flex items-center justify-center border rounded-md">
-                <p className="text-muted-foreground">Instagram top content will appear here</p>
-              </div>
+              <TopPerformingPosts platform="instagram" />
             </TabsContent>
 
             <TabsContent value="x">
-              <div className="h-[300px] flex items-center justify-center border rounded-md">
-                <p className="text-muted-foreground">X top content will appear here</p>
-              </div>
+              <TopPerformingPosts platform="x" />
             </TabsContent>
 
             <TabsContent value="youtube">
-              <div className="h-[300px] flex items-center justify-center border rounded-md">
-                <p className="text-muted-foreground">YouTube top content will appear here</p>
+              <TopPerformingPosts platform="youtube" />
+            </TabsContent>
+            
+            <TabsContent value="tiktok">
+              <TopPerformingPosts platform="tiktok" />
+            </TabsContent>
+            
+            <TabsContent value="more">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Button variant="outline">LinkedIn</Button>
+                <Button variant="outline">Pinterest</Button>
+                <Button variant="outline">Facebook</Button>
               </div>
             </TabsContent>
           </Tabs>
@@ -371,115 +355,57 @@ const Analytics = () => {
       </Card>
 
       {/* Insights & Recommendations */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Insights & Recommendations</CardTitle>
-          <CardDescription>AI-powered recommendations based on your performance</CardDescription>
+      <Card className="shadow-sm hover:shadow-md transition-shadow duration-300">
+        <CardHeader className="pb-3">
+          <div className="flex justify-between items-center">
+            <div>
+              <CardTitle className="text-xl">Insights & Recommendations</CardTitle>
+              <CardDescription>AI-powered recommendations based on your performance</CardDescription>
+            </div>
+            <Button variant="outline" size="sm">Refresh Insights</Button>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          {[
-            {
-              title: "Posting Time Optimization",
-              description: "Your Instagram Stories perform best at 6 PM on Wednesdays (avg. 5K views). Schedule more stories at this time!",
-              action: "Schedule a Story",
-              icon: <Calendar className="h-5 w-5" />
-            },
-            {
-              title: "Collaboration Opportunity",
-              description: "Based on your audience (60% Female, 50% 18-24, interested in Fashion), you're a great fit for brands like Sephora and H&M.",
-              action: "Pitch Now",
-              icon: <Users className="h-5 w-5" />
-            },
-            {
-              title: "Content Strategy",
-              description: "Your audience engages 40% more with behind-the-scenes stories. Post a story showing your daily routine!",
-              action: "Create Story",
-              icon: <Activity className="h-5 w-5" />
-            }
-          ].map((insight, i) => (
-            <div key={i} className="flex gap-4 p-4 border rounded-lg hover:bg-slate-50 transition-colors">
-              <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                {insight.icon}
-              </div>
-              <div className="flex-1">
-                <h4 className="font-medium text-lg">{insight.title}</h4>
-                <p className="text-muted-foreground">{insight.description}</p>
-              </div>
-              <Button variant="outline" size="sm" className="whitespace-nowrap self-start">
-                {insight.action}
-              </Button>
-            </div>
-          ))}
+          <InsightCard
+            title="Posting Time Optimization"
+            description="Your Instagram Stories perform best at 6 PM on Wednesdays (avg. 5K views). Schedule more stories at this time!"
+            action="Schedule a Story"
+            icon={<Calendar className="h-5 w-5" />}
+            actionVariant="default"
+          />
+          <InsightCard
+            title="Collaboration Opportunity"
+            description="Based on your audience (60% Female, 50% 18-24, interested in Fashion), you're a great fit for brands like Sephora and H&M."
+            action="Pitch Now"
+            icon={<Users className="h-5 w-5" />}
+            actionVariant="outline"
+          />
+          <InsightCard
+            title="Content Strategy"
+            description="Your audience engages 40% more with behind-the-scenes stories. Post a story showing your daily routine!"
+            action="Create Story"
+            icon={<Activity className="h-5 w-5" />}
+            actionVariant="default"
+            badge={{text: "5-day streak", color: "green"}}
+          />
         </CardContent>
       </Card>
 
       {/* Collaboration Tracker */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Collaboration Tracker</CardTitle>
-          <CardDescription>Track your brand partnerships and sponsored content</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left p-2">Brand</th>
-                  <th className="text-left p-2">Campaign</th>
-                  <th className="text-left p-2">Platform</th>
-                  <th className="text-left p-2">Type</th>
-                  <th className="text-left p-2">Date</th>
-                  <th className="text-left p-2">Performance</th>
-                  <th className="text-left p-2">ROI</th>
-                  <th className="text-left p-2">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {
-                    brand: "Nike",
-                    campaign: "Spring Collection",
-                    platform: "Instagram",
-                    type: "Post",
-                    date: "Jun 5, 2023",
-                    performance: "12K reach, 5.5% engagement",
-                    roi: "$500",
-                    status: "Completed"
-                  },
-                  {
-                    brand: "Sephora",
-                    campaign: "Beauty Tutorial",
-                    platform: "Instagram",
-                    type: "Story",
-                    date: "Jun 10, 2023",
-                    performance: "6K views, 300 replies",
-                    roi: "$300",
-                    status: "Pending Payment"
-                  }
-                ].map((collab, i) => (
-                  <tr key={i} className="border-b hover:bg-slate-50 cursor-pointer">
-                    <td className="p-2">{collab.brand}</td>
-                    <td className="p-2">{collab.campaign}</td>
-                    <td className="p-2">{collab.platform}</td>
-                    <td className="p-2">{collab.type}</td>
-                    <td className="p-2">{collab.date}</td>
-                    <td className="p-2">{collab.performance}</td>
-                    <td className="p-2">{collab.roi}</td>
-                    <td className="p-2">
-                      <Badge className={collab.status === "Completed" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}>
-                        {collab.status}
-                      </Badge>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="mt-4 flex justify-end">
+      <Card className="shadow-sm hover:shadow-md transition-shadow duration-300">
+        <CardHeader className="pb-3">
+          <div className="flex justify-between items-center">
+            <div>
+              <CardTitle className="text-xl">Collaboration Tracker</CardTitle>
+              <CardDescription>Track your brand partnerships and sponsored content</CardDescription>
+            </div>
             <Button variant="outline" size="sm">
               Add Collaboration
             </Button>
           </div>
+        </CardHeader>
+        <CardContent>
+          <CollaborationTracker platform={selectedPlatform} />
         </CardContent>
       </Card>
     </div>
