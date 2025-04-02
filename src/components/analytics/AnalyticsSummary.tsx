@@ -7,9 +7,10 @@ import { Badge } from '@/components/ui/badge';
 interface AnalyticsSummaryProps {
   platform?: string;
   timeRange?: string;
+  contentType?: string;
 }
 
-export function AnalyticsSummary({ platform = 'all', timeRange = '30days' }: AnalyticsSummaryProps) {
+export function AnalyticsSummary({ platform = 'all', timeRange = '30days', contentType = 'all-content' }: AnalyticsSummaryProps) {
   // This would normally come from an API based on platform and timeRange
   const summaryData = {
     totalReach: '120K',

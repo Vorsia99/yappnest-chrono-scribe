@@ -14,16 +14,12 @@ import { InsightCard } from '@/components/analytics/InsightCard';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { PreviousPostsTable } from "@/components/analytics/PreviousPostsTable";
 
-// Other imports remain the same
-
 const Analytics = () => {
-  // State for UI controls
   const [timeRange, setTimeRange] = useState('30days');
   const [platform, setPlatform] = useState('all');
   const [contentType, setContentType] = useState('all-content');
   const [isLoading, setIsLoading] = useState(false);
   
-  // State for section visibility
   const [sectionsState, setSectionsState] = useState({
     summary: true,
     contentPerformance: true,
@@ -33,7 +29,6 @@ const Analytics = () => {
     previousPosts: true
   });
   
-  // Toggle section visibility
   const toggleSection = (section: keyof typeof sectionsState) => {
     setSectionsState({
       ...sectionsState,
@@ -41,7 +36,6 @@ const Analytics = () => {
     });
   };
   
-  // Helper function to simulate data loading on filter change
   const handleFilterChange = (filterType: string, value: string) => {
     setIsLoading(true);
     
@@ -110,7 +104,6 @@ const Analytics = () => {
         </div>
       )}
       
-      {/* Key Insights Summary */}
       <Collapsible 
         open={sectionsState.summary} 
         onOpenChange={() => toggleSection('summary')}
@@ -137,7 +130,6 @@ const Analytics = () => {
         </CollapsibleContent>
       </Collapsible>
       
-      {/* Content Performance */}
       <Collapsible 
         open={sectionsState.contentPerformance} 
         onOpenChange={() => toggleSection('contentPerformance')}
@@ -183,7 +175,6 @@ const Analytics = () => {
         </CollapsibleContent>
       </Collapsible>
       
-      {/* Audience Insights */}
       <Collapsible 
         open={sectionsState.audienceInsights} 
         onOpenChange={() => toggleSection('audienceInsights')}
@@ -206,7 +197,10 @@ const Analytics = () => {
                 <CardTitle className="text-lg font-medium">Demographics</CardTitle>
               </CardHeader>
               <CardContent>
-                <DemographicsChart platform={platform} />
+                <DemographicsChart 
+                  type="age" 
+                  platform={platform} 
+                />
               </CardContent>
             </Card>
             
@@ -220,28 +214,28 @@ const Analytics = () => {
                     icon={<UserCheck className="h-4 w-4" />}
                     title="Top Audience"
                     value="Women 25-34"
-                    trend={"+12%"}
+                    trend="+12%"
                     trendDirection="up"
                   />
                   <InsightCard
                     icon={<Activity className="h-4 w-4" />}
                     title="Peak Activity"
                     value="7-9 PM weekdays"
-                    trend={"+5%"}
+                    trend="+5%"
                     trendDirection="up"
                   />
                   <InsightCard
                     icon={<BarChart3 className="h-4 w-4" />}
                     title="Avg. Engagement"
                     value="4.8%"
-                    trend={"-0.3%"}
+                    trend="-0.3%"
                     trendDirection="down"
                   />
                   <InsightCard
                     icon={<Share2 className="h-4 w-4" />}
                     title="Shares Ratio"
                     value="2.4%"
-                    trend={"+0.7%"}
+                    trend="+0.7%"
                     trendDirection="up"
                   />
                 </div>
@@ -254,7 +248,6 @@ const Analytics = () => {
         </CollapsibleContent>
       </Collapsible>
       
-      {/* Engagement Patterns */}
       <Collapsible 
         open={sectionsState.engagementPatterns} 
         onOpenChange={() => toggleSection('engagementPatterns')}
@@ -283,13 +276,13 @@ const Analytics = () => {
                   <TabsTrigger value="impressions">Impressions</TabsTrigger>
                 </TabsList>
                 <TabsContent value="engagement">
-                  <EngagementHeatmap platform={platform} metric="engagement" />
+                  <EngagementHeatmap platform={platform} contentType={contentType} />
                 </TabsContent>
                 <TabsContent value="reach">
-                  <EngagementHeatmap platform={platform} metric="reach" />
+                  <EngagementHeatmap platform={platform} contentType={contentType} />
                 </TabsContent>
                 <TabsContent value="impressions">
-                  <EngagementHeatmap platform={platform} metric="impressions" />
+                  <EngagementHeatmap platform={platform} contentType={contentType} />
                 </TabsContent>
               </Tabs>
             </CardContent>
@@ -297,7 +290,6 @@ const Analytics = () => {
         </CollapsibleContent>
       </Collapsible>
       
-      {/* Collaborations & Mentions */}
       <Collapsible 
         open={sectionsState.collaborations} 
         onOpenChange={() => toggleSection('collaborations')}
@@ -319,13 +311,12 @@ const Analytics = () => {
               <CardTitle className="text-lg font-medium">Collaborator Performance</CardTitle>
             </CardHeader>
             <CardContent>
-              <CollaborationTracker platform={platform} timeRange={timeRange} />
+              <CollaborationTracker platform={platform} />
             </CardContent>
           </Card>
         </CollapsibleContent>
       </Collapsible>
       
-      {/* Previous Posts Section - NEW */}
       <Collapsible 
         open={sectionsState.previousPosts} 
         onOpenChange={() => toggleSection('previousPosts')}
@@ -354,7 +345,7 @@ const Analytics = () => {
         </CollapsibleContent>
       </Collapsible>
 
-      <style jsx global>{`
+      <style jsx>{`
         @keyframes progress-indeterminate {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
