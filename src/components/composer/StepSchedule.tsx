@@ -87,7 +87,7 @@ export const StepSchedule = ({ formData, updateFormData, isFirstVisit }) => {
                   <Label className="mb-2 block">Select Time</Label>
                   <TimePicker
                     value={time}
-                    onChange={handleTimeChange}
+                    onTimeChange={handleTimeChange}
                   />
 
                   {date && time && (

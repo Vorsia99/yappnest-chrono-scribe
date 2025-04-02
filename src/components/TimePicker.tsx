@@ -10,12 +10,19 @@ import {
 import { cn } from "@/lib/utils";
 
 interface TimePickerProps {
+  value?: string;
   onTimeChange?: (time: string) => void;
 }
 
-export function TimePicker({ onTimeChange }: TimePickerProps) {
-  const [time, setTime] = React.useState<string>("");
+export function TimePicker({ value, onTimeChange }: TimePickerProps) {
+  const [time, setTime] = React.useState<string>(value || "");
   
+  React.useEffect(() => {
+    if (value !== undefined) {
+      setTime(value);
+    }
+  }, [value]);
+
   const hours = Array.from({ length: 12 }, (_, i) => i + 1);
   const minutes = ["00", "15", "30", "45"];
   const periods = ["AM", "PM"];
@@ -23,6 +30,17 @@ export function TimePicker({ onTimeChange }: TimePickerProps) {
   const [selectedHour, setSelectedHour] = React.useState<number | null>(null);
   const [selectedMinute, setSelectedMinute] = React.useState<string | null>(null);
   const [selectedPeriod, setSelectedPeriod] = React.useState<string | null>(null);
+  
+  React.useEffect(() => {
+    if (time) {
+      const match = time.match(/(\d+):(\d+)\s?(AM|PM)/i);
+      if (match) {
+        setSelectedHour(parseInt(match[1]));
+        setSelectedMinute(match[2]);
+        setSelectedPeriod(match[3].toUpperCase());
+      }
+    }
+  }, [time]);
 
   const handleHourSelect = (hour: number) => {
     setSelectedHour(hour);
