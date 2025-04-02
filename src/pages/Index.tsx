@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -162,8 +163,8 @@ const Index = () => {
       {/* Supported Platforms Section - Updated with actual icons */}
       <section className="py-16 bg-yapp-pale-blue px-4 md:px-0">
         <div className="container-custom text-center">
-          <h2 className="text-2xl md:text-3xl text-yapp-text-navy font-serif mb-3">
-            All Your Social Platforms in One Place
+          <h2 className="text-2xl md:text-3xl text-yapp-text-navy font-serif mb-3 text-center">
+            One Platform, All Your Social Media
           </h2>
           <p className="text-yapp-text-navy-light mb-10 max-w-2xl mx-auto">
             Connect and manage all your social accounts from a single dashboard
@@ -207,8 +208,8 @@ const Index = () => {
       <section className="py-16 bg-white px-4 md:px-0">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl text-yapp-text-navy font-serif mb-3">
-              Powerful Tools for Social Media Success
+            <h2 className="text-2xl md:text-3xl text-yapp-text-navy font-serif mb-3 text-center">
+              How yappHQ Transforms Your Social Media
             </h2>
             <p className="text-yapp-text-navy-light max-w-2xl mx-auto">
               Everything you need to grow your audience and measure your impact
@@ -307,7 +308,7 @@ const Index = () => {
       <section className="py-16 bg-gradient-to-br from-yapp-deep-navy to-blue-900 text-white px-4 md:px-0">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl text-white font-serif mb-3">
+            <h2 className="text-2xl md:text-3xl text-white font-serif mb-3 text-center">
               See yappHQ in Action
             </h2>
             <p className="text-white/90 max-w-2xl mx-auto">
@@ -339,8 +340,8 @@ const Index = () => {
       <section className="py-16 bg-gradient-to-br from-yapp-pale-blue to-blue-50 px-6 md:px-0">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-2xl md:text-3xl text-yapp-text-navy font-serif mb-3">
-              Loved by Social Media Managers
+            <h2 className="text-2xl md:text-3xl text-yapp-text-navy font-serif mb-3 text-center">
+              Trusted by Creators & Brands
             </h2>
             <p className="text-yapp-text-navy-light">
               Hear from the professionals who transformed their workflow with yappHQ
@@ -430,8 +431,8 @@ const Index = () => {
       <section className="py-16 bg-white px-4 md:px-0">
         <div className="container-custom max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl text-yapp-text-navy font-serif mb-3">
-              Find Your Perfect Plan
+            <h2 className="text-2xl md:text-3xl text-yapp-text-navy font-serif mb-3 text-center">
+              Choose Your Perfect Plan
             </h2>
             <p className="text-yapp-text-navy-light max-w-2xl mx-auto">
               Answer a few quick questions to get a personalized recommendation
@@ -490,7 +491,7 @@ const Index = () => {
       <section className="bg-yapp-pale-blue py-16 px-4 md:px-0">
         <div className="container-custom max-w-4xl">
           <h2 className="text-2xl md:text-3xl text-yapp-text-navy font-serif text-center mb-10">
-            Frequently Asked Questions
+            FREQUENTLY ASKED QUESTIONS
           </h2>
           
           <Accordion type="single" collapsible className="space-y-4">
