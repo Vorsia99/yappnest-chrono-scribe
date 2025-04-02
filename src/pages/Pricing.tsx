@@ -102,7 +102,7 @@ const Pricing = () => {
       {/* Header */}
       <header className="py-16 text-center">
         <div className="container mx-auto px-4 md:px-6">
-          <h1 className="text-5xl text-yapp-deep-navy mb-6">Simple, Transparent Pricing</h1>
+          <h1 className="text-5xl text-yapp-deep-navy mb-6 text-center">Simple, Transparent Pricing</h1>
           <p className="text-xl text-yapp-deep-navy/80 max-w-2xl mx-auto">
             Choose the plan that's right for you. All plans include access to all supported platforms.
           </p>
@@ -128,6 +128,7 @@ const Pricing = () => {
       {/* Pricing Grid */}
       <section className="py-8 pb-24">
         <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl text-yapp-deep-navy font-serif mb-8 text-center">Choose Your Perfect Plan</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {plans.map((plan) => (
               <div 
@@ -185,7 +186,7 @@ const Pricing = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4">Everything You Need to Succeed</h2>
+            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">One Platform, All Your Social Media</h2>
             <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
               All plans come with these powerful features to help you grow your social media presence.
             </p>
@@ -267,11 +268,67 @@ const Pricing = () => {
         </div>
       </section>
 
+      {/* Why Choose yappHQ Section */}
+      <section className="py-16 bg-yapp-pale-blue">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">Why Choose yappHQ</h2>
+            <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
+              Our platform is designed to make social media management simple and effective.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <Card className="bg-white border-0 shadow-md">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-medium text-yapp-deep-navy mb-2">Easy to Use</h3>
+                <p className="text-yapp-deep-navy/80">
+                  Our intuitive interface makes scheduling and managing content simple.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-white border-0 shadow-md">
+              <CardContent className="p-6">
+                <h3 className="text-lg font-medium text-yapp-deep-navy mb-2">Time-Saving</h3>
+                <p className="text-yapp-deep-navy/80">
+                  Batch your content creation and scheduling to save hours each week.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted by Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">Trusted by Creators & Brands</h2>
+            <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
+              Join thousands of satisfied users who've transformed their social media workflow.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* How yappHQ Transforms Section */}
+      <section className="py-16 bg-yapp-pale-blue">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">How yappHQ Transforms Your Social Media</h2>
+            <p className="text-yapp-deep-navy/80 max-w-2xl mx-auto">
+              Our comprehensive platform streamlines your entire social media workflow.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="py-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl text-yapp-deep-navy font-serif mb-4 text-center">Frequently Asked Questions</h2>
           </div>
           
           <div className="max-w-3xl mx-auto space-y-6">
@@ -309,7 +366,7 @@ const Pricing = () => {
       {/* CTA Section - Updated with purple gradient background */}
       <section className="bg-gradient-to-br from-purple-900 to-indigo-900 py-16">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <h2 className="text-3xl text-white font-serif mb-4">Ready to grow your social presence?</h2>
+          <h2 className="text-3xl text-white font-serif mb-4 text-center">Ready to grow your social presence?</h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
             Join thousands of marketers who have simplified their workflow with yappHQ
           </p>

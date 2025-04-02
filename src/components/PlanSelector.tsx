@@ -80,6 +80,9 @@ const PlanSelector = () => {
 
   return (
     <div className="w-full">
+      {/* Section title - centered */}
+      <h2 className="text-3xl text-yapp-deep-navy font-serif mb-8 text-center">Choose Your Perfect Plan</h2>
+      
       {/* Billing toggle */}
       <div className="flex items-center justify-center mb-8 space-x-4">
         <span className={`text-lg ${billingCycle === 'monthly' ? 'text-yapp-deep-navy font-medium' : 'text-yapp-deep-navy/60'}`}>
