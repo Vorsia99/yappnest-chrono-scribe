@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -122,7 +121,7 @@ const Index = () => {
           <div className="grid grid-cols-2 md:flex md:justify-around items-center gap-8 md:gap-12 flex-wrap">
             <div className="h-12 flex items-center justify-center grayscale hover:grayscale-0 transition-all">
               <svg className="h-8" viewBox="0 0 100 30" fill="currentColor">
-                <path d="M12.6 5.2H8.7v19.6h3.9V5.2zm26 0h-6.4v19.6H36v-7.5h2.6c4.3 0 7.9-2.4 7.9-6.1s-3.6-6-7.9-6zm.1 9H36V8.4h2.7c2.4 0 4.1 1 4.1 2.9 0 1.9-1.7 2.9-4.1 2.9zm17.2-9h-6.9v19.6h6.8c6.8 0 11.6-4.4 11.6-9.9 0-5.4-4.8-9.7-11.5-9.7zm-.2 16.4h-2.8V8.4h2.8c4.4 0 7.7 2.6 7.7 6.5s-3.3 6.7-7.7 6.7zM70 5.2h3.9v19.6H70V5.2zm14.3 0h-5.8v19.6h3.9v-6.6h1.9c4.4 0 7.7-2.9 7.7-6.5s-3.3-6.5-7.7-6.5zm0 9.7h-1.9V8.4h1.9c2.2 0 3.9 1.3 3.9 3.3s-1.7 3.2-3.9 3.2z"/>
+                <path d="M12.6 5.2H8.7v19.6h3.9V5.2zm26 0h-6.4v19.6H36v-7.5h2.6c4.3 0 7.9-2.4 7.9-6.1s-3.6-6-7.9-6zm.1 9H36V8.4h2.7c2.4 0 4.1 1 4.1 2.9 0 1.9-1.7 2.9-4.1 2.9zm17.2-9h-6.9v19.6h6.8c6.8 0 11.6-4.4 11.6-9.9 0-5.4-4.8-9.7-11.5-9.7zm-.2 16.4h-2.8V8.4h2.8c4.4 0 7.7 2.6 7.7 6.5s-3.3 6.7-7.7 6.7zM70 5.2h3.9v19H70V5.2zm14.3 0h-5.8v19.6h3.9v-6.6h1.9c4.4 0 7.7-2.9 7.7-6.5s-3.3-6.5-7.7-6.5zm0 9.7h-1.9V8.4h1.9c2.2 0 3.9 1.3 3.9 3.3s-1.7 3.2-3.9 3.2z"/>
               </svg>
             </div>
             <div className="h-12 flex items-center justify-center grayscale hover:grayscale-0 transition-all">
@@ -565,7 +564,7 @@ const Index = () => {
               <Button variant="cta" size="lg" className="w-full sm:w-auto shadow-lg">
                 Start your 30-day free trial
               </Button>
-              <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white/10 w-full sm:w-auto">
+              <Button variant="cta" className="w-full sm:w-auto">
                 Schedule a demo
               </Button>
             </div>
