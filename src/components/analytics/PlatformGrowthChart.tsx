@@ -1,8 +1,8 @@
 
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import {
-  Area,
-  AreaChart,
+  Line,
+  LineChart,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -62,165 +62,135 @@ export function PlatformGrowthChart({ platform = 'all', timeRange = '30days' }: 
         bluesky: { color: "#0085FF" },
         facebook: { color: "#1877F2" }
       }}>
-        <AreaChart
+        <LineChart
           data={filteredData}
           margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
         >
-          <defs>
-            {/* Gradient definitions for each platform */}
-            <linearGradient id="colorInstagram" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#E1306C" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#E1306C" stopOpacity={0}/>
-            </linearGradient>
-            <linearGradient id="colorYoutube" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#FF0000" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#FF0000" stopOpacity={0}/>
-            </linearGradient>
-            <linearGradient id="colorX" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#000000" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#000000" stopOpacity={0}/>
-            </linearGradient>
-            <linearGradient id="colorTiktok" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#69C9D0" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#69C9D0" stopOpacity={0}/>
-            </linearGradient>
-            <linearGradient id="colorThreads" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#313131" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#313131" stopOpacity={0}/>
-            </linearGradient>
-            <linearGradient id="colorLinkedin" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#0A66C2" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#0A66C2" stopOpacity={0}/>
-            </linearGradient>
-            <linearGradient id="colorPinterest" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#E60023" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#E60023" stopOpacity={0}/>
-            </linearGradient>
-            <linearGradient id="colorBluesky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#0085FF" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#0085FF" stopOpacity={0}/>
-            </linearGradient>
-            <linearGradient id="colorFacebook" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#1877F2" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#1877F2" stopOpacity={0}/>
-            </linearGradient>
-          </defs>
+          <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
           <ChartTooltip content={<ChartTooltipContent />} />
           
           {/* Show all platforms or just the selected one */}
           {(platform === 'all' || platform === 'instagram') && (
-            <Area 
+            <Line 
               type="monotone" 
               dataKey="instagram" 
               name="Instagram"
               stroke="#E1306C" 
-              fillOpacity={1} 
-              fill="url(#colorInstagram)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
               animationDuration={1000}
             />
           )}
           
           {(platform === 'all' || platform === 'youtube') && (
-            <Area 
+            <Line 
               type="monotone" 
               dataKey="youtube" 
               name="YouTube"
               stroke="#FF0000" 
-              fillOpacity={1} 
-              fill="url(#colorYoutube)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
               animationDuration={1000}
             />
           )}
           
           {(platform === 'all' || platform === 'x') && (
-            <Area 
+            <Line 
               type="monotone" 
               dataKey="x" 
               name="X"
               stroke="#000000" 
-              fillOpacity={1} 
-              fill="url(#colorX)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
               animationDuration={1000}
             />
           )}
           
           {(platform === 'all' || platform === 'tiktok') && (
-            <Area 
+            <Line 
               type="monotone" 
               dataKey="tiktok" 
               name="TikTok"
               stroke="#69C9D0" 
-              fillOpacity={1} 
-              fill="url(#colorTiktok)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
               animationDuration={1000}
             />
           )}
           
           {(platform === 'all' || platform === 'threads') && (
-            <Area 
+            <Line 
               type="monotone" 
               dataKey="threads" 
               name="Threads"
               stroke="#313131" 
-              fillOpacity={1} 
-              fill="url(#colorThreads)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
               animationDuration={1000}
             />
           )}
           
           {(platform === 'all' || platform === 'linkedin') && (
-            <Area 
+            <Line 
               type="monotone" 
               dataKey="linkedin" 
               name="LinkedIn"
               stroke="#0A66C2" 
-              fillOpacity={1} 
-              fill="url(#colorLinkedin)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
               animationDuration={1000}
             />
           )}
           
           {(platform === 'all' || platform === 'pinterest') && (
-            <Area 
+            <Line 
               type="monotone" 
               dataKey="pinterest" 
               name="Pinterest"
               stroke="#E60023" 
-              fillOpacity={1} 
-              fill="url(#colorPinterest)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
               animationDuration={1000}
             />
           )}
           
           {(platform === 'all' || platform === 'bluesky') && (
-            <Area 
+            <Line 
               type="monotone" 
               dataKey="bluesky" 
               name="Bluesky"
               stroke="#0085FF" 
-              fillOpacity={1} 
-              fill="url(#colorBluesky)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
               animationDuration={1000}
             />
           )}
           
           {(platform === 'all' || platform === 'facebook') && (
-            <Area 
+            <Line 
               type="monotone" 
               dataKey="facebook" 
               name="Facebook"
               stroke="#1877F2" 
-              fillOpacity={1} 
-              fill="url(#colorFacebook)" 
+              strokeWidth={2}
+              dot={{ r: 4 }}
+              activeDot={{ r: 6 }}
               animationDuration={1000}
             />
           )}
           
           <Legend />
-        </AreaChart>
+        </LineChart>
       </ChartContainer>
     </div>
   );
