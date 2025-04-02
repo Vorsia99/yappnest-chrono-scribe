@@ -158,6 +158,10 @@
   .reduced-font {
     @apply font-normal text-sm;
   }
+  
+  .bg-purple-gradient {
+    @apply bg-gradient-to-br from-purple-900 to-indigo-900;
+  }
 }
 
 /* Custom spacing utilities */

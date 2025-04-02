@@ -97,8 +97,8 @@ const Features = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-yapp-deep-navy py-16 text-center mt-16">
+      {/* CTA Section - Updated with purple gradient background */}
+      <section className="bg-gradient-to-br from-purple-900 to-indigo-900 py-16 text-center mt-16">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl text-white mb-4">Ready to get started?</h2>
           <p className="text-white/80 mb-8 max-w-2xl mx-auto">
