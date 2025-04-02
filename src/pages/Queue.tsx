@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -6,12 +5,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowDown, ArrowUp, Calendar, ChevronDown, Edit, Filter, MoreHorizontal, Pencil, Search, Trash2, X } from "lucide-react";
+import { ArrowDown, ArrowUp, Calendar, ChevronDown, ChevronLeft, ChevronRight, Edit, Filter, MoreHorizontal, Pencil, Search, Trash2, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { UpcomingPostCard } from "@/components/UpcomingPostCard";
 import { useState } from "react";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { format, startOfWeek, endOfWeek, eachDayOfInterval, addDays, isSameDay } from "date-fns";
 
 const Queue = () => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
@@ -19,6 +20,9 @@ const Queue = () => {
   const [platformFilter, setPlatformFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("date-desc");
+  const [calendarView, setCalendarView] = useState<"week" | "month">("month");
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [weekStartDate, setWeekStartDate] = useState<Date>(startOfWeek(new Date()));
 
   const scheduledPosts = [
     { id: 1, title: "Summer Collection Launch", type: "post", platform: "instagram", status: "scheduled", date: "Jun 15, 2023", time: "10:00 AM" },
@@ -31,6 +35,29 @@ const Queue = () => {
     { id: 8, title: "Company Update", type: "post", platform: "instagram", status: "scheduled", date: "Jun 22, 2023", time: "1:15 PM" },
     { id: 9, title: "Holiday Promotion", type: "story", platform: "facebook", status: "scheduled", date: "Jun 25, 2023", time: "11:30 AM" },
   ];
+
+  const getPostDate = (dateString: string) => {
+    if (dateString === "-") return null;
+    return new Date(dateString + ", 2023");
+  };
+
+  const getPostsForDate = (date: Date) => {
+    if (!date) return [];
+    return scheduledPosts.filter(post => {
+      const postDate = getPostDate(post.date);
+      return postDate && isSameDay(postDate, date);
+    });
+  };
+
+  const weekDates = eachDayOfInterval({
+    start: weekStartDate,
+    end: endOfWeek(weekStartDate)
+  });
+
+  const navigateWeek = (direction: 'next' | 'prev') => {
+    const days = direction === 'next' ? 7 : -7;
+    setWeekStartDate(addDays(weekStartDate, days));
+  };
 
   const platformColors = {
     instagram: "bg-gradient-to-r from-purple-500 to-pink-500",
@@ -75,7 +102,6 @@ const Queue = () => {
     }
   };
 
-  // Filter posts based on selected filters
   const filteredPosts = scheduledPosts.filter(post => {
     const matchesContentType = contentTypeFilter === "all" || post.type === contentTypeFilter;
     const matchesPlatform = platformFilter === "all" || post.platform === platformFilter;
@@ -83,7 +109,6 @@ const Queue = () => {
     return matchesContentType && matchesPlatform && matchesStatus;
   });
 
-  // Sort posts based on selected sort option
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     switch (sortBy) {
       case "date-asc":
@@ -362,14 +387,190 @@ const Queue = () => {
             </TabsContent>
             
             <TabsContent value="calendar">
-              <div className="h-[500px] flex items-center justify-center border rounded-md">
-                <div className="text-center">
-                  <Calendar className="mx-auto h-12 w-12 text-muted-foreground" />
-                  <h3 className="mt-4 text-lg font-medium">Calendar View</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Calendar view will be shown here
-                  </p>
+              <div className="space-y-4 border rounded-md p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex space-x-2">
+                    <Button variant="outline" size="sm" onClick={() => setCalendarView("week")}>
+                      Week
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => setCalendarView("month")}>
+                      Month
+                    </Button>
+                  </div>
+                  {calendarView === "week" && (
+                    <div className="flex items-center space-x-4">
+                      <Button variant="ghost" size="icon" onClick={() => navigateWeek('prev')}>
+                        <ChevronLeft className="h-4 w-4" />
+                      </Button>
+                      <span className="text-sm font-medium">
+                        {format(weekStartDate, "MMMM d")} - {format(endOfWeek(weekStartDate), "MMMM d, yyyy")}
+                      </span>
+                      <Button variant="ghost" size="icon" onClick={() => navigateWeek('next')}>
+                        <ChevronRight className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
+                
+                {calendarView === "month" ? (
+                  <div>
+                    <CalendarComponent
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={setSelectedDate}
+                      className="rounded-md border"
+                      modifiers={{
+                        post: scheduledPosts
+                          .filter(post => post.type === 'post' && post.date !== '-')
+                          .map(post => getPostDate(post.date) as Date),
+                        story: scheduledPosts
+                          .filter(post => post.type === 'story' && post.date !== '-')
+                          .map(post => getPostDate(post.date) as Date)
+                      }}
+                      modifiersClassNames={{
+                        post: 'bg-green-100 text-green-800 rounded-full',
+                        story: 'bg-pink-100 text-pink-800 rounded-full'
+                      }}
+                      components={{
+                        DayContent: (props) => {
+                          const postsForThisDay = getPostsForDate(props.date);
+                          
+                          return (
+                            <div className="relative w-full h-full">
+                              <div className={`flex items-center justify-center ${postsForThisDay.length > 0 ? 'font-bold' : ''}`}>
+                                {props.date.getDate()}
+                              </div>
+                              <div className="absolute bottom-0 left-0 right-0 flex justify-center space-x-1">
+                                {postsForThisDay.some(post => post.type === 'post') && (
+                                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full" />
+                                )}
+                                {postsForThisDay.some(post => post.type === 'story') && (
+                                  <div className="w-1.5 h-1.5 bg-pink-500 rounded-full" />
+                                )}
+                              </div>
+                            </div>
+                          );
+                        }
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <div className="grid grid-cols-7 gap-1">
+                      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                        <div key={day} className="text-center py-2 text-sm font-medium text-muted-foreground">
+                          {day}
+                        </div>
+                      ))}
+                      
+                      {weekDates.map(date => {
+                        const postsForDay = getPostsForDate(date);
+                        const isToday = isSameDay(date, new Date());
+                        
+                        return (
+                          <div
+                            key={date.toString()}
+                            className={`border rounded-md min-h-[120px] p-2 ${isToday ? 'border-primary' : ''} ${
+                              isSameDay(date, selectedDate) ? 'bg-accent' : ''
+                            }`}
+                            onClick={() => setSelectedDate(date)}
+                          >
+                            <div className="text-right mb-1">
+                              <span className={`text-sm ${isToday ? 'bg-primary text-primary-foreground rounded-full px-2 py-0.5' : ''}`}>
+                                {format(date, "d")}
+                              </span>
+                            </div>
+                            <div className="space-y-1">
+                              {postsForDay.slice(0, 3).map(post => (
+                                <div
+                                  key={post.id}
+                                  className={`text-xs px-2 py-1 rounded-sm truncate ${
+                                    post.type === 'post' ? 'bg-green-100 text-green-800' : 'bg-pink-100 text-pink-800'
+                                  }`}
+                                >
+                                  {post.time} - {post.title}
+                                </div>
+                              ))}
+                              {postsForDay.length > 3 && (
+                                <div className="text-xs text-muted-foreground text-center">
+                                  +{postsForDay.length - 3} more
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+                
+                {selectedDate && (
+                  <div className="mt-6 border-t pt-4">
+                    <h3 className="font-medium mb-3">
+                      {format(selectedDate, "EEEE, MMMM d, yyyy")}
+                    </h3>
+                    <div className="space-y-3">
+                      {getPostsForDate(selectedDate).length > 0 ? (
+                        getPostsForDate(selectedDate).map(post => (
+                          <div key={post.id} className="flex items-center justify-between p-3 border rounded-md hover:bg-accent transition-colors">
+                            <div className="flex items-center space-x-3">
+                              <Badge className={`${(typeColors as any)[post.type]}`}>
+                                {post.type.charAt(0).toUpperCase() + post.type.slice(1)}
+                              </Badge>
+                              <div>
+                                <div className="font-medium">{post.title}</div>
+                                <div className="text-sm text-muted-foreground flex items-center space-x-2">
+                                  <Badge className={`${(platformColors as any)[post.platform]} text-white border-0`}>
+                                    {post.platform.charAt(0).toUpperCase() + post.platform.slice(1)}
+                                  </Badge>
+                                  <span>•</span>
+                                  <span>{post.time}</span>
+                                  <span>•</span>
+                                  <Badge variant="outline" className={`${(statusColors as any)[post.status]}`}>
+                                    {post.status.charAt(0).toUpperCase() + post.status.slice(1)}
+                                  </Badge>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center">
+                              <Button variant="ghost" size="icon">
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button variant="ghost" size="icon">
+                                    <MoreHorizontal className="h-4 w-4" />
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                  <DropdownMenuItem>
+                                    <Edit className="mr-2 h-4 w-4" /> Edit
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem>
+                                    <Calendar className="mr-2 h-4 w-4" /> Reschedule
+                                  </DropdownMenuItem>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem className="text-destructive">
+                                    <Trash2 className="mr-2 h-4 w-4" /> Delete
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-center py-8 text-muted-foreground">
+                          <Calendar className="h-12 w-12 mx-auto mb-3" />
+                          <h4 className="font-medium mb-1">No content scheduled</h4>
+                          <p className="text-sm mb-4">No posts or stories scheduled for this date.</p>
+                          <Button>
+                            <Pencil className="mr-2 h-4 w-4" /> Create Post
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </TabsContent>
           </Tabs>
