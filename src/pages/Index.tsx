@@ -136,7 +136,7 @@ const Index = () => {
             </div>
             <div className="h-12 flex items-center justify-center grayscale hover:grayscale-0 transition-all">
               <svg className="h-7" viewBox="0 0 150 30" fill="currentColor">
-                <path d="M10.4 6.5C4.7 6.5 0 11.1 0 16.8s4.7 10.3 10.4 10.3c5.7 0 10.4-4.6 10.4-10.3S16.1 6.5 10.4 6.5zm0 16.7c-3.5 0-6.4-2.9-6.4-6.4 0-3.5 2.9-6.4 6.4-6.4 3.5 0 6.4 2.9 6.4 6.4 0 3.5-2.9 6.4-6.4 6.4zM35.2 6.8h-4v12.6c0 3.5-2.8 6.3-6.3 6.3v4c5.7 0 10.3-4.6 10.3-10.3V6.8zm38.9 0v17h4v-17h-4zm-20.5 0c-4.7 0-8.6 3.8-8.6 8.6v8.4h4v-8.4c0-2.5 2-4.6 4.6-4.6 2.5 0 4.6 2 4.6 4.6v8.4h4v-8.4c-.1-4.8-3.9-8.6-8.6-8.6zm40.1 0v10.6c0 2.5-2 4.6-4.6 4.6-2.5 0-4.6-2-4.6-4.6V6.8h-4v10.6c0 4.7 3.8 8.6 8.6 8.6 4.7 0 8.6-3.8 8.6-8.6V6.8h-4zM129 6.8h-8v4h4v13h4v-17zm16.3 0h-8.6c-2.5 0-4.6 2-4.6 4.6 0 2.1 1.4 3.7 3.3 4.3l4.2 1.4c.9.3 1.4 1.1 1.4 2 0 1.1-.9 2-2 2h-6.5v4h6.5c3.1 0 5.7-2.5 5.7-5.7 0-2.5-1.6-4.7-4-5.4l-3.6-1.2c-.5-.2-.9-.7-.9-1.3 0-.7.6-1.3 1.3-1.3h6.6v-3.4h1.2z"/>
+                <path d="M10.4 6.5C4.7 6.5 0 11.1 0 16.8s4.7 10.3 10.4 10.3c5.7 0 10.4-4.6 10.4-10.3S16.1 6.5 10.4 6.5zm0 16.7c-3.5 0-6.4-2.9-6.4-6.4 0-3.5 2.9-6.4 6.4-6.4 3.5 0 6.4 2.9 6.4 6.4 0 3.5-2.9 6.4-6.4 6.4zM35.2 6.8h-4v12.6c0 3.5-2.8 6.3-6.3 6.3v4c5.7 0 10.3-4.6 10.3-10.3V6.8zm38.9 0v17h4v-17h-4zm-20.5 0c-4.7 0-8.6 3.8-8.6 8.6v8.4h4v-8.4c0-2.5 2-4.6 4.6-4.6 2.5 0 4.6 2 4.6 4.6v8.4h4v-8.4c-.1-4.3-2.4-7.2-6.3-7.2m17.2 0c-5.9 0-9.3 4.4-9.3 9.2 0 5.3 3.9 9 9.5 9 3.7 0 6.9-1.6 8.4-5.2h-5c-.7 1-2 1.5-3.4 1.5-2 0-3.8-1-4-3.1h12.3c.8-6.2-3.4-11.4-8.5-11.4z"/>
               </svg>
             </div>
           </div>
@@ -552,8 +552,8 @@ const Index = () => {
         </div>
       </section>
       
-      {/* CTA Section - Enhanced with better visuals */}
-      <section className="bg-gradient-to-r from-yapp-deep-navy to-blue-900 py-16 text-center px-4 md:px-0">
+      {/* CTA Section - Enhanced with better visuals and PURPLE GRADIENT BACKGROUND */}
+      <section className="bg-purple-gradient py-16 text-center px-4 md:px-0">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl md:text-3xl lg:text-4xl text-white font-serif mb-4">Ready to transform your social media?</h2>
