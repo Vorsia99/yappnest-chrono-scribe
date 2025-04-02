@@ -14,9 +14,9 @@ import {
   Mail, 
   Lock, 
   User,
-  Google, 
-  Facebook, 
-  Linkedin
+  Globe, // Replaced Google with Globe
+  Facebook as FacebookIcon, // Renamed to avoid confusion
+  Linkedin as LinkedinIcon // Renamed to avoid confusion
 } from 'lucide-react';
 
 const SignUp = () => {
@@ -203,7 +203,7 @@ const SignUp = () => {
                     onClick={() => handleSocialSignUp('Google')}
                     disabled={isLoading}
                   >
-                    <Google className="h-4 w-4" />
+                    <Globe className="h-4 w-4" /> {/* Changed from Google to Globe */}
                     Continue with Google
                   </Button>
                   
@@ -213,7 +213,7 @@ const SignUp = () => {
                     onClick={() => handleSocialSignUp('Facebook')}
                     disabled={isLoading}
                   >
-                    <Facebook className="h-4 w-4" />
+                    <FacebookIcon className="h-4 w-4" /> {/* Renamed to FacebookIcon */}
                     Continue with Facebook
                   </Button>
                   
@@ -223,7 +223,7 @@ const SignUp = () => {
                     onClick={() => handleSocialSignUp('LinkedIn')}
                     disabled={isLoading}
                   >
-                    <Linkedin className="h-4 w-4" />
+                    <LinkedinIcon className="h-4 w-4" /> {/* Renamed to LinkedinIcon */}
                     Continue with LinkedIn
                   </Button>
                   
