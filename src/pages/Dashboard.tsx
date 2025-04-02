@@ -1,7 +1,20 @@
 
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Edit2, Trash2, Calendar, Clock, ArrowRight, Users, BarChart3, Activity } from "lucide-react";
+import { 
+  Edit2, 
+  Trash2, 
+  Calendar, 
+  Clock, 
+  ArrowRight, 
+  Users, 
+  BarChart3, 
+  Activity, 
+  ChevronDown, 
+  ChevronUp,
+  GlobeIcon,
+  LayoutDashboard
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +28,10 @@ import { PlatformStat } from "@/components/PlatformStat";
 import { StatsCard } from "@/components/StatsCard";
 import { QuickActions } from "@/components/QuickActions";
 import { TopPerformingPosts } from "@/components/TopPerformingPosts";
+import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { DashboardPostsTable } from "@/components/DashboardPostsTable";
+import { ContentOverviewChart } from "@/components/ContentOverviewChart";
 
 // Post types for TypeScript
 interface Post {
@@ -25,6 +42,7 @@ interface Post {
   date: string;
   time: string;
   status: "draft" | "scheduled";
+  prediction?: "positive" | "negative" | "neutral";
 }
 
 const Dashboard = () => {
@@ -37,7 +55,8 @@ const Dashboard = () => {
       image: "/lovable-uploads/1f5dc3cd-0e25-4aa0-ba2f-889d901ac525.png",
       date: "April 20, 2024",
       time: "10:00 AM",
-      status: "scheduled"
+      status: "scheduled",
+      prediction: "positive"
     },
     {
       id: 2,
@@ -46,7 +65,8 @@ const Dashboard = () => {
       image: "/lovable-uploads/14e1f6ac-5248-44df-a433-8eaa03333e2e.png",
       date: "April 18, 2024",
       time: "2:00 PM",
-      status: "scheduled"
+      status: "scheduled",
+      prediction: "neutral"
     },
     {
       id: 3,
@@ -54,7 +74,8 @@ const Dashboard = () => {
       content: "New video coming next week. Stay tuned!",
       date: "April 16, 2024",
       time: "9:00 AM",
-      status: "scheduled"
+      status: "scheduled",
+      prediction: "negative"
     }
   ]);
 
@@ -76,8 +97,27 @@ const Dashboard = () => {
   
   // State for number of posts to display
   const [postsToDisplay, setPostsToDisplay] = useState(5);
+  
+  // State for section visibility
+  const [sectionsState, setSectionsState] = useState({
+    upcomingPosts: true,
+    analytics: true,
+    connectedAccounts: true,
+    topPosts: true
+  });
+  
+  // State for view type
+  const [postsViewType, setPostsViewType] = useState<"cards" | "list">("cards");
 
   const { toast } = useToast();
+
+  // Toggle section visibility
+  const toggleSection = (section: keyof typeof sectionsState) => {
+    setSectionsState({
+      ...sectionsState,
+      [section]: !sectionsState[section]
+    });
+  };
 
   // Handle content change
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -248,6 +288,23 @@ const Dashboard = () => {
   const handlePostsToDisplayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPostsToDisplay(Number(e.target.value));
   };
+  
+  // Render prediction badge
+  const renderPredictionBadge = (prediction?: "positive" | "negative" | "neutral") => {
+    if (!prediction) return null;
+    
+    const variants = {
+      positive: "bg-green-100 text-green-800",
+      negative: "bg-red-100 text-red-800",
+      neutral: "bg-blue-100 text-blue-800"
+    };
+    
+    return (
+      <Badge className={variants[prediction]}>
+        {prediction.charAt(0).toUpperCase() + prediction.slice(1)}
+      </Badge>
+    );
+  };
 
   return (
     <div className="space-y-8">
@@ -257,6 +314,12 @@ const Dashboard = () => {
           <p className="text-muted-foreground">Welcome back! Here's an overview of your social media activity</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button variant="cta-dark" className="flex items-center gap-2">
+              <Edit2 size={16} />
+              <span>Create New Post</span>
+            </Button>
+          </DialogTrigger>
           <DialogContent className="max-w-3xl">
             <DialogHeader>
               <DialogTitle>Create New Post</DialogTitle>
@@ -329,11 +392,30 @@ const Dashboard = () => {
       </div>
 
       {/* Upcoming Posts Section */}
-      <div>
+      <Collapsible 
+        open={sectionsState.upcomingPosts} 
+        onOpenChange={() => toggleSection('upcomingPosts')}
+        className="mb-8"
+      >
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-medium">Your Next Posts</h2>
+          <div className="flex items-center gap-2">
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="p-1 h-auto">
+                {sectionsState.upcomingPosts ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </Button>
+            </CollapsibleTrigger>
+            <h2 className="text-xl font-medium">Your Next Posts</h2>
+          </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
+              <select
+                className="text-sm border rounded py-1 px-2 bg-white"
+                value={postsViewType}
+                onChange={(e) => setPostsViewType(e.target.value as "cards" | "list")}
+              >
+                <option value="cards">Card View</option>
+                <option value="list">List View</option>
+              </select>
               <label htmlFor="postsCount" className="text-sm text-yapp-deep-navy/70">Show:</label>
               <select 
                 id="postsCount" 
@@ -352,124 +434,205 @@ const Dashboard = () => {
           </div>
         </div>
         
-        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none">
-          {scheduledPosts.slice(0, postsToDisplay).map((post) => (
-            <div key={post.id} className="flex-shrink-0 w-[280px]">
-              <UpcomingPostCard 
-                post={post} 
-                onDelete={() => handleDeletePost(post.id)}
-                onEdit={() => handleEditPost(post)}
-              />
-            </div>
-          ))}
-          {scheduledPosts.length === 0 && (
+        <CollapsibleContent>
+          {scheduledPosts.length === 0 ? (
             <div className="w-full flex flex-col items-center justify-center p-8 bg-yapp-pale-blue rounded-lg">
               <p className="text-center text-muted-foreground mb-4">No upcoming posts. Create a new post to get started.</p>
               <Button variant="cta-dark" onClick={() => setIsDialogOpen(true)}>
                 Create New Post
               </Button>
             </div>
+          ) : postsViewType === "cards" ? (
+            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none">
+              {scheduledPosts.slice(0, postsToDisplay).map((post) => (
+                <div key={post.id} className="flex-shrink-0 w-[280px]">
+                  <UpcomingPostCard 
+                    post={post} 
+                    onDelete={() => handleDeletePost(post.id)}
+                    onEdit={() => handleEditPost(post)}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <DashboardPostsTable 
+              posts={scheduledPosts.slice(0, postsToDisplay)} 
+              onDelete={handleDeletePost} 
+              onEdit={handleEditPost} 
+            />
           )}
-        </div>
-      </div>
+        </CollapsibleContent>
+      </Collapsible>
 
       {/* Analytics Overview Section */}
-      <div>
-        <h2 className="text-xl font-medium mb-4">Analytics Overview</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatsCard
-            title="Total Posts Published"
-            value="42"
-            description="Published"
-            icon={<Activity className="h-4 w-4 text-muted-foreground" />}
-            trend="up"
-            trendValue="+12% this month"
-          />
-          <StatsCard
-            title="Total Engagement"
-            value="3.5%"
-            description="Avg. Engagement"
-            icon={<BarChart3 className="h-4 w-4 text-muted-foreground" />}
-            trend="down"
-            trendValue="-0.8% this month"
-          />
-          <StatsCard
-            title="Total Reach"
-            value="10K"
-            description="Accounts Reached"
-            icon={<Users className="h-4 w-4 text-muted-foreground" />}
-            trend="up"
-            trendValue="+5% this month"
-          />
-          <StatsCard
-            title="Top Platform"
-            value="Instagram"
-            description="4.2% engagement"
-            icon={<Activity className="h-4 w-4 text-muted-foreground" />}
-            trend="up"
-            trendValue="+1.5% this month"
-          />
+      <Collapsible 
+        open={sectionsState.analytics} 
+        onOpenChange={() => toggleSection('analytics')}
+        className="mb-8"
+      >
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center gap-2">
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="p-1 h-auto">
+                {sectionsState.analytics ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </Button>
+            </CollapsibleTrigger>
+            <h2 className="text-xl font-medium">Analytics Overview</h2>
+          </div>
         </div>
-        <div className="mt-4 flex justify-center gap-4">
-          <Button variant="outline" className="gap-2">
-            View Full Analytics <ArrowRight size={16} />
-          </Button>
-          <Button variant="outline" className="gap-2">
-            Export Overview
-          </Button>
-        </div>
-      </div>
+        
+        <CollapsibleContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <StatsCard
+              title="Total Posts Published"
+              value="42"
+              description="Published"
+              icon={<Activity className="h-4 w-4 text-muted-foreground" />}
+              trend="up"
+              trendValue="+12% this month"
+            />
+            <StatsCard
+              title="Total Engagement"
+              value="3.5%"
+              description="Avg. Engagement"
+              icon={<BarChart3 className="h-4 w-4 text-muted-foreground" />}
+              trend="down"
+              trendValue="-0.8% this month"
+            />
+            <StatsCard
+              title="Total Reach"
+              value="10K"
+              description="Accounts Reached"
+              icon={<Users className="h-4 w-4 text-muted-foreground" />}
+              trend="up"
+              trendValue="+5% this month"
+            />
+            <StatsCard
+              title="Top Platform"
+              value="Instagram"
+              description="4.2% engagement"
+              icon={<Activity className="h-4 w-4 text-muted-foreground" />}
+              trend="up"
+              trendValue="+1.5% this month"
+            />
+          </div>
+          
+          <div className="mt-6 mb-4">
+            <Tabs defaultValue="30days" className="w-full">
+              <TabsList>
+                <TabsTrigger value="7days">7 Days</TabsTrigger>
+                <TabsTrigger value="30days">30 Days</TabsTrigger>
+                <TabsTrigger value="90days">90 Days</TabsTrigger>
+                <TabsTrigger value="year">Year</TabsTrigger>
+              </TabsList>
+              <TabsContent value="7days" className="mt-4">
+                <ContentOverviewChart period="7days" />
+              </TabsContent>
+              <TabsContent value="30days" className="mt-4">
+                <ContentOverviewChart period="30days" />
+              </TabsContent>
+              <TabsContent value="90days" className="mt-4">
+                <ContentOverviewChart period="90days" />
+              </TabsContent>
+              <TabsContent value="year" className="mt-4">
+                <ContentOverviewChart period="year" />
+              </TabsContent>
+            </Tabs>
+          </div>
+          
+          <div className="mt-4 flex justify-center gap-4">
+            <Button variant="outline" className="gap-2">
+              View Full Analytics <ArrowRight size={16} />
+            </Button>
+            <Button variant="outline" className="gap-2">
+              Export Overview
+            </Button>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
 
       {/* Connected Accounts Section */}
-      <div>
-        <h2 className="text-xl font-medium mb-4">Connected Accounts</h2>
-        <Card className="bg-yapp-pale-blue">
-          <CardContent className="p-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <PlatformStat
-                platform="instagram"
-                username="@yourusername"
-                followers="5,432"
-                engagement="4.2%"
-                growth="+2.3%"
-                posts="128"
-                status="connected"
-              />
-              <PlatformStat
-                platform="x"
-                username="@yourusername"
-                followers="2,100"
-                engagement="1.5%"
-                growth="+0.8%"
-                posts="95"
-                status="connected"
-              />
-              <PlatformStat
-                platform="linkedin"
-                username="Your Company"
-                followers="1,890"
-                engagement="3.1%"
-                growth="+1.4%"
-                posts="42"
-                status="connected"
-              />
-            </div>
-            <div className="mt-6 flex justify-center gap-4">
-              <Button variant="outline">
-                Manage All Accounts
+      <Collapsible 
+        open={sectionsState.connectedAccounts} 
+        onOpenChange={() => toggleSection('connectedAccounts')}
+        className="mb-8"
+      >
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center gap-2">
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="p-1 h-auto">
+                {sectionsState.connectedAccounts ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
               </Button>
-              <Button variant="outline">
-                Connect More Accounts
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            </CollapsibleTrigger>
+            <h2 className="text-xl font-medium">Connected Accounts</h2>
+          </div>
+        </div>
+        
+        <CollapsibleContent>
+          <Card className="bg-yapp-pale-blue">
+            <CardContent className="p-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <PlatformStat
+                  platform="instagram"
+                  username="@yourusername"
+                  followers="5,432"
+                  engagement="4.2%"
+                  growth="+2.3%"
+                  posts="128"
+                  status="connected"
+                />
+                <PlatformStat
+                  platform="x"
+                  username="@yourusername"
+                  followers="2,100"
+                  engagement="1.5%"
+                  growth="+0.8%"
+                  posts="95"
+                  status="connected"
+                />
+                <PlatformStat
+                  platform="linkedin"
+                  username="Your Company"
+                  followers="1,890"
+                  engagement="3.1%"
+                  growth="+1.4%"
+                  posts="42"
+                  status="connected"
+                />
+              </div>
+              <div className="mt-6 flex justify-center gap-4">
+                <Button variant="outline">
+                  Manage All Accounts
+                </Button>
+                <Button variant="outline">
+                  Connect More Accounts
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </CollapsibleContent>
+      </Collapsible>
 
       {/* Top Performing Posts Section */}
-      <div>
-        <TopPerformingPosts />
-      </div>
+      <Collapsible 
+        open={sectionsState.topPosts} 
+        onOpenChange={() => toggleSection('topPosts')}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center gap-2">
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="p-1 h-auto">
+                {sectionsState.topPosts ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              </Button>
+            </CollapsibleTrigger>
+            <h2 className="text-xl font-medium">Top Performing Posts</h2>
+          </div>
+        </div>
+        
+        <CollapsibleContent>
+          <TopPerformingPosts limit={3} />
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 };
