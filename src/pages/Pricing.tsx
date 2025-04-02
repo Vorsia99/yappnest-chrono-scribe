@@ -145,7 +145,8 @@ const Pricing = () => {
                   <h3 className="text-xl font-medium text-yapp-deep-navy mb-2">{plan.name}</h3>
                   <div className="flex items-baseline mt-4 mb-6">
                     <span className="text-4xl font-bold text-yapp-deep-navy">
-                      ${billingCycle === 'yearly' ? calculateYearlyPrice(plan.price) : plan.price}
+                      {plan.price === 0 ? 'Free' : 
+                      `$${billingCycle === 'yearly' ? calculateYearlyPrice(plan.price) : plan.price}`}
                     </span>
                     <span className="text-yapp-deep-navy/70 ml-1">/month</span>
                   </div>

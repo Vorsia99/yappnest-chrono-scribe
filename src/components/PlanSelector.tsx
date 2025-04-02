@@ -115,7 +115,8 @@ const PlanSelector = () => {
               <h3 className="text-xl font-medium text-yapp-deep-navy mb-2">{plan.name}</h3>
               <div className="flex items-baseline mt-4 mb-4">
                 <span className="text-4xl font-bold text-yapp-deep-navy">
-                  {formatPrice(plan[billingCycle === 'yearly' ? 'price.yearly' : 'price.monthly'])}
+                  {plan.price[billingCycle === 'yearly' ? 'yearly' : 'monthly'] === 0 ? 'Free' : 
+                   `$${plan.price[billingCycle === 'yearly' ? 'yearly' : 'monthly'].toFixed(2)}`}
                 </span>
                 {plan.price.monthly > 0 && (
                   <span className="text-yapp-deep-navy/70 ml-1">/month</span>
