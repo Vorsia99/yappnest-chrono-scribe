@@ -1,132 +1,131 @@
 
-import React, { useEffect } from "react";
+import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { CheckCircle, CalendarRange, BarChart2, Plus } from "lucide-react";
-import confetti from "canvas-confetti";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { CheckCircle, Edit, CalendarIcon, Clock } from "lucide-react";
+import { format } from "date-fns";
 
-interface StepConfirmationProps {
-  formData: any;
-  goToStep: (step: number) => void;
-}
-
-export const StepConfirmation = ({ formData, goToStep }: StepConfirmationProps) => {
-  useEffect(() => {
-    // Launch confetti when the component mounts
-    const launchConfetti = () => {
-      const colors = ["#4AFCA6", "#FF9CAC"];
-      
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: colors,
-      });
-      
-      setTimeout(() => {
-        confetti({
-          particleCount: 50,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: colors,
-        });
-      }, 250);
-      
-      setTimeout(() => {
-        confetti({
-          particleCount: 50,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: colors,
-        });
-      }, 400);
+export const StepConfirmation = ({ formData, goToStep }) => {
+  const getPlatformIcon = (platformId) => {
+    const icons = {
+      facebook: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+        </svg>
+      ),
+      instagram: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+        </svg>
+      ),
+      twitter: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+        </svg>
+      ),
+      youtube: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+          <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
+        </svg>
+      ),
     };
-    
-    try {
-      launchConfetti();
-    } catch (e) {
-      console.error("Error launching confetti:", e);
+    return icons[platformId] || null;
+  };
+
+  const getPlatformName = (platformId) => {
+    const names = {
+      facebook: 'Facebook',
+      instagram: 'Instagram',
+      twitter: 'Twitter',
+      youtube: 'YouTube'
+    };
+    return names[platformId] || platformId;
+  };
+
+  const getScheduleText = () => {
+    if (formData.postType === 'now') {
+      return 'Post immediately';
+    } else if (formData.postType === 'optimal') {
+      return 'Post at optimal time (Tuesday at 10:00 AM)';
+    } else if (formData.scheduledDate && formData.scheduledTime) {
+      return `Scheduled for ${format(formData.scheduledDate, 'PPP')} at ${formData.scheduledTime}`;
     }
-  }, []);
+    return 'Schedule not set';
+  };
 
   return (
-    <div className="space-y-8">
-      <div className="text-center animate-scale-in">
-        <div className="flex justify-center mb-4">
-          <div className="h-16 w-16 rounded-full bg-yapp-electric-green flex items-center justify-center">
-            <CheckCircle className="h-10 w-10 text-white" />
-          </div>
+    <div className="space-y-6">
+      <div className="text-center pb-6">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
+          <CheckCircle className="h-8 w-8 text-green-600" />
         </div>
-        <h2 className="text-2xl font-semibold mb-2">Success! Your post is scheduled</h2>
-        <p className="text-muted-foreground">Your content will be published at the scheduled time</p>
+        <h2 className="text-2xl font-bold mb-2">Ready to Publish!</h2>
+        <p className="text-muted-foreground">Your content is ready to be published. Please review the details below.</p>
       </div>
-
-      <Card className="border-yapp-electric-green/30 bg-yapp-electric-green/5">
-        <CardContent className="p-6">
-          <h3 className="text-lg font-medium mb-4">Post Summary</h3>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Title</span>
-              <span className="text-sm font-medium">{formData.title || "No title provided"}</span>
+      
+      <Card className="border-green-200">
+        <CardContent className="pt-6">
+          <div className="space-y-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-medium text-lg">{formData.title || 'Untitled Post'}</h3>
+                <p className="text-sm text-muted-foreground">{getScheduleText()}</p>
+              </div>
+              <Button variant="ghost" size="sm" onClick={() => goToStep(5)} className="flex items-center gap-1">
+                <Edit className="h-4 w-4" /> Edit Schedule
+              </Button>
             </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Platforms</span>
-              <span className="text-sm font-medium">Instagram{formData.selectedPlatforms?.length > 1 ? ` +${formData.selectedPlatforms.length - 1} more` : ""}</span>
+            
+            <div className="p-4 bg-muted/40 rounded-md">
+              <div className="flex items-center mb-2">
+                <CalendarIcon className="h-4 w-4 mr-2 text-muted-foreground" />
+                <span className="text-sm font-medium">Platforms</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {formData.selectedPlatforms && formData.selectedPlatforms.map(platform => (
+                  <div key={platform} className="flex items-center bg-background px-2 py-1 rounded border">
+                    <span className="text-primary mr-1">{getPlatformIcon(platform)}</span>
+                    <span className="text-sm">{getPlatformName(platform)}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Scheduled for</span>
-              <span className="text-sm font-medium">
-                {formData.postType === "now" 
-                  ? "Immediate publication" 
-                  : formData.postType === "optimal" 
-                    ? "Tomorrow at 6:00 PM (optimal)" 
-                    : "April 20, 2024 at 10:00 AM"}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-sm text-muted-foreground">Media type</span>
-              <span className="text-sm font-medium">{formData.mediaType === "media" ? "Image/Video" : "Text only"}</span>
-            </div>
+            
+            {formData.mediaType && (
+              <div className="p-4 bg-muted/40 rounded-md">
+                <div className="flex items-center mb-2">
+                  <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <span className="text-sm font-medium">Media</span>
+                </div>
+                <div className="text-sm">{formData.mediaType.charAt(0).toUpperCase() + formData.mediaType.slice(1)} content</div>
+              </div>
+            )}
+            
+            <Button 
+              variant="cta-dark" 
+              className="w-full py-6"
+              onClick={() => {
+                alert('Post scheduled successfully!');
+                // In a real app, this would submit the form data
+              }}
+            >
+              <CheckCircle className="mr-2 h-5 w-5" /> 
+              Confirm and {formData.postType === 'now' ? 'Publish' : 'Schedule'}
+            </Button>
           </div>
         </CardContent>
       </Card>
 
-      <div className="space-y-2">
-        <div className="flex items-center gap-2 text-sm">
-          <div className="h-6 w-6 rounded-full bg-yapp-soft-pink flex items-center justify-center">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 0L15.5 7.5L24 8.5L17.5 14L19.5 22L12 18L4.5 22L6.5 14L0 8.5L8.5 7.5L12 0Z" fill="white"/>
-            </svg>
-          </div>
-          <span>Achievement unlocked: First Post Scheduled!</span>
-        </div>
-        <div className="flex items-center gap-2 text-sm">
-          <CalendarRange className="h-4 w-4 text-yapp-deep-navy" />
-          <span>You've scheduled posts 3 days in a row!</span>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Button 
-          className="bg-yapp-misty-blue hover:bg-yapp-misty-blue/90"
-          onClick={() => goToStep(1)}
-        >
-          <Plus className="mr-2 h-4 w-4" /> Schedule Another Post
-        </Button>
-        <Button variant="outline">
-          <CalendarRange className="mr-2 h-4 w-4" /> View Queue
-        </Button>
-      </div>
-
-      <div className="border-t pt-4">
-        <div className="flex items-center gap-2 justify-center text-sm text-muted-foreground">
-          <BarChart2 className="h-4 w-4" />
-          <span>Track your post's performance in Analytics!</span>
-        </div>
-        <div className="text-center mt-4 text-xs text-muted-foreground">
-          <p>You're one of 10,000+ marketers using yappHQ!</p>
+      <div className="text-center space-y-3">
+        <p className="text-muted-foreground">Need to make changes?</p>
+        <div className="flex flex-wrap justify-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => goToStep(1)}>Edit Media</Button>
+          <Button variant="outline" size="sm" onClick={() => goToStep(2)}>Edit Platforms</Button>
+          <Button variant="outline" size="sm" onClick={() => goToStep(3)}>Edit Content</Button>
+          <Button variant="outline" size="sm" onClick={() => goToStep(4)}>Edit Preview</Button>
         </div>
       </div>
     </div>

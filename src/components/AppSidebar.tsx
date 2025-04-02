@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -18,7 +17,6 @@ import {
   ListChecks, 
   Calendar, 
   BarChart3, 
-  Image,
   Settings,
   User,
   MessageSquare
@@ -27,12 +25,11 @@ import YappLogo from './YappLogo';
 
 const navItems = [
   { title: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-  { title: 'Create Post', icon: PenSquare, path: '/composer' },
+  { title: 'Content Studio', icon: PenSquare, path: '/composer' },
   { title: 'Queue', icon: ListChecks, path: '/queue' },
   { title: 'Calendar', icon: Calendar, path: '/calendar' },
   { title: 'Analytics', icon: BarChart3, path: '/analytics' },
   { title: 'Engagement', icon: MessageSquare, path: '/engagement' },
-  { title: 'Media Library', icon: Image, path: '/media-library' },
   { title: 'Settings', icon: Settings, path: '/settings' },
 ];
 
