@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -226,6 +227,29 @@ const Dashboard = () => {
       youtube: <Youtube className="h-4 w-4" />
     };
     return icons[platform] || <GlobeIcon className="h-4 w-4" />;
+  };
+  
+  // Function to render prediction badge - adding this to fix the error
+  const renderPredictionBadge = (prediction: string) => {
+    if (prediction.includes('High') || prediction.includes('Viral') || prediction.includes('+')) {
+      return (
+        <Badge className="bg-[#4AFCA6] text-[#2D3748] hover:bg-[#4AFCA6]/80">
+          {prediction}
+        </Badge>
+      );
+    } else if (prediction.includes('Low') || prediction.includes('-')) {
+      return (
+        <Badge className="bg-[#E53E3E]/20 text-[#E53E3E] hover:bg-[#E53E3E]/30">
+          {prediction}
+        </Badge>
+      );
+    } else {
+      return (
+        <Badge className="bg-[#A3BFFA]/20 text-[#4A5568] hover:bg-[#A3BFFA]/30">
+          {prediction}
+        </Badge>
+      );
+    }
   };
 
   return (
