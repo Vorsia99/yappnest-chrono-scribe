@@ -14,6 +14,7 @@ import Queue from "./pages/Queue";
 import Analytics from "./pages/Analytics";
 import Composer from "./pages/Composer";
 import Engagement from "./pages/Engagement";
+import MediaLibrary from "./pages/MediaLibrary";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -60,6 +61,7 @@ const App = () => (
             <Route path="/queue" element={<Queue />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/engagement" element={<Engagement />} />
+            <Route path="/media-library" element={<MediaLibrary />} />
             <Route path="/settings" element={<Navigate to="/dashboard" />} />
           </Route>
           <Route path="*" element={<NotFound />} />
