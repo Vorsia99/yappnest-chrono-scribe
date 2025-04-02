@@ -107,9 +107,9 @@ const Engagement = () => {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-semibold mb-2">Engagement</h1>
-        <p className="text-muted-foreground">
+      <div className="text-left">
+        <h1 className="text-2xl font-medium mb-2">Engagement</h1>
+        <p className="text-muted-foreground text-sm">
           Manage comments, direct messages, and mentions across all your connected platforms.
         </p>
       </div>
@@ -140,10 +140,10 @@ const Engagement = () => {
                         <AvatarFallback>{item.username.substring(0, 2).toUpperCase()}</AvatarFallback>
                       </Avatar>
                       
-                      <div className="flex-1 space-y-1">
+                      <div className="flex-1 space-y-1 text-left">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <span className="font-medium">@{item.username}</span>
+                            <span className="font-normal">@{item.username}</span>
                             <Badge variant="outline" className="text-xs flex items-center gap-1">
                               {getTypeIcon(item.type)}
                               <span className="capitalize">{item.type}</span>
@@ -156,17 +156,17 @@ const Engagement = () => {
                         <p className="text-sm">{item.content}</p>
                         
                         <div className="flex items-center gap-2 pt-1">
-                          <Button variant="ghost" size="sm" className="h-8 px-2">
+                          <Button variant="ghost" size="sm" className="h-8 px-2 text-sm font-normal">
                             Reply
                           </Button>
-                          <Button variant="ghost" size="sm" className="h-8 px-2">
+                          <Button variant="ghost" size="sm" className="h-8 px-2 text-sm font-normal">
                             <Heart className="h-4 w-4 mr-1" /> Like
                           </Button>
                           {!item.read && (
                             <Button 
                               variant="ghost" 
                               size="sm" 
-                              className="h-8 px-2"
+                              className="h-8 px-2 text-sm font-normal"
                               onClick={() => markAsRead(item.id)}
                             >
                               Mark as read

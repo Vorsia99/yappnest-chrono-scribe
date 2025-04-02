@@ -58,7 +58,7 @@ export function ContentPerformanceChart({ contentType = 'all-content', platform 
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <Select value={metric} onValueChange={setMetric}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] text-sm">
             <SelectValue placeholder="Select metric" />
           </SelectTrigger>
           <SelectContent>
@@ -73,14 +73,14 @@ export function ContentPerformanceChart({ contentType = 'all-content', platform 
           aria-label="Toggle sponsored content"
           pressed={showSponsored}
           onPressedChange={setShowSponsored}
-          className="ml-auto"
+          className="ml-auto text-sm"
         >
           Sponsored Only
         </Toggle>
       </div>
       
       {showSponsored && (
-        <div className="text-sm text-muted-foreground bg-yapp-pale-blue p-3 rounded-md">
+        <div className="text-sm text-muted-foreground bg-yapp-pale-blue p-3 rounded-md text-left">
           Showing sponsored content metrics • Avg. Engagement: 5.1% • Avg. Reach: 14,000
         </div>
       )}

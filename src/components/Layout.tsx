@@ -25,12 +25,12 @@ const Layout = () => {
                 onClick={() => navigate('/composer')}
               >
                 <PlusIcon size={16} />
-                <span>Create Post</span>
+                <span className="text-sm">Create Post</span>
               </Button>
               <UserNav />
             </div>
           </div>
-          <main className="px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto">
+          <main className="px-4 sm:px-6 lg:px-8 py-6 max-w-7xl mx-auto text-left">
             <Outlet />
           </main>
         </div>

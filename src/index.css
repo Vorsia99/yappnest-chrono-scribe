@@ -96,23 +96,23 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans font-normal text-yapp-deep-navy;
+    @apply font-sans font-normal text-yapp-deep-navy text-left;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl font-normal;
-  }
-
-  h2 {
     @apply text-3xl md:text-4xl font-normal;
   }
 
+  h2 {
+    @apply text-2xl md:text-3xl font-normal;
+  }
+
   h3 {
-    @apply text-xl md:text-2xl font-normal;
+    @apply text-lg md:text-xl font-normal;
   }
 
   .section-header {
-    @apply mb-10 text-center;
+    @apply mb-8 text-left;
   }
   
   .container-custom {
@@ -145,6 +145,18 @@
 
   .animate-on-scroll.visible {
     animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .text-alignment-reset {
+    @apply text-left;
+  }
+  
+  .card-header {
+    @apply text-left;
+  }
+  
+  .reduced-font {
+    @apply font-normal text-sm;
   }
 }
 

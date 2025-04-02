@@ -49,7 +49,7 @@ export function DashboardPostsTable({ posts, onDelete, onEdit }: DashboardPostsT
 
   if (posts.length === 0) {
     return (
-      <div className="w-full overflow-hidden rounded-md border p-8 flex flex-col items-center justify-center text-center">
+      <div className="w-full overflow-hidden rounded-md border p-8 flex flex-col items-center justify-center">
         <AlertTriangle className="h-10 w-10 text-amber-500 mb-2" />
         <h3 className="text-lg font-medium mb-1">No posts found</h3>
         <p className="text-muted-foreground mb-4">You don't have any posts scheduled or drafted yet.</p>
@@ -75,8 +75,8 @@ export function DashboardPostsTable({ posts, onDelete, onEdit }: DashboardPostsT
         <TableBody>
           {posts.map((post) => (
             <TableRow key={post.id} className="group hover:bg-muted/30 transition-colors">
-              <TableCell className="font-medium max-w-[200px] truncate">{post.content}</TableCell>
-              <TableCell>
+              <TableCell className="font-normal max-w-[200px] truncate text-left">{post.content}</TableCell>
+              <TableCell className="text-left">
                 <Badge variant="outline">
                   {post.type === "image" ? "Image + Text" : "Text"}
                 </Badge>
