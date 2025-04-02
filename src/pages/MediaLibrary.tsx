@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -15,21 +16,64 @@ import {
   Video,
   Music,
   MoreHorizontal,
-  Download
+  Download,
+  Star,
+  Clock
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Sample media items for demonstration
-const mediaItems = [
-  { id: 1, name: "Campaign Banner.png", type: "image", size: "1.2 MB", modified: "2023-08-15", tags: ["marketing", "banner"] },
-  { id: 2, name: "Product Video.mp4", type: "video", size: "8.5 MB", modified: "2023-08-10", tags: ["product"] },
-  { id: 3, name: "Social Template 1.psd", type: "template", size: "3.7 MB", modified: "2023-08-05", tags: ["social", "template"] },
-  { id: 4, name: "Brand Guidelines.pdf", type: "document", size: "2.1 MB", modified: "2023-07-28", tags: ["brand"] },
-  { id: 5, name: "Summer Campaign.png", type: "image", size: "0.9 MB", modified: "2023-08-18", tags: ["marketing", "summer"] },
-  { id: 6, name: "Company Podcast.mp3", type: "audio", size: "5.3 MB", modified: "2023-08-01", tags: ["podcast"] },
-  { id: 7, name: "Instagram Story Template.psd", type: "template", size: "2.8 MB", modified: "2023-08-12", tags: ["social", "instagram"] },
-  { id: 8, name: "Team Photo.jpg", type: "image", size: "3.2 MB", modified: "2023-07-20", tags: ["team"] },
+// Sample images for demonstration
+const imageItems = [
+  { id: 1, name: "Campaign Banner.png", type: "image", size: "1.2 MB", modified: "2023-08-15", tags: ["marketing", "banner"], favorite: false },
+  { id: 5, name: "Summer Campaign.png", type: "image", size: "0.9 MB", modified: "2023-08-18", tags: ["marketing", "summer"], favorite: true },
+  { id: 8, name: "Team Photo.jpg", type: "image", size: "3.2 MB", modified: "2023-07-20", tags: ["team"], favorite: false },
+  { id: 9, name: "Product Launch Cover.jpg", type: "image", size: "2.8 MB", modified: "2023-08-22", tags: ["product", "launch"], favorite: false },
+  { id: 10, name: "Office Party.jpg", type: "image", size: "4.1 MB", modified: "2023-07-15", tags: ["team", "event"], favorite: true },
+  { id: 11, name: "Logo Design Final.png", type: "image", size: "0.6 MB", modified: "2023-06-30", tags: ["branding", "logo"], favorite: false },
 ];
+
+// Sample videos for demonstration
+const videoItems = [
+  { id: 2, name: "Product Video.mp4", type: "video", size: "8.5 MB", modified: "2023-08-10", tags: ["product"], favorite: false },
+  { id: 12, name: "Customer Testimonial.mp4", type: "video", size: "12.3 MB", modified: "2023-08-05", tags: ["testimonial", "customer"], favorite: true },
+  { id: 13, name: "How-To Tutorial.mp4", type: "video", size: "15.7 MB", modified: "2023-07-28", tags: ["tutorial", "how-to"], favorite: false },
+  { id: 14, name: "Company Overview.mp4", type: "video", size: "22.4 MB", modified: "2023-06-15", tags: ["company", "overview"], favorite: false },
+];
+
+// Sample templates for demonstration
+const templateItems = [
+  { id: 3, name: "Social Template 1.psd", type: "template", size: "3.7 MB", modified: "2023-08-05", tags: ["social", "template"], favorite: true },
+  { id: 7, name: "Instagram Story Template.psd", type: "template", size: "2.8 MB", modified: "2023-08-12", tags: ["social", "instagram"], favorite: false },
+  { id: 15, name: "Newsletter Template.psd", type: "template", size: "4.2 MB", modified: "2023-07-25", tags: ["email", "newsletter"], favorite: false },
+  { id: 16, name: "Social Media Calendar.xlsx", type: "template", size: "1.5 MB", modified: "2023-08-01", tags: ["social", "calendar"], favorite: true },
+];
+
+// Sample documents and other files
+const otherItems = [
+  { id: 4, name: "Brand Guidelines.pdf", type: "document", size: "2.1 MB", modified: "2023-07-28", tags: ["brand"], favorite: false },
+  { id: 6, name: "Company Podcast.mp3", type: "audio", size: "5.3 MB", modified: "2023-08-01", tags: ["podcast"], favorite: false },
+  { id: 17, name: "Q3 Marketing Plan.docx", type: "document", size: "1.8 MB", modified: "2023-08-20", tags: ["marketing", "plan"], favorite: true },
+  { id: 18, name: "Customer Survey Results.csv", type: "data", size: "0.7 MB", modified: "2023-07-10", tags: ["customer", "data"], favorite: false },
+];
+
+// Combine all items for the "All Files" view
+const allMediaItems = [...imageItems, ...videoItems, ...templateItems, ...otherItems];
+
+// Recently modified items (last 7 days)
+const getRecentItems = () => {
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  
+  return allMediaItems
+    .filter(item => {
+      const modifiedDate = new Date(item.modified);
+      return modifiedDate >= sevenDaysAgo;
+    })
+    .sort((a, b) => new Date(b.modified).getTime() - new Date(a.modified).getTime());
+};
+
+// Favorite items
+const favoriteItems = allMediaItems.filter(item => item.favorite);
 
 // Sample folders for demonstration
 const folders = [
@@ -47,15 +91,32 @@ export default function MediaLibrary() {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [currentFolder, setCurrentFolder] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("all");
   
-  // Filter media items based on search query and current folder
-  const filteredMedia = mediaItems.filter(item => {
+  // Determine which items to display based on the active tab
+  const getTabItems = () => {
+    switch (activeTab) {
+      case "images":
+        return imageItems;
+      case "videos":
+        return videoItems;
+      case "templates":
+        return templateItems;
+      case "recent":
+        return getRecentItems();
+      case "favorites":
+        return favoriteItems;
+      default:
+        return allMediaItems;
+    }
+  };
+  
+  // Filter media items based on search query
+  const filteredMedia = getTabItems().filter(item => {
     const matchesSearch = searchQuery === "" || 
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
     
-    // In this example we're not actually filtering by folder since we don't have a folder structure
-    // In a real app, each media item would have a folderId property
     return matchesSearch;
   });
 
@@ -72,9 +133,148 @@ export default function MediaLibrary() {
         return <File className="h-6 w-6 text-green-500" />;
       case "audio":
         return <Music className="h-6 w-6 text-red-500" />;
+      case "data":
+        return <File className="h-6 w-6 text-teal-500" />;
       default:
         return <File className="h-6 w-6 text-gray-500" />;
     }
+  };
+
+  // Function to render media content for each tab
+  const renderMediaContent = () => {
+    return (
+      <>
+        {/* Breadcrumb navigation */}
+        <div className="flex items-center text-sm mb-4">
+          <Button variant="link" className="p-0 h-auto" onClick={() => setCurrentFolder(null)}>
+            Media Library
+          </Button>
+          {currentFolder && (
+            <>
+              <span className="mx-2">/</span>
+              <span className="font-medium">{currentFolder}</span>
+            </>
+          )}
+        </div>
+        
+        {/* Folders section - only show if we're at root level and not in recent or favorites tabs */}
+        {!currentFolder && 
+         activeTab !== "recent" && 
+         activeTab !== "favorites" && (
+          <div className="mb-6">
+            <h2 className="text-lg font-medium mb-3">Folders</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {folders.map((folder) => (
+                <Card 
+                  key={folder.id} 
+                  className="cursor-pointer hover:bg-accent transition-colors"
+                  onClick={() => setCurrentFolder(folder.name)}
+                >
+                  <CardContent className="p-4 flex items-center gap-3">
+                    <div className="bg-muted rounded-md p-2">
+                      <FolderPlus className="h-6 w-6 text-yapp-misty-blue" />
+                    </div>
+                    <div>
+                      <p className="font-medium">{folder.name}</p>
+                      <p className="text-xs text-muted-foreground">{folder.count} items</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Files section */}
+        <div>
+          <h2 className="text-lg font-medium mb-3">
+            {currentFolder ? `Files in ${currentFolder}` : 
+             activeTab === "recent" ? 'Recently Modified Files' :
+             activeTab === "favorites" ? 'Favorite Files' :
+             activeTab === "images" ? 'Images' :
+             activeTab === "videos" ? 'Videos' :
+             activeTab === "templates" ? 'Templates' :
+             'All Files'}
+          </h2>
+          
+          {filteredMedia.length === 0 ? (
+            <div className="text-center py-20 border rounded-md bg-muted/20">
+              <div className="mx-auto w-12 h-12 rounded-full bg-muted flex items-center justify-center mb-3">
+                <File className="h-6 w-6 text-muted-foreground" />
+              </div>
+              <h3 className="font-medium">No files found</h3>
+              <p className="text-sm text-muted-foreground">Try adjusting your search or upload a new file.</p>
+            </div>
+          ) : viewMode === "grid" ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {filteredMedia.map((item) => (
+                <Card key={item.id} className="cursor-pointer hover:bg-accent/50 transition-colors">
+                  <CardContent className="p-0">
+                    <div className="aspect-square bg-muted flex items-center justify-center relative">
+                      {renderFileIcon(item.type)}
+                      {item.favorite && (
+                        <div className="absolute top-2 right-2">
+                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-3">
+                      <p className="font-medium text-sm truncate" title={item.name}>{item.name}</p>
+                      <div className="flex justify-between items-center mt-1">
+                        <p className="text-xs text-muted-foreground">{item.size}</p>
+                        <p className="text-xs text-muted-foreground flex items-center gap-1">
+                          <Clock className="h-3 w-3" /> {item.modified}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="border rounded-md">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Size</TableHead>
+                    <TableHead>Modified</TableHead>
+                    <TableHead className="w-[100px]">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredMedia.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium flex items-center gap-2">
+                        {renderFileIcon(item.type)}
+                        <span className="flex items-center gap-2">
+                          {item.name}
+                          {item.favorite && <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />}
+                        </span>
+                      </TableCell>
+                      <TableCell className="capitalize">{item.type}</TableCell>
+                      <TableCell>{item.size}</TableCell>
+                      <TableCell>{item.modified}</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <Download className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </div>
+      </>
+    );
   };
 
   return (
@@ -129,7 +329,15 @@ export default function MediaLibrary() {
       </div>
 
       {/* Main content area */}
-      <Tabs defaultValue="all" className="w-full">
+      <Tabs 
+        defaultValue="all" 
+        className="w-full" 
+        value={activeTab}
+        onValueChange={(value) => {
+          setActiveTab(value);
+          setCurrentFolder(null); // Reset folder when switching tabs
+        }}
+      >
         <TabsList>
           <TabsTrigger value="all">All Files</TabsTrigger>
           <TabsTrigger value="images">Images</TabsTrigger>
@@ -140,128 +348,27 @@ export default function MediaLibrary() {
         </TabsList>
         
         <TabsContent value="all" className="space-y-4">
-          {/* Breadcrumb navigation */}
-          <div className="flex items-center text-sm mb-4">
-            <Button variant="link" className="p-0 h-auto" onClick={() => setCurrentFolder(null)}>
-              Media Library
-            </Button>
-            {currentFolder && (
-              <>
-                <span className="mx-2">/</span>
-                <span className="font-medium">{currentFolder}</span>
-              </>
-            )}
-          </div>
-          
-          {/* Folders section - only show if we're at root level */}
-          {!currentFolder && (
-            <div className="mb-6">
-              <h2 className="text-lg font-medium mb-3">Folders</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {folders.map((folder) => (
-                  <Card 
-                    key={folder.id} 
-                    className="cursor-pointer hover:bg-accent transition-colors"
-                    onClick={() => setCurrentFolder(folder.name)}
-                  >
-                    <CardContent className="p-4 flex items-center gap-3">
-                      <div className="bg-muted rounded-md p-2">
-                        <FolderPlus className="h-6 w-6 text-yapp-misty-blue" />
-                      </div>
-                      <div>
-                        <p className="font-medium">{folder.name}</p>
-                        <p className="text-xs text-muted-foreground">{folder.count} items</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          )}
-          
-          {/* Files section */}
-          <div>
-            <h2 className="text-lg font-medium mb-3">
-              {currentFolder ? `Files in ${currentFolder}` : 'Recent Files'}
-            </h2>
-            
-            {viewMode === "grid" ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {filteredMedia.map((item) => (
-                  <Card key={item.id} className="cursor-pointer hover:bg-accent/50 transition-colors">
-                    <CardContent className="p-0">
-                      <div className="aspect-square bg-muted flex items-center justify-center">
-                        {renderFileIcon(item.type)}
-                      </div>
-                      <div className="p-3">
-                        <p className="font-medium text-sm truncate" title={item.name}>{item.name}</p>
-                        <p className="text-xs text-muted-foreground">{item.size}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ) : (
-              <div className="border rounded-md">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Size</TableHead>
-                      <TableHead>Modified</TableHead>
-                      <TableHead className="w-[100px]">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredMedia.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell className="font-medium flex items-center gap-2">
-                          {renderFileIcon(item.type)}
-                          {item.name}
-                        </TableCell>
-                        <TableCell className="capitalize">{item.type}</TableCell>
-                        <TableCell>{item.size}</TableCell>
-                        <TableCell>{item.modified}</TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                              <Download className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </div>
+          {renderMediaContent()}
         </TabsContent>
         
-        {/* Other tab contents would be similar to "all" but with filtered content */}
         <TabsContent value="images" className="space-y-4">
-          {/* Similar structure as "all" tab but filtered for images */}
-          <p className="text-muted-foreground">Showing image files only.</p>
+          {renderMediaContent()}
         </TabsContent>
         
         <TabsContent value="videos" className="space-y-4">
-          <p className="text-muted-foreground">Showing video files only.</p>
+          {renderMediaContent()}
         </TabsContent>
         
         <TabsContent value="templates" className="space-y-4">
-          <p className="text-muted-foreground">Showing template files only.</p>
+          {renderMediaContent()}
         </TabsContent>
         
         <TabsContent value="recent" className="space-y-4">
-          <p className="text-muted-foreground">Showing recently accessed files.</p>
+          {renderMediaContent()}
         </TabsContent>
         
         <TabsContent value="favorites" className="space-y-4">
-          <p className="text-muted-foreground">Showing your favorite files.</p>
+          {renderMediaContent()}
         </TabsContent>
       </Tabs>
       
