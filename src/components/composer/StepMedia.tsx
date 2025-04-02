@@ -1,94 +1,85 @@
 
-import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Image, FileText, Upload, FileVideo, PlusCircle } from "lucide-react";
+import { Upload, FileText, Image as ImageIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
-export const StepMedia = ({ formData, updateFormData, isFirstVisit }) => {
-  const [mediaType, setMediaType] = useState(formData.mediaType || "");
-  
-  const handleTypeSelect = (type) => {
-    setMediaType(type);
+interface StepMediaProps {
+  formData: any;
+  updateFormData: (data: any) => void;
+  isFirstVisit: boolean;
+}
+
+export const StepMedia = ({ formData, updateFormData, isFirstVisit }: StepMediaProps) => {
+  const selectMediaType = (type: string) => {
     updateFormData({ mediaType: type });
   };
-
-  const mediaTypes = [
-    { id: 'image', label: 'Image', icon: <Image className="h-6 w-6 mb-2" /> },
-    { id: 'video', label: 'Video', icon: <FileVideo className="h-6 w-6 mb-2" /> },
-    { id: 'text', label: 'Text Only', icon: <FileText className="h-6 w-6 mb-2" /> },
-    { id: 'mixed', label: 'Mixed Content', icon: <PlusCircle className="h-6 w-6 mb-2" /> }
-  ];
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold mb-2">Choose Media Type</h2>
-        <p className="text-muted-foreground mb-6">Select the type of content you want to create</p>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {mediaTypes.map((type) => (
-            <Card 
-              key={type.id}
-              className={`cursor-pointer hover:border-primary transition-all ${mediaType === type.id ? 'border-2 border-primary' : ''}`}
-              onClick={() => handleTypeSelect(type.id)}
-            >
-              <CardContent className="flex flex-col items-center justify-center text-center p-6">
-                {type.icon}
-                <h3 className="font-medium">{type.label}</h3>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <h2 className="text-2xl font-semibold mb-2">Choose media or text</h2>
+        <p className="text-muted-foreground">Select the type of content you want to create</p>
       </div>
 
-      {mediaType && (
-        <div className="animate-fade-in">
-          <h2 className="text-xl font-semibold mb-2">Upload Media</h2>
-          <p className="text-muted-foreground mb-6">Upload or select media from your library</p>
+      <div className="grid md:grid-cols-2 gap-6">
+        <TooltipProvider>
+          <Tooltip open={isFirstVisit}>
+            <TooltipTrigger asChild>
+              <Card 
+                className={cn(
+                  "hover:scale-105 transition-all duration-300 cursor-pointer border-2",
+                  formData.mediaType === "media" ? "border-yapp-misty-blue" : "border-transparent"
+                )}
+                onClick={() => selectMediaType("media")}
+              >
+                <CardContent className="flex flex-col items-center justify-center p-10 text-center">
+                  <div className="h-16 w-16 rounded-full bg-yapp-pale-blue flex items-center justify-center mb-4">
+                    <ImageIcon className="h-8 w-8 text-yapp-deep-navy" />
+                  </div>
+                  <h3 className="text-xl font-medium mb-2">Upload Media</h3>
+                  <p className="text-sm text-muted-foreground">Upload images, videos, or GIFs</p>
+                </CardContent>
+              </Card>
+            </TooltipTrigger>
+            <TooltipContent side="right" className="max-w-xs">
+              <p>Tip: Upload high-quality media to boost engagement!</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
-          <Tabs defaultValue="upload" className="w-full">
-            <TabsList className="mb-4">
-              <TabsTrigger value="upload">Upload New</TabsTrigger>
-              <TabsTrigger value="library">Media Library</TabsTrigger>
-              <TabsTrigger value="templates">Templates</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="upload" className="mt-0">
-              <div className="border-2 border-dashed rounded-lg p-12 text-center">
-                <div className="flex flex-col items-center">
-                  <Upload className="h-12 w-12 text-muted-foreground mb-4" />
-                  <h3 className="text-lg font-medium mb-1">Drag and drop files here</h3>
-                  <p className="text-muted-foreground mb-4">or browse from your computer</p>
-                  <Button>Select Files</Button>
-                </div>
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="library" className="mt-0">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                  <div key={i} className="aspect-square bg-muted rounded-md overflow-hidden">
-                    <div className="h-full w-full bg-gray-200 flex items-center justify-center text-gray-400">
-                      <Image className="h-8 w-8" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="templates" className="mt-0">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                  <div key={i} className="aspect-video bg-muted rounded-md overflow-hidden">
-                    <div className="h-full w-full bg-gray-100 flex items-center justify-center text-gray-400">
-                      Template {i}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+        <Card 
+          className={cn(
+            "hover:scale-105 transition-all duration-300 cursor-pointer border-2",
+            formData.mediaType === "text" ? "border-yapp-misty-blue" : "border-transparent"
+          )}
+          onClick={() => selectMediaType("text")}
+        >
+          <CardContent className="flex flex-col items-center justify-center p-10 text-center">
+            <div className="h-16 w-16 rounded-full bg-yapp-pale-blue flex items-center justify-center mb-4">
+              <FileText className="h-8 w-8 text-yapp-deep-navy" />
+            </div>
+            <h3 className="text-xl font-medium mb-2">Text Only</h3>
+            <p className="text-sm text-muted-foreground">Create a text-only post</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {formData.mediaType === "media" && (
+        <div className="mt-8 space-y-4">
+          <div className="border-2 border-dashed rounded-lg p-12 text-center">
+            <Upload className="h-10 w-10 mx-auto text-muted-foreground mb-2" />
+            <p className="text-sm text-muted-foreground">
+              Drag & drop your media files here, or <span className="text-yapp-misty-blue cursor-pointer">browse</span>
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">Supports JPG, PNG, MP4, MOV</p>
+          </div>
+
+          <Button variant="outline" className="w-full">
+            Browse Stock Media
+          </Button>
         </div>
       )}
     </div>

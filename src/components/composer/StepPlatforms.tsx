@@ -1,79 +1,131 @@
 
-import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
+import React, { useEffect, useState } from "react";
+import { PlatformSelector } from "@/components/PlatformSelector";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { LockIcon, Grid, CirclePlus, PlusCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export const StepPlatforms = ({ formData, updateFormData, isFirstVisit }) => {
-  const [selected, setSelected] = useState(formData.selectedPlatforms || []);
+interface Platform {
+  id: string;
+  name: string;
+  icon: any;
+  connected: boolean;
+  color: string;
+}
 
-  const handlePlatformToggle = (platform) => {
-    setSelected(prev => {
-      const isSelected = prev.includes(platform);
-      const newSelection = isSelected
-        ? prev.filter(p => p !== platform)
-        : [...prev, platform];
-      
-      updateFormData({ selectedPlatforms: newSelection });
-      return newSelection;
-    });
+interface StepPlatformsProps {
+  formData: any;
+  updateFormData: (data: any) => void;
+  isFirstVisit: boolean;
+}
+
+export const StepPlatforms = ({ formData, updateFormData, isFirstVisit }: StepPlatformsProps) => {
+  const [contentType, setContentType] = useState(formData.contentType || "post");
+
+  // Handle content type selection (post, story, or both)
+  const handleContentTypeChange = (type: string) => {
+    setContentType(type);
+    updateFormData({ contentType: type });
   };
 
-  const platforms = [
-    { id: 'facebook', name: 'Facebook', icon: <Facebook className="h-8 w-8" />, accounts: ['My Business Page', 'Personal Profile'] },
-    { id: 'instagram', name: 'Instagram', icon: <Instagram className="h-8 w-8" />, accounts: ['@yourbusinesshandle'] },
-    { id: 'twitter', name: 'Twitter', icon: <Twitter className="h-8 w-8" />, accounts: ['@yourtwitterhandle'] },
-    { id: 'youtube', name: 'YouTube', icon: <Youtube className="h-8 w-8" />, accounts: ['Your Channel'] }
-  ];
+  // Handle platform selection for posts and stories
+  const handlePlatformsChange = (platforms: Platform[]) => {
+    updateFormData({ selectedPlatforms: platforms });
+  };
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold mb-2">Choose Platforms</h2>
-        <p className="text-muted-foreground mb-6">Select platforms where you'd like to publish this content</p>
+        <h2 className="text-2xl font-semibold mb-2">Select platforms and accounts</h2>
+        <p className="text-muted-foreground">Choose where you want to publish your content</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {platforms.map((platform) => (
-          <Card 
-            key={platform.id}
-            className={`cursor-pointer hover:border-primary transition-all ${selected.includes(platform.id) ? 'border-2 border-primary' : ''}`}
-            onClick={() => handlePlatformToggle(platform.id)}
-          >
-            <CardContent className="p-6">
-              <div className="flex items-center">
-                <div className={`p-2 rounded-full ${selected.includes(platform.id) ? 'bg-primary/10' : 'bg-muted'}`}>
-                  {platform.icon}
-                </div>
-                <div className="ml-4">
-                  <h3 className="font-medium text-lg">{platform.name}</h3>
-                  <p className="text-muted-foreground text-sm">{platform.accounts.join(', ')}</p>
-                </div>
-                <div className="ml-auto">
-                  {selected.includes(platform.id) ? (
-                    <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  ) : (
-                    <div className="h-6 w-6 rounded-full border-2 border-muted"></div>
-                  )}
-                </div>
+      {/* Content Type Selection */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 animate-fade-in">
+        <Card 
+          className={cn(
+            "cursor-pointer hover:shadow-md transition-all hover:scale-105",
+            contentType === "post" ? "border-yapp-misty-blue border-2" : ""
+          )}
+          onClick={() => handleContentTypeChange("post")}
+        >
+          <CardContent className="flex flex-col items-center justify-center p-6 text-center">
+            <div className="h-12 w-12 rounded-full bg-yapp-pale-blue flex items-center justify-center mb-3">
+              <Grid className="h-6 w-6 text-yapp-deep-navy" />
+            </div>
+            <h3 className="font-medium">Post</h3>
+            <p className="text-xs text-muted-foreground mt-1">Regular feed posts</p>
+          </CardContent>
+        </Card>
+
+        <Card 
+          className={cn(
+            "cursor-pointer hover:shadow-md transition-all hover:scale-105",
+            contentType === "story" ? "border-yapp-misty-blue border-2" : ""
+          )}
+          onClick={() => handleContentTypeChange("story")}
+        >
+          <CardContent className="flex flex-col items-center justify-center p-6 text-center">
+            <div className="h-12 w-12 rounded-full bg-yapp-pale-blue flex items-center justify-center mb-3">
+              <CirclePlus className="h-6 w-6 text-yapp-deep-navy" />
+            </div>
+            <h3 className="font-medium">Story</h3>
+            <p className="text-xs text-muted-foreground mt-1">Temporary 24hr updates</p>
+          </CardContent>
+        </Card>
+
+        <Card 
+          className={cn(
+            "cursor-pointer hover:shadow-md transition-all hover:scale-105",
+            contentType === "both" ? "border-yapp-misty-blue border-2" : ""
+          )}
+          onClick={() => handleContentTypeChange("both")}
+        >
+          <CardContent className="flex flex-col items-center justify-center p-6 text-center">
+            <div className="h-12 w-12 rounded-full bg-yapp-pale-blue flex items-center justify-center mb-3">
+              <PlusCircle className="h-6 w-6 text-yapp-deep-navy" />
+            </div>
+            <h3 className="font-medium">Post + Story</h3>
+            <p className="text-xs text-muted-foreground mt-1">Create both simultaneously</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="space-y-4 animate-fade-in">
+        <TooltipProvider>
+          <Tooltip open={isFirstVisit}>
+            <TooltipTrigger asChild>
+              <div>
+                <PlatformSelector 
+                  onChange={handlePlatformsChange}
+                  initialPlatforms={formData.selectedPlatforms || []}
+                  contentType={contentType}
+                />
               </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            </TooltipTrigger>
+            <TooltipContent side="right" className="max-w-xs">
+              <p>Free Plan: Post to 1 platform. Upgrade to Pro to post to all 9 platforms!</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
-      <div className="pt-4">
-        <Button variant="outline">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-          </svg>
-          Connect New Account
-        </Button>
+        <div className="flex items-center justify-between text-sm pt-2">
+          <span className="text-muted-foreground">Selected accounts: 1/1</span>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center gap-1 text-muted-foreground">
+                  <LockIcon size={14} />
+                  <span>Free Plan Limit</span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Upgrade to Pro to post to up to 5 accounts!</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </div>
     </div>
   );

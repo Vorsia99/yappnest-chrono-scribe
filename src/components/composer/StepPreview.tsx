@@ -1,106 +1,138 @@
 
-import React from 'react';
+import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Facebook, Instagram, Twitter, Youtube, Image, Edit } from "lucide-react";
+import { Instagram, X, Facebook, Youtube, MessageCircle, Image, Pencil } from "lucide-react";
 
-export const StepPreview = ({ formData, updateFormData, goToStep }) => {
-  const getPlatformIcon = (platformId) => {
-    switch(platformId) {
-      case 'facebook': return <Facebook className="h-6 w-6" />;
-      case 'instagram': return <Instagram className="h-6 w-6" />;
-      case 'twitter': return <Twitter className="h-6 w-6" />;
-      case 'youtube': return <Youtube className="h-6 w-6" />;
-      default: return null;
-    }
+interface StepPreviewProps {
+  formData: any;
+  updateFormData: (data: any) => void;
+  goToStep: (step: number) => void;
+}
+
+export const StepPreview = ({ formData, updateFormData, goToStep }: StepPreviewProps) => {
+  const [activeTab, setActiveTab] = useState("instagram");
+  
+  const platforms = [
+    { id: "instagram", name: "Instagram", icon: Instagram },
+    { id: "x", name: "X", icon: X },
+    { id: "facebook", name: "Facebook", icon: Facebook },
+    { id: "youtube", name: "YouTube", icon: Youtube },
+    { id: "tiktok", name: "TikTok", icon: MessageCircle }
+  ];
+
+  const handleEditContent = () => {
+    goToStep(3);
   };
-
-  const getPlatformName = (platformId) => {
-    switch(platformId) {
-      case 'facebook': return 'Facebook';
-      case 'instagram': return 'Instagram';
-      case 'twitter': return 'Twitter';
-      case 'youtube': return 'YouTube';
-      default: return platformId;
-    }
-  };
-
-  // If no platforms were selected, show a message
-  if (!formData.selectedPlatforms || formData.selectedPlatforms.length === 0) {
-    return (
-      <div className="text-center py-12">
-        <h3 className="text-lg font-medium mb-2">No platforms selected</h3>
-        <p className="text-muted-foreground mb-4">Please go back and select at least one platform.</p>
-        <Button variant="outline" onClick={() => goToStep(2)}>Go Back to Platform Selection</Button>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold mb-2">Preview Your Posts</h2>
-        <p className="text-muted-foreground mb-6">This is how your posts will look on each platform</p>
+        <h2 className="text-2xl font-semibold mb-2">Preview and edit</h2>
+        <p className="text-muted-foreground">See how your post will appear on each platform</p>
       </div>
 
-      <Tabs defaultValue={formData.selectedPlatforms[0]} className="w-full">
-        <TabsList className="mb-4">
-          {formData.selectedPlatforms.map(platformId => (
-            <TabsTrigger key={platformId} value={platformId} className="flex items-center gap-2">
-              {getPlatformIcon(platformId)}
-              <span>{getPlatformName(platformId)}</span>
+      <Tabs 
+        defaultValue="instagram" 
+        className="w-full"
+        value={activeTab}
+        onValueChange={setActiveTab}
+      >
+        <TabsList className="w-full justify-start mb-4 overflow-auto">
+          {platforms.map(platform => (
+            <TabsTrigger key={platform.id} value={platform.id} className="gap-1">
+              <platform.icon className="h-4 w-4" /> {platform.name}
             </TabsTrigger>
           ))}
         </TabsList>
 
-        {formData.selectedPlatforms.map(platformId => (
-          <TabsContent key={platformId} value={platformId} className="mt-0">
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center">
-                    <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
-                      {getPlatformIcon(platformId)}
-                    </div>
-                    <div className="ml-3">
-                      <p className="font-medium">{getPlatformName(platformId)}</p>
-                      <p className="text-sm text-muted-foreground">@youraccount</p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="sm" onClick={() => goToStep(3)} className="flex items-center gap-1">
-                    <Edit className="h-4 w-4" /> Edit
-                  </Button>
-                </div>
+        {platforms.map(platform => (
+          <TabsContent 
+            key={platform.id} 
+            value={platform.id}
+            className="animate-fade-in"
+          >
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="w-full md:w-1/2">
+                <h3 className="text-lg font-medium mb-4">Preview</h3>
                 
-                <div className="mb-4">
-                  {formData.mediaType && (
-                    <div className="aspect-video bg-muted rounded-md overflow-hidden mb-4 flex items-center justify-center">
-                      <Image className="h-12 w-12 text-muted-foreground" />
+                {platform.id === "instagram" && (
+                  <div className="bg-white rounded-lg shadow-md max-w-sm mx-auto p-3">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="h-8 w-8 bg-gray-200 rounded-full"></div>
+                      <div>
+                        <p className="text-sm font-bold">your_account</p>
+                      </div>
                     </div>
-                  )}
-                  <p className="whitespace-pre-line">
-                    {formData.captions && (formData.captions[platformId] || formData.captions.global || "No caption added yet.")}
-                  </p>
-                  {formData.hashtags && formData.hashtags[platformId] && (
-                    <p className="text-blue-500 mt-2">
-                      {formData.hashtags[platformId].split(' ').map((tag, i) => (
-                        <span key={i} className="mr-1">{tag}</span>
-                      ))}
-                    </p>
-                  )}
-                </div>
-
-                <div className="border-t pt-4 mt-4">
-                  <p className="text-sm text-muted-foreground">Post Preview</p>
-                  <div className="flex items-center mt-2 gap-2">
-                    <div className="h-5 w-20 bg-muted rounded"></div>
-                    <div className="h-5 w-16 bg-muted rounded"></div>
-                    <div className="h-5 w-24 bg-muted rounded"></div>
+                    <div className="bg-gray-200 h-72 rounded flex items-center justify-center">
+                      <Image className="h-12 w-12 text-gray-400" />
+                    </div>
+                    <div className="mt-3 space-y-2">
+                      <p className="text-sm">
+                        <span className="font-bold">your_account</span> {formData.captions?.[platform.id] || "Your caption will appear here..."}
+                      </p>
+                      <p className="text-xs text-blue-500">{formData.hashtags?.[platform.id] || "#hashtags #will #appear #here"}</p>
+                    </div>
+                  </div>
+                )}
+                
+                {platform.id === "x" && (
+                  <div className="bg-white rounded-lg shadow-md max-w-sm mx-auto p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="h-10 w-10 bg-gray-200 rounded-full flex-shrink-0"></div>
+                      <div className="space-y-2 w-full">
+                        <div className="flex justify-between">
+                          <p className="text-sm font-bold">Your Account <span className="font-normal text-gray-500">@youraccount</span></p>
+                          <p className="text-xs text-gray-500">Just now</p>
+                        </div>
+                        <p className="text-sm">{formData.captions?.[platform.id] || "Your tweet content will appear here..."}</p>
+                        {formData.mediaType === "media" && (
+                          <div className="bg-gray-200 h-48 rounded flex items-center justify-center mt-2">
+                            <Image className="h-12 w-12 text-gray-400" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {(platform.id === "facebook" || platform.id === "youtube" || platform.id === "tiktok") && (
+                  <div className="h-72 flex items-center justify-center border rounded-lg">
+                    <p className="text-muted-foreground">{platform.name} preview will appear here</p>
+                  </div>
+                )}
+              </div>
+              
+              <div className="w-full md:w-1/2 space-y-4">
+                <h3 className="text-lg font-medium mb-4">Edit Options</h3>
+                
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={handleEditContent}
+                >
+                  <Pencil className="mr-2 h-4 w-4" /> Edit Content
+                </Button>
+                
+                {(platform.id === "youtube" || platform.id === "tiktok") && (
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start"
+                  >
+                    <Image className="mr-2 h-4 w-4" /> Change Cover Image
+                  </Button>
+                )}
+                
+                <div className="pt-4">
+                  <h4 className="text-sm font-medium mb-2">Content Summary</h4>
+                  <div className="rounded bg-gray-50 p-4 text-sm">
+                    <p className="mb-2"><span className="font-medium">Title:</span> {formData.title || "No title provided"}</p>
+                    <p className="mb-2"><span className="font-medium">Caption length:</span> {(formData.captions?.[platform.id] || "").length} characters</p>
+                    <p><span className="font-medium">Media:</span> {formData.mediaType === "media" ? "Yes" : "Text only"}</p>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </TabsContent>
         ))}
       </Tabs>
